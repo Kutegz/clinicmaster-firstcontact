@@ -1,0 +1,13 @@
+
+# Ignore .NET build artifacts
+**/bin/
+**/obj/
+
+# Ignore local application settings
+appsettings.Development.json
+
+# Ignore Docker-related files
+Dockerfile*
+.dockerignore
+
+ClinicMasterFirstContact.http
