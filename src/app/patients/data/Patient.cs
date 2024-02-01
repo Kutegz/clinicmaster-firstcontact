@@ -34,19 +34,25 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
             };
 
     }
-    public async Task<PatientResult<IEnumerable<PatientResponse>>> GetPatients()
-    {        
+    public async Task<PatientResult<IEnumerable<PatientResponse>>> GetPatients(int page , int pageSize)
+    {       
+        if (page <= 0) page = 1;
+        if (pageSize <= 0) pageSize = 10;
+        if (pageSize > 100) pageSize = 100;
+
         var query = """
                         SELECT PatientNo, FullName, Gender, Age FROM Patients
                     """;
         using var connection = context.CreateConnection();
         var patients = await connection.QueryAsync<PatientResponse>(sql: query);
+        
+        var pagedPatients = patients.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
         return new () 
                 {
                     Success = true,
                     Message = string.Empty,
-                    Data = patients.ToList(),            
+                    Data = pagedPatients,            
                 };           
 
     }

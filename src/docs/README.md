@@ -22,6 +22,10 @@
 GET {{host}}/patients/
 ```
 
+```js
+GET {{host}}/patients?page=1$pageSize=10/
+```
+
 ### All Patients Response
 
 ```js

@@ -12,7 +12,7 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
     private readonly JsonSerializerOptions serializerOptions = new ()
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            PropertyNameCaseInsensitive = true
+            PropertyNameCaseInsensitive = true,            
         };
      public async Task<SurgeryResult<SurgeryResponse>> GetSurgery(string patientNo, string treatmentNo)
     {
@@ -20,6 +20,7 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
                         SELECT TreatmentNo, PatientNo, VisitDate, Content 
                         FROM Surgeries WHERE PatientNo = @PatientNo AND TreatmentNo = @TreatmentNo
                     """;
+
         using var connection = context.CreateConnection();
         var parameters = new { patientNo, treatmentNo };
         var data = await connection.QuerySingleOrDefaultAsync<SurgeryRowData> (sql: query, param: parameters);
@@ -55,6 +56,7 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
                         SELECT TreatmentNo, PatientNo, VisitDate, Content 
                         FROM Surgeries WHERE PatientNo = @PatientNo
                     """;
+                    
         using var connection = context.CreateConnection();
         var incomingData = await connection.QueryAsync<SurgeryRowData>(sql: query, param: new { patientNo });
 
@@ -75,11 +77,11 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
             });
 
         return new () 
-                {
-                    Success = true,
-                    Message = string.Empty,
-                    Data = surgeries.ToList(),            
-                };           
+            {
+                Success = true,
+                Message = string.Empty,
+                Data = surgeries.ToList(),            
+            };           
 
     }
   
