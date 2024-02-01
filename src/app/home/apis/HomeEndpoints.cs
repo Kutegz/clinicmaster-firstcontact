@@ -8,9 +8,9 @@ public static class HomeEndpoints
         app.MapGet(pattern: "/error", handler: () =>  Results.Problem()).AllowAnonymous();
         app.MapGet(pattern: "/", handler: () => new 
             {
+                IsLive = true,
                 Message = "Welcome to ClinicMaster First Contact API",
-                Descrition = "Provide patient number to get patient data summary",
-                IsLive = true
+                Descrition = "Provide patient number to get patient data summary"
             }
             
         ).AllowAnonymous();
