@@ -8,7 +8,6 @@ namespace App.Patients.Data;
 
 public sealed class Patient(ClinicMasterContext context) : IPatient 
 {
-    private readonly ClinicMasterContext context = context;
     public async Task<PatientResult<PatientResponse>> GetPatient(string patientNo)
     {
 

@@ -1,6 +1,6 @@
 
 using Dapper;
-using System.Text.Json;
+using App.Common.Utils;
 using App.Common.Context;
 using App.Surgeries.Models;
 using App.Surgeries.Contracts;
@@ -8,12 +8,6 @@ using App.Surgeries.Contracts;
 namespace App.Surgeries.Data;
 public sealed class Surgery(ClinicMasterContext context) : ISurgery 
 {
-    private readonly ClinicMasterContext context = context;
-    private readonly JsonSerializerOptions serializerOptions = new ()
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            PropertyNameCaseInsensitive = true,            
-        };
      public async Task<SurgeryResult<SurgeryResponse>> GetSurgery(string patientNo, string treatmentNo)
     {
         var query = """
@@ -37,8 +31,8 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
                 TreatmentNo = data.TreatmentNo,
                 PatientNo = data.PatientNo,
                 VisitDate = data.VisitDate,
-                Content = JsonSerializer.Deserialize<SurgeryContentResponse>
-                (json: data.Content, options: serializerOptions) ?? SurgeryContentResponse.Empty                                
+                Content = Helpers.DeserializeContent<SurgeryContentResponse>
+                (content: data.Content) ?? SurgeryContentResponse.Empty                                
             };
 
         return new () 
@@ -72,8 +66,8 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
                 TreatmentNo = data.TreatmentNo,
                 PatientNo = data.PatientNo,
                 VisitDate = data.VisitDate,
-                Content = JsonSerializer.Deserialize<SurgeryContentResponse>
-                (json: data.Content, options: serializerOptions) ?? SurgeryContentResponse.Empty                                
+                Content = Helpers.DeserializeContent<SurgeryContentResponse>
+                (content: data.Content) ?? SurgeryContentResponse.Empty                             
             });
 
         return new () 

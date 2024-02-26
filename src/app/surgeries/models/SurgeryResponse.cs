@@ -1,5 +1,6 @@
 
-using App.Common.Helpers;
+
+using App.Common.Utils;
 using App.Surgeries.Contracts;
 
 namespace App.Surgeries.Models;
@@ -8,7 +9,7 @@ public sealed record SurgeryResponse : SurgeryBase<SurgeryContentResponse> {
     {
         TreatmentNo = string.Empty,
         PatientNo = string.Empty,
-        VisitDate = DateTime.Parse(Properties.NullDateTimeString),
+        VisitDate = DateTime.Parse(Constants.NullDateTimeString),
         Content = SurgeryContentResponse.Empty,
     };
 
