@@ -1,5 +1,5 @@
 
-using App.Patients.Models;
+using App.Patients.Models.Responses;
 
 namespace App.Patients.Contracts;
 public interface IPatient{

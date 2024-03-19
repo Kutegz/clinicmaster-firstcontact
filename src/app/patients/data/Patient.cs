@@ -1,8 +1,8 @@
 
 using Dapper;
 using App.Common.Context;
-using App.Patients.Models;
 using App.Patients.Contracts;
+using App.Patients.Models.Responses;
 
 namespace App.Patients.Data;
 

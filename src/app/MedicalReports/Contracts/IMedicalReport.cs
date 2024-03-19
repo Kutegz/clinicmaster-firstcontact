@@ -1,5 +1,5 @@
 
-using App.MedicalReports.Models;
+using App.MedicalReports.Models.Responses;
 
 namespace App.MedicalReports.Contracts;
 public interface IMedicalReport

@@ -1,6 +1,6 @@
 
-using App.MedicalReports.Models;
 using App.MedicalReports.Contracts;
+using App.MedicalReports.Models.Responses;
 
 namespace App.MedicalReports.Controllers;
 public static class MedicalReportController 

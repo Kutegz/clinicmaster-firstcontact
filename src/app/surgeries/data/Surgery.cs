@@ -2,8 +2,8 @@
 using Dapper;
 using App.Common.Utils;
 using App.Common.Context;
-using App.Surgeries.Models;
 using App.Surgeries.Contracts;
+using App.Surgeries.Models.Responses;
 
 namespace App.Surgeries.Data;
 public sealed class Surgery(ClinicMasterContext context) : ISurgery 

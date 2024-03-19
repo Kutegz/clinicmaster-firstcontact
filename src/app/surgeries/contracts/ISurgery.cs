@@ -1,5 +1,5 @@
 
-using App.Surgeries.Models;
+using App.Surgeries.Models.Responses;
 
 namespace App.Surgeries.Contracts;
 public interface ISurgery{

@@ -1,6 +1,6 @@
 
-using App.Surgeries.Models;
 using App.Surgeries.Contracts;
+using App.Surgeries.Models.Responses;
 
 namespace App.Surgeries.Controllers;
 public static class SurgeryController 

@@ -1,7 +1,7 @@
 
-using App.Patients.Models;
 using App.Patients.Contracts;
 using App.Surgeries.Contracts;
+using App.Patients.Models.Responses;
 
 namespace App.Patients.Controllers;
 

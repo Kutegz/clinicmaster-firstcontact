@@ -2,8 +2,8 @@
 using Dapper;
 using App.Common.Utils;
 using App.Common.Context;
-using App.MedicalReports.Models;
 using App.MedicalReports.Contracts;
+using App.MedicalReports.Models.Responses;
 
 namespace App.MedicalReports.Data;
 public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport 
