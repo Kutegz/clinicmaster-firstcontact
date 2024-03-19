@@ -29,17 +29,17 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<IMedicalReport, MedicalReport>();
 
     builder.Services.AddOpenTelemetry()
-                    .WithMetrics(configure: option => 
-                    {
-                        option.AddPrometheusExporter();
-                        option.AddMeter(names: ["Microsoft.AspNetCore.Hosting",
-                                                "Microsoft.AspNetCore.Server.Kestrel"]);
-                        option.AddView(instrumentName: "request-processing", 
-                        metricStreamConfiguration: new ExplicitBucketHistogramConfiguration()
-                        {
-                            Boundaries = [10, 20]
-                        });
-                    });
+            .WithMetrics(configure: option => 
+            {
+                option.AddPrometheusExporter();
+                option.AddMeter(names: ["Microsoft.AspNetCore.Hosting",
+                                        "Microsoft.AspNetCore.Server.Kestrel"]);
+                option.AddView(instrumentName: "request-processing", 
+                metricStreamConfiguration: new ExplicitBucketHistogramConfiguration()
+                {
+                    Boundaries = [10, 20]
+                });
+            });
     
     builder.Services.AddValidatorsFromAssemblyContaining(type: typeof(PaymentRequestValidator));
     builder.Services.AddGlobalExceptionHandler();

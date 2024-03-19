@@ -9,7 +9,7 @@ public static class MedicalReportEndpoints
     {
         // Includes all Patient MedicalReports API endpoint mappings
         var group = app.MapGroup(prefix: "/{facilityCode}/visits/medicalreports")
-                        .RequireAuthorization(); //.AddEndpointFilter<ApiKeyAuthEndpointFilter>();
+                        .RequireAuthorization(); //.AddEndpointFilter<ApiAccessAuthEndpointFilter>();
 
         group.MapGet(pattern: "/{visitNo}", handler: MedicalReportController.GetMedicalReport).AllowAnonymous(); 
                     

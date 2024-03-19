@@ -19,11 +19,11 @@
 ### All Patients Request
 
 ```js
-GET {{host}}/patients/
+GET http://ksc-cm.kyabirwasc.org:9090/patients/
 ```
 
 ```js
-GET {{host}}/patients?page=1$pageSize=10/
+GET http://ksc-cm.kyabirwasc.org:9090/patients?page=1$pageSize=10/
 ```
 
 ### All Patients Response
@@ -115,7 +115,7 @@ GET {{host}}/patients?page=1$pageSize=10/
 ### Single Patient Request
 
 ```js
-GET {{host}}/patients/{{patientNo}}
+GET http://ksc-cm.kyabirwasc.org:9090/patients/{{patientNo}}
 ```
 
 ### Single Patient Response
@@ -186,7 +186,7 @@ GET {{host}}/patients/{{patientNo}}
 ### Patient Surgeries Request
 
 ```js
-GET {{host}}/patients/{{patientNo}}/surgeries/
+GET http://ksc-cm.kyabirwasc.org:9090/patients/{{patientNo}}/surgeries/
 ```
 
 ### Patient Surgeries Response
@@ -251,7 +251,7 @@ GET {{host}}/patients/{{patientNo}}/surgeries/
 ### Patient Single Surgery Request
 
 ```js
-GET {{host}}/patients/{{patientNo}}/surgeries/{{treatmentNo}}
+GET http://ksc-cm.kyabirwasc.org:9090/patients/{{patientNo}}/surgeries/{{treatmentNo}}
 ```
 
 ### Patient Single Surgery Response

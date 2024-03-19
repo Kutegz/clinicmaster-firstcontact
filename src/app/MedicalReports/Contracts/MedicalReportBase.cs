@@ -8,4 +8,3 @@ public abstract record MedicalReportBase<TContent> {
     public required string CreatedBy {get; init;}
     public required DateTime CreatedAt {get; init;}   
 }
-

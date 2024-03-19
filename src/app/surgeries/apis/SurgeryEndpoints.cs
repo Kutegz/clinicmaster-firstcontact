@@ -10,7 +10,7 @@ public static class SurgeryEndpoints
         // Includes all Patient Surgeries API endpoint mappings 
         var group = app.MapGroup(prefix: "/patients")
                         .RequireAuthorization()
-                        .AddEndpointFilter<ApiKeyAuthEndpointFilter>();
+                        .AddEndpointFilter<ApiAccessAuthEndpointFilter>();
 
         group.MapGet(pattern: "/{patientNo}/surgeries/{treatmentNo}", 
                     handler: SurgeryController.GetSurgery).AllowAnonymous(); 

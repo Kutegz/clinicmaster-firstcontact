@@ -10,7 +10,7 @@ public static class PatientEndpoints
         // Includes all Patients API endpoint mappings
         var group = app.MapGroup(prefix: "/patients")
                         .RequireAuthorization()
-                        .AddEndpointFilter<ApiKeyAuthEndpointFilter>();
+                        .AddEndpointFilter<ApiAccessAuthEndpointFilter>();
                         
         group.MapGet(pattern: "/{patientNo}", handler: PatientController.GetPatient).AllowAnonymous(); 
         group.MapGet(pattern: "", handler: PatientController.GetPatients).AllowAnonymous();

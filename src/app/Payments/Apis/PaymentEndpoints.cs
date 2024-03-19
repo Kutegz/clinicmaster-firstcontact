@@ -10,7 +10,7 @@ public static class PaymentEndpoints
     {
         // Includes all Payments API endpoint mappings
         var group = app.MapGroup(prefix: "/payments").RequireAuthorization();
-                        // .AddEndpointFilter<ApiKeyAuthEndpointFilter>();
+                        // .AddEndpointFilter<ApiAccessAuthEndpointFilter>();
                         
         group.MapPut(pattern: "", handler: PaymentController.UpdatePayment).AllowAnonymous()
                                     .WithName(nameof(PaymentController.UpdatePayment))
