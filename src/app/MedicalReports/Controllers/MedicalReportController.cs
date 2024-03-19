@@ -1,10 +1,30 @@
 
 using App.MedicalReports.Contracts;
+using App.MedicalReports.Models.Requests;
 using App.MedicalReports.Models.Responses;
 
 namespace App.MedicalReports.Controllers;
 public static class MedicalReportController 
 {
+    public static async Task<IResult> CreateMedicalReport(MedicalReportRequest request, 
+                                        IMedicalReport repo, ILogger<MedicalReportRequest> logger)
+    {      
+        try
+        {    
+            var fullRequest = MedicalReportFullRequest.Create(request);
+            await repo.CreateMedicalReport(fullRequest);
+
+            logger.LogInformation("Goods Received Note request received {@fullRequest}", fullRequest); 
+
+            return Results.Created(uri: $"/medicalReport/{request.GRNNo}/", 
+                                    value: new { Message = "Goods Received Note Created Successfully"});            
+        }
+        catch (Exception ex) 
+        { 
+            logger.LogError("Failed to create Gooods Received Note with GRN No: {@GRNNo}", request.GRNNo); 
+            return Results.Problem(ex.Message); 
+        }  
+    }
     public static async Task<IResult> GetMedicalReport(string facilityCode, string visitNo, IMedicalReport repo)
     {      
         try

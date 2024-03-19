@@ -11,11 +11,12 @@ using App.Common.Exceptions;
 using OpenTelemetry.Metrics;
 using App.Patients.Contracts;
 using App.Payments.Contracts;
+using App.MedicalReports.Apis;
 using App.Surgeries.Contracts;
 using App.Payments.Validators;
 using App.MedicalReports.Data;
-using App.MedicalReports.Apis;
 using App.MedicalReports.Contracts;
+using App.MedicalReports.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 {    
@@ -42,6 +43,8 @@ var builder = WebApplication.CreateBuilder(args);
             });
     
     builder.Services.AddValidatorsFromAssemblyContaining(type: typeof(PaymentRequestValidator));
+    builder.Services.AddValidatorsFromAssemblyContaining(type: typeof(MedicalReportRequestValidator));
+
     builder.Services.AddGlobalExceptionHandler();
 
 }

@@ -1,6 +1,6 @@
 
-namespace App.GoodsReceivedNote.Models.Requests;
-public sealed record GoodsReceivedNoteDetailsRequest 
+namespace App.MedicalReports.Models.Requests;
+public sealed record MedicalReportDetailsRequest 
 {
     public required string ItemCode {get; init;}   
     public required string ItemName {get; init;}

@@ -1,8 +1,8 @@
 
 using App.Common.Utils;
 
-namespace App.GoodsReceivedNote.Models.Requests;
-public sealed record GoodsReceivedNoteFullRequest 
+namespace App.MedicalReports.Models.Requests;
+public sealed record MedicalReportFullRequest 
 {
     public required string GRNNo {get; init;}
     public required DateTime ReceivedDate {get; init;}
@@ -10,7 +10,7 @@ public sealed record GoodsReceivedNoteFullRequest
     public required string CreatedBy {get; init;}   
     public required DateTime CreatedAt {get; init;}   
     public required bool SyncStatus {get; init;}   
-    public static GoodsReceivedNoteFullRequest Create (GoodsReceivedNoteRequest request) => new()
+    public static MedicalReportFullRequest Create (MedicalReportRequest request) => new()
     {
         GRNNo = request.GRNNo,
         ReceivedDate = request.ReceivedDate,

@@ -1,14 +1,40 @@
 
 using Dapper;
+using System.Data;
 using App.Common.Utils;
 using App.Common.Context;
 using App.MedicalReports.Contracts;
+using App.MedicalReports.Models.Requests;
 using App.MedicalReports.Models.Responses;
 
 namespace App.MedicalReports.Data;
 public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport 
 {
-     public async Task<MedicalReportResult<MedicalReportResponse>> GetMedicalReport(string facilityCode, string visitNo)
+    public async Task<bool> CreateMedicalReport(MedicalReportFullRequest request)
+    
+    {        
+        var query = """
+                        INSERT INTO GoodsReceivedNote (GRNNo, ReceivedDate, Content, CreatedBy, CreatedAt, SyncStatus) 
+                        VALUES (@GRNNo, @ReceivedDate, CAST(@Content AS JSONB), @CreatedBy, @CreatedAt, @SyncStatus);
+                    """;
+                    
+        var parameters = new DynamicParameters ();
+
+        parameters.Add(name: nameof(request.GRNNo), value: request.GRNNo, dbType: DbType.String);
+        parameters.Add(name: nameof(request.ReceivedDate), value: request.ReceivedDate, dbType: DbType.Date);
+        parameters.Add(name: nameof(request.Content), value: request.Content, dbType: DbType.String);
+        parameters.Add(name: nameof(request.CreatedBy), value: request.CreatedBy, dbType: DbType.String);
+        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTime2);
+        parameters.Add(name: nameof(request.SyncStatus), value: request.SyncStatus, dbType: DbType.Boolean);
+
+        using var connection = context.CreateConnection();
+        var result = await connection.ExecuteAsync(sql: query, param: parameters);
+
+        return result > 0;
+    }
+
+
+    public async Task<MedicalReportResult<MedicalReportResponse>> GetMedicalReport(string facilityCode, string visitNo)
     {
         var query = """
                         SELECT FacilityCode, VisitNo, VisitDate, Content, CreatedBy, CreatedAt
