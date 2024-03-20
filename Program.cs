@@ -4,6 +4,7 @@ using App.Patients.Apis;
 using App.Patients.Data;
 // using App.Payments.Apis;
 using App.Payments.Data;
+using OpenTelemetry.Logs;
 using App.Common.Context;
 using App.Surgeries.Apis;
 using App.Surgeries.Data;
@@ -15,11 +16,31 @@ using App.MedicalReports.Apis;
 using App.Surgeries.Contracts;
 using App.Payments.Validators;
 using App.MedicalReports.Data;
+using Api.MedicalReports.Services;
 using App.MedicalReports.Contracts;
 using App.MedicalReports.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
-{    
+{       
+    builder.Services.AddOpenTelemetry().WithMetrics(configure: metrics => 
+        {
+            metrics.AddMeter(names: ["Microsoft.AspNetCore.Hosting", "System.Net.Http",
+                                    "Microsoft.AspNetCore.Server.Kestrel", "ReadMedicalReport"]);
+            metrics.AddPrometheusExporter();
+
+            // OTLP destination can configure using an environment variable
+            // OTEL_EXPORTER_OTLP_ENDPOINT
+
+            metrics.AddOtlpExporter();
+        });
+
+    builder.Logging.AddOpenTelemetry(configure: options => 
+        {
+            options.AddOtlpExporter();
+        });
+
+    builder.Services.AddSingleton<MedicalReportMetrics>();
+
     builder.Services.AddAuthentication();
     builder.Services.AddAuthorization();
     
@@ -29,19 +50,6 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<IPayment, Payment>();
     builder.Services.AddScoped<IMedicalReport, MedicalReport>();
 
-    builder.Services.AddOpenTelemetry()
-            .WithMetrics(configure: option => 
-            {
-                option.AddPrometheusExporter();
-                option.AddMeter(names: ["Microsoft.AspNetCore.Hosting",
-                                        "Microsoft.AspNetCore.Server.Kestrel"]);
-                option.AddView(instrumentName: "request-processing", 
-                metricStreamConfiguration: new ExplicitBucketHistogramConfiguration()
-                {
-                    Boundaries = [10, 20]
-                });
-            });
-    
     builder.Services.AddValidatorsFromAssemblyContaining(type: typeof(PaymentRequestValidator));
     builder.Services.AddValidatorsFromAssemblyContaining(type: typeof(MedicalReportRequestValidator));
 

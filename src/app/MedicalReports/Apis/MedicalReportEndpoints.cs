@@ -1,6 +1,8 @@
 
 using App.Auth;
+using App.Common.Filters;
 using App.MedicalReports.Controllers;
+using App.MedicalReports.Models.Requests;
 
 namespace App.MedicalReports.Apis;
 public static class MedicalReportEndpoints
@@ -10,11 +12,14 @@ public static class MedicalReportEndpoints
         // Includes all Patient MedicalReports API endpoint mappings
         var group = app.MapGroup(prefix: "/{facilityCode}/visits/medicalreports")
                         .RequireAuthorization().AddEndpointFilter<ApiAccessAuthEndpointFilter>();
+                        
+        group.MapPost(pattern: "", handler: MedicalReportController.CreateMedicalReport).AllowAnonymous()
+                                    .WithName(nameof(MedicalReportController.CreateMedicalReport))
+                                    .AddEndpointFilter<RequestEndPontFilter<MedicalReportRequest>>();   
 
-        group.MapGet(pattern: "/{visitNo}", handler: MedicalReportController.GetMedicalReport).AllowAnonymous(); 
-                    
         group.MapGet(pattern: "", handler: MedicalReportController.GetMedicalReports).AllowAnonymous(); 
 
+        group.MapGet(pattern: "/{visitNo}", handler: MedicalReportController.GetMedicalReport).AllowAnonymous(); 
     }
 
 }

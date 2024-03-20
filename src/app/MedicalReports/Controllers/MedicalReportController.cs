@@ -1,4 +1,5 @@
 
+using Api.MedicalReports.Services;
 using App.MedicalReports.Contracts;
 using App.MedicalReports.Models.Requests;
 using App.MedicalReports.Models.Responses;
@@ -6,22 +7,27 @@ using App.MedicalReports.Models.Responses;
 namespace App.MedicalReports.Controllers;
 public static class MedicalReportController 
 {
-    public static async Task<IResult> CreateMedicalReport(MedicalReportRequest request, 
-                                        IMedicalReport repo, ILogger<MedicalReportRequest> logger)
+    public static async Task<IResult> CreateMedicalReport(MedicalReportRequest request, IMedicalReport repo, 
+                                                        ILogger<MedicalReportRequest> logger, MedicalReportMetrics metrics)
     {      
         try
         {    
             var fullRequest = MedicalReportFullRequest.Create(request);
             await repo.CreateMedicalReport(fullRequest);
 
-            logger.LogInformation("Goods Received Note request received {@fullRequest}", fullRequest); 
+            metrics.MedicalReportCounter.Add(delta: 1, 
+                                        new KeyValuePair<string, dynamic?>("VisitNo", fullRequest.GRNNo),
+                                        new KeyValuePair<string, dynamic?>("CreatedAt", fullRequest.CreatedAt)
+                                    );
+
+            logger.LogInformation("Medical Report request received {@fullRequest}", fullRequest); 
 
             return Results.Created(uri: $"/medicalReport/{request.GRNNo}/", 
-                                    value: new { Message = "Goods Received Note Created Successfully"});            
+                                    value: new { Message = "Medical Report Created Successfully"});            
         }
         catch (Exception ex) 
         { 
-            logger.LogError("Failed to create Gooods Received Note with GRN No: {@GRNNo}", request.GRNNo); 
+            logger.LogError("Failed to create Medical Report with Visit No: {@GRNNo}", request.GRNNo); 
             return Results.Problem(ex.Message); 
         }  
     }
