@@ -16,18 +16,20 @@ public static class MedicalReportController
             await repo.CreateMedicalReport(fullRequest);
 
             metrics.MedicalReportCounter.Add(delta: 1, 
-                                        new KeyValuePair<string, dynamic?>("VisitNo", fullRequest.GRNNo),
+                                        new KeyValuePair<string, dynamic?>("FacilityCode", fullRequest.FacilityCode),
+                                        new KeyValuePair<string, dynamic?>("VisitNo", fullRequest.VisitNo),
                                         new KeyValuePair<string, dynamic?>("CreatedAt", fullRequest.CreatedAt)
                                     );
 
             logger.LogInformation("Medical Report request received {@fullRequest}", fullRequest); 
 
-            return Results.Created(uri: $"/medicalReport/{request.GRNNo}/", 
+            return Results.Created(uri: $"/{request.FacilityCode}/visits/medicalreports/{request.VisitNo}/", 
                                     value: new { Message = "Medical Report Created Successfully"});            
         }
         catch (Exception ex) 
         { 
-            logger.LogError("Failed to create Medical Report with Visit No: {@GRNNo}", request.GRNNo); 
+            logger.LogError("Failed to create Medical Report with Facility Code: {FacilityCode}, and Visit No: {VisitNo}", 
+                                                                                    request.FacilityCode, request.VisitNo); 
             return Results.Problem(ex.Message); 
         }  
     }

@@ -7,14 +7,16 @@ public sealed class MedicalReportRequestValidator : AbstractValidator<MedicalRep
 {
     public MedicalReportRequestValidator() 
     {
-        RuleFor(request => request.GRNNo).Length(1, 20).NotEmpty()
-                                            .WithMessage(errorMessage: "Please include GRNNo");
-        RuleFor(request => request.ReceivedDate).NotEmpty()
-                                            .WithMessage(errorMessage: "Please include Received Date")
+        RuleFor(request => request.FacilityCode).Length(1, 20).NotEmpty()
+                                            .WithMessage(errorMessage: "Please include Facility Code");
+        RuleFor(request => request.VisitNo).Length(1, 20).NotEmpty()
+                                            .WithMessage(errorMessage: "Please include Visit No");
+        RuleFor(request => request.VisitDate).NotEmpty()
+                                            .WithMessage(errorMessage: "Please include Visit Date")
                                             .GreaterThan(DateTime.Parse(Constants.NullDateTimeString))
-                                            .WithMessage(errorMessage: "Received Date cannot be in the past")
+                                            .WithMessage(errorMessage: "Visit Date cannot be in the past")
                                             .LessThan(DateTime.Now)
-                                            .WithMessage(errorMessage: "Received Date cannot be ahead of today" );
+                                            .WithMessage(errorMessage: "Visit Date cannot be ahead of today" );
                                             
         RuleFor(request => request.Content.SupplierNo).NotEmpty();
         RuleFor(request => request.Content.SupplierName).NotEmpty();
