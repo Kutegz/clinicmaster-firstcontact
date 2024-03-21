@@ -6,11 +6,10 @@ namespace App.MedicalReports.Validators;
 public sealed class MedicalReportRequestValidator : AbstractValidator<MedicalReportRequest> 
 {
 
-    // public MedicalReportRequestValidator() 
-    public MedicalReportRequestValidator(HttpContext context) 
+    public MedicalReportRequestValidator() 
     {
-        context.Request.RouteValues.TryGetValue("facilityCode", out var facilityCode);
-        Console.WriteLine($"facilityCode: {facilityCode}");
+        // context.Request.RouteValues.TryGetValue("facilityCode", out var facilityCode);
+        // Console.WriteLine($"facilityCode: {facilityCode}");
 
         RuleFor(request => request.FacilityCode).Length(1, 20).NotEmpty()
                                             .WithMessage(errorMessage: "Please include Facility Code");
