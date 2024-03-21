@@ -37,42 +37,5 @@ public sealed record EyeAssessmentRequest
     public required string Right_eye_ball { get; init; }
     public required string Left_orbit { get; init; }
     public required string Right_orbit { get; init; }
-    public static EyeAssessmentRequest Empty => new() 
-    {
-        Left_pupil = string.Empty,
-        Right_pupil = string.Empty,
-        Left_lid_margin = string.Empty,
-        Right_lid_margin = string.Empty,
-        Left_conjunctiva = string.Empty,
-        Right_conjunctiva = string.Empty,
-        Left_bulbar_conjunctiva = string.Empty,
-        Right_bulbar_conjunctiva = string.Empty,
-        Left_central_cornea = string.Empty,
-        Right_central_cornea = string.Empty,
-        Left_vertical_cornea = string.Empty,
-        Right_vertical_cornea = string.Empty,
-        Left_anterior_chamber = string.Empty,
-        Right_anterior_chamber = string.Empty,
-        Left_iris = string.Empty,
-        Right_iris = string.Empty,
-        Left_anterior_chamber_angle = string.Empty,
-        Right_anterior_chamber_angle = string.Empty,
-        Left_retina = string.Empty,
-        Right_retina = string.Empty,
-        Left_macula = string.Empty,
-        Right_macula = string.Empty,
-        Left_optic_disc = string.Empty,
-        Right_optic_disc = string.Empty,
-        Left_iop = string.Empty,
-        Right_iop = string.Empty,
-        Left_vitreous = string.Empty,
-        Right_vitreous = string.Empty,
-        Left_lens = string.Empty,
-        Right_lens = string.Empty,
-        Eye_notes = string.Empty,
-        Left_eye_ball = string.Empty,
-        Right_eye_ball = string.Empty,
-        Left_orbit = string.Empty,
-        Right_orbit = string.Empty
-    };
+
 }

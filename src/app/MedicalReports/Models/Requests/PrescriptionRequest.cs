@@ -8,14 +8,4 @@ public sealed record PrescriptionRequest
     public required int Duration {get; init;}   
     public required int Quantity {get; init;}   
     public required string Notes {get; init;}   
-    public static PrescriptionRequest Empty => new() 
-    {
-        Drug_code = string.Empty,
-        Drug_name = string.Empty,
-        Dosage = string.Empty,
-        Duration = 0,
-        Quantity = 0,
-        Notes = string.Empty
-    };
-
 }

@@ -11,15 +11,4 @@ public sealed record PatientRequest
     public required string Status {get; init;}
     public required List<string> Chronic_diseases {get; init;}   
     public required List<PatientAllergiesRequest> Allergies {get; init;}  
-    public static PatientRequest Empty => new() 
-    {
-        Identifier = string.Empty,
-        Age = 0,
-        Gender = string.Empty,
-        Join_date = DateTime.Parse(Constants.NullDateTimeString),
-        Status = string.Empty,
-        Chronic_diseases = [],
-        Allergies = [],
-    };
-
 }
