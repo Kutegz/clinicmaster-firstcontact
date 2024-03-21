@@ -7,11 +7,14 @@ using App.MedicalReports.Models.Responses;
 namespace App.MedicalReports.Controllers;
 public static class MedicalReportController 
 {
-    public static async Task<IResult> CreateMedicalReport(MedicalReportRequest request, IMedicalReport repo, 
+    public static async Task<IResult> CreateMedicalReport(string facilityCode, MedicalReportRequest request, IMedicalReport repo, 
                                                         ILogger<MedicalReportRequest> logger, MedicalReportMetrics metrics)
     {      
         try
         {    
+            
+            Console.WriteLine($"Facility Code: {facilityCode}");
+
             var fullRequest = MedicalReportFullRequest.Create(request);
             await repo.CreateMedicalReport(fullRequest);
 

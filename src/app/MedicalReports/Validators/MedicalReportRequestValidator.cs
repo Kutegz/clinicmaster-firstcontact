@@ -5,8 +5,13 @@ using App.MedicalReports.Models.Requests;
 namespace App.MedicalReports.Validators;
 public sealed class MedicalReportRequestValidator : AbstractValidator<MedicalReportRequest> 
 {
-    public MedicalReportRequestValidator() 
+
+    // public MedicalReportRequestValidator() 
+    public MedicalReportRequestValidator(HttpContext context) 
     {
+        context.Request.RouteValues.TryGetValue("facilityCode", out var facilityCode);
+        Console.WriteLine($"facilityCode: {facilityCode}");
+
         RuleFor(request => request.FacilityCode).Length(1, 20).NotEmpty()
                                             .WithMessage(errorMessage: "Please include Facility Code");
         RuleFor(request => request.VisitNo).Length(1, 20).NotEmpty()
@@ -18,7 +23,7 @@ public sealed class MedicalReportRequestValidator : AbstractValidator<MedicalRep
                                             .LessThan(DateTime.Now)
                                             .WithMessage(errorMessage: "Visit Date cannot be ahead of today" );
                                             
-        RuleFor(request => request.Content.SupplierNo).NotEmpty();
-        RuleFor(request => request.Content.SupplierName).NotEmpty();
+        // RuleFor(request => request.Content.Organization).NotEmpty();//.NotEqual("");
+        // RuleFor(request => request.Content.Patient).NotEmpty();
     }
 }

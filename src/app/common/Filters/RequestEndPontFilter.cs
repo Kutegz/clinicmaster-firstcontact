@@ -8,7 +8,7 @@ public sealed class RequestEndPontFilter<T>(ILogger<RequestEndPontFilter<T>> log
     public async ValueTask<dynamic?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
         var item = context.Arguments.OfType<T>().FirstOrDefault(predicate: arg => arg?.GetType() == typeof(T));
-
+        
         if (item is not null) 
         {
             var validation =  await validator.ValidateAsync(item);
