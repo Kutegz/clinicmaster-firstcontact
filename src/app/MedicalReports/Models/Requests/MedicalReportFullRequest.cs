@@ -11,15 +11,26 @@ public sealed record MedicalReportFullRequest
     public required string CreatedBy {get; init;}   
     public required DateTime CreatedAt {get; init;}   
     public required string Agents {get; init;}   
-    public static MedicalReportFullRequest Create (MedicalReportRequest request) => new()
-    {
-        FacilityCode = request.FacilityCode,
-        VisitNo = request.VisitNo,
-        VisitDate = request.VisitDate,
-        Content = Helpers.SerializeContent(content: request.Content),
-        CreatedBy = "System User",
-        CreatedAt = DateTime.Now,
-        Agents = "[]"
-    };
+    public static MedicalReportFullRequest Create (MedicalReportRequest request, string createdBy) 
+        => new()
+            {
+                FacilityCode = request.FacilityCode,
+                VisitNo = request.VisitNo,
+                VisitDate = request.VisitDate,
+                Content = Helpers.SerializeContent(content: request.Content),
+                CreatedBy = createdBy,
+                CreatedAt = DateTime.Now,
+                Agents = Helpers.SerializeContent(content: new MedicalReportAgentsRequest
+                    {
+                        Submitter = new AgentsSubmitterRequest
+                            {
+                                AgentId = createdBy,
+                                SyncCount = 1,
+                                SyncStatus = true,
+                                SyncDateTime = DateTime.Now,
+                                ErrorMessage = string.Empty
+                            }
+                    }),
+            };
     
 }

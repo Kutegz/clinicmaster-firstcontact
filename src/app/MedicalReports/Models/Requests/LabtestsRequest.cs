@@ -1,5 +1,4 @@
 
-
 namespace App.MedicalReports.Models.Requests;
 public sealed record LabtestsRequest 
 {
