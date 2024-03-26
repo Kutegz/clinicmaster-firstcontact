@@ -22,7 +22,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
         parameters.Add(name: nameof(request.PatientNo), value: request.PatientNo, dbType: DbType.String);
         parameters.Add(name: nameof(request.FullName), value: request.FullName, dbType: DbType.String);
         parameters.Add(name: nameof(request.Gender), value: request.Gender, dbType: DbType.String);
-        parameters.Add(name: nameof(request.Age), value: request.Age, dbType: DbType.UInt16);
+        parameters.Add(name: nameof(request.Age), value: request.Age, dbType: DbType.Int32);
         parameters.Add(name: nameof(request.CreatedBy), value: request.CreatedBy, dbType: DbType.String);
         parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTime2);
         parameters.Add(name: nameof(request.Agents), value: request.Agents, dbType: DbType.String);
