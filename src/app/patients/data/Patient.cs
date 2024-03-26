@@ -1,13 +1,37 @@
 
 using Dapper;
+using System.Data;
 using App.Common.Context;
 using App.Patients.Contracts;
+using App.Patients.Models.Requests;
 using App.Patients.Models.Responses;
 
 namespace App.Patients.Data;
 
 public sealed class Patient(ClinicMasterContext context) : IPatient 
 {
+    public async Task<bool> CreatePatient(PatientFullRequest request)    
+    {        
+        var query = """
+                        INSERT INTO Patients (PatientNo, FullName, Gender, Age, CreatedBy, CreatedAt, Agents)
+                        VALUES (@PatientNo, @FullName, @Gender, @Age, @CreatedBy, @CreatedAt, @Agents);
+                    """;
+                    
+        var parameters = new DynamicParameters ();
+
+        parameters.Add(name: nameof(request.PatientNo), value: request.PatientNo, dbType: DbType.String);
+        parameters.Add(name: nameof(request.FullName), value: request.FullName, dbType: DbType.String);
+        parameters.Add(name: nameof(request.Gender), value: request.Gender, dbType: DbType.String);
+        parameters.Add(name: nameof(request.Age), value: request.Age, dbType: DbType.UInt16);
+        parameters.Add(name: nameof(request.CreatedBy), value: request.CreatedBy, dbType: DbType.String);
+        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTime2);
+        parameters.Add(name: nameof(request.Agents), value: request.Agents, dbType: DbType.String);
+
+        using var connection = context.CreateConnection();
+        var result = await connection.ExecuteAsync(sql: query, param: parameters);
+
+        return result > 0;
+    }
     public async Task<PatientResult<PatientResponse>> GetPatient(string patientNo)
     {
 

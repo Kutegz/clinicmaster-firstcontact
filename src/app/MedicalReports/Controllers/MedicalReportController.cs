@@ -49,7 +49,7 @@ public static class MedicalReportController
                                         tag3: new KeyValuePair<string, dynamic?>("CreatedAt", fullRequest.CreatedAt)
                                     );
 
-            return Results.Created(uri: $"/{request.FacilityCode}/visits/medicalreports/{request.VisitNo}/", 
+            return Results.Created(uri: $"/{fullRequest.FacilityCode}/visits/medicalreports/{fullRequest.VisitNo}/", 
                                     value: new 
                                             { 
                                                 Success = true,

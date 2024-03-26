@@ -15,6 +15,7 @@ using App.Payments.Contracts;
 using App.MedicalReports.Apis;
 using App.Surgeries.Contracts;
 using App.Payments.Validators;
+using App.Patients.Validators;
 using App.MedicalReports.Data;
 using Api.MedicalReports.Services;
 using App.MedicalReports.Contracts;
@@ -50,6 +51,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<IPayment, Payment>();
     builder.Services.AddScoped<IMedicalReport, MedicalReport>();
 
+    builder.Services.AddValidatorsFromAssemblyContaining(type: typeof(PatientRequestValidator));
     builder.Services.AddValidatorsFromAssemblyContaining(type: typeof(PaymentRequestValidator));
     builder.Services.AddValidatorsFromAssemblyContaining(type: typeof(MedicalReportRequestValidator));
 

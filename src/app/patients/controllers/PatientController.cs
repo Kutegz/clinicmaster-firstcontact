@@ -1,12 +1,50 @@
 
+using App.Common.Utils;
 using App.Patients.Contracts;
 using App.Surgeries.Contracts;
+using App.Patients.Models.Requests;
 using App.Patients.Models.Responses;
 
 namespace App.Patients.Controllers;
 
 public static class PatientController 
 {
+    public static async Task<IResult> CreatePatient(PatientRequest request, IPatient repo, 
+                                                    HttpContext context, ILogger<PatientRequest> logger)
+    {      
+        try
+        {                 
+            string? createdBy = context.Request.Headers[Constants.XAgentId];           
+            var fullRequest = PatientFullRequest.Create(request: request, createdBy: createdBy ?? Constants.ClinicMaster);
+
+            var patient = await repo.GetPatient(patientNo: fullRequest.PatientNo);
+            if (!patient.Data.Equals(PatientResponse.Empty) && patient.Success) 
+            {
+                logger.LogError(message: "Patient with Patient No: {PatientNo} already exists", args: [fullRequest.PatientNo]);
+
+                return Results.Conflict(new { 
+                    Success = false,
+                    Message = $"Patient with Patient No: {fullRequest.PatientNo} already exists"
+                    });
+            }
+            
+            await repo.CreatePatient(request: fullRequest);
+
+            return Results.Created(uri: $"/patients/{fullRequest.PatientNo}/", value: new 
+                    { 
+                        Success = true,
+                        Message = $"Patient with Patient No: {fullRequest.PatientNo} created successfully"
+                    });            
+        }
+        catch (Exception ex) 
+        {             
+            logger.LogError(ex, message: "An error occurred while creating patient with Patient No: {PatientNo}", 
+                            args: [request.PatientNo]);        
+                                                                                    
+            return Results.Problem(ex.Message); 
+        }  
+    }
+
     public static async Task<IResult> GetPatient(string patientNo, IPatient repo, ISurgery surgeryRepo)
     {      
         try

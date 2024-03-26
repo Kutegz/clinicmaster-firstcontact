@@ -34,7 +34,6 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         return result > 0;
     }
 
-
     public async Task<MedicalReportResult<MedicalReportResponse>> GetMedicalReport(string facilityCode, string visitNo)
     {
         var query = """
