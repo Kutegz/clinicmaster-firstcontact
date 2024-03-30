@@ -24,21 +24,21 @@ using App.MedicalReports.Validators;
 var builder = WebApplication.CreateBuilder(args);
 {       
     builder.Services.AddOpenTelemetry().WithMetrics(configure: metrics => 
-        {
-            metrics.AddMeter(names: ["Microsoft.AspNetCore.Hosting", "System.Net.Http",
-                                    "Microsoft.AspNetCore.Server.Kestrel", "ReadMedicalReport"]);
-            metrics.AddPrometheusExporter();
+    {
+        metrics.AddMeter(names: ["Microsoft.AspNetCore.Hosting", "System.Net.Http",
+                                "Microsoft.AspNetCore.Server.Kestrel", "ReadMedicalReport"]);
+        metrics.AddPrometheusExporter();
 
-            // OTLP destination can configure using an environment variable
-            // OTEL_EXPORTER_OTLP_ENDPOINT
+        // OTLP destination can configure using an environment variable
+        // OTEL_EXPORTER_OTLP_ENDPOINT
 
-            metrics.AddOtlpExporter();
-        });
+        metrics.AddOtlpExporter();
+    });
 
     builder.Logging.AddOpenTelemetry(configure: options => 
-        {
-            options.AddOtlpExporter();
-        });
+    {
+        options.AddOtlpExporter();
+    });
 
     builder.Services.AddSingleton<MedicalReportMetrics>();
 
@@ -55,7 +55,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddValidatorsFromAssemblyContaining(type: typeof(PaymentRequestValidator));
     builder.Services.AddValidatorsFromAssemblyContaining(type: typeof(MedicalReportRequestValidator));
 
-    builder.Services.AddGlobalExceptionHandler();
+    builder.Services.AddExceptionHandler<AppExceptionHandler>();
 
 }
 

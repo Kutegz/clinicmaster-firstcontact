@@ -1,4 +1,4 @@
-
+// Purpose: Contains the API endpoint mappings for the Home module.
 namespace App.Home.Apis;
 public static class HomeEndpoints 
 {
@@ -11,8 +11,7 @@ public static class HomeEndpoints
                 IsLive = true,
                 Message = "Welcome to ClinicMaster First Contact API",
                 Descrition = "Provide patient number to get patient data summary"
-            }
-            
+            }         
         ).AllowAnonymous();
     }
 }
