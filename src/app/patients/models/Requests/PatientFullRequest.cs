@@ -13,7 +13,8 @@ public sealed record PatientFullRequest
     public required DateTime CreatedAt {get; init;}   
     public required string Agents {get; init;}   
     public static PatientFullRequest Create (PatientRequest request, string createdBy) 
-        => new()
+    {
+        return new()
             {
                 PatientNo = request.PatientNo,
                 FullName = request.FullName,
@@ -32,7 +33,8 @@ public sealed record PatientFullRequest
                                 SyncDateTime = DateTime.Now,
                                 ErrorMessage = string.Empty
                             }
-                    }),
+                    })
             };
+    }
     
 }
