@@ -4,18 +4,27 @@ using App.Patients.Contracts;
 using App.Surgeries.Contracts;
 using App.Patients.Models.Requests;
 using App.Patients.Models.Responses;
+using App.Common.Models.Requests;
 
 namespace App.Patients.Controllers;
 
 public static class PatientController 
 {
-    public static async Task<IResult> CreatePatient(PatientRequest request, IPatient repo, TimeProvider timeProvider,
+    public static async Task<IResult> CreatePatient(PatientRequest request, IPatient repo, TimeProvider timeProvider, 
                                                     HttpContext context, ILogger<PatientRequest> logger)
     {      
         try
         {                 
-            string? createdBy = context.Request.Headers[Constants.XAgentId];           
-            var fullRequest = PatientFullRequest.Create(request: request, createdBy: createdBy ?? Constants.ClinicMaster, 
+            string? createdBy = context.Request.Headers[Constants.XAgentId];   
+            var creatorRequest = CreatorRequest.Create(agentId: createdBy ?? Constants.ClinicMaster, 
+                                                        agentName: Constants.ClinicMaster, 
+                                                        syncCount: 1, syncStatus: true, 
+                                                        syncDateTime: timeProvider.GetUtcNow().DateTime, 
+                                                        errorMessage: string.Empty);
+
+            string creator = Utils.SerializeContent(content: creatorRequest);        
+
+            var fullRequest = PatientFullRequest.Create(request: request, creator: creator, 
                                                         createdAt: timeProvider.GetUtcNow().DateTime);
 
             var patient = await repo.GetPatient(patientNo: fullRequest.PatientNo);

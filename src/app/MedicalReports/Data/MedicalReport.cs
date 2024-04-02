@@ -14,8 +14,8 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
     
     {        
         var query = """
-                        INSERT INTO MedicalReports (FacilityCode, VisitNo, VisitDate, Content, CreatedBy, CreatedAt, Agents)
-                        VALUES (@FacilityCode, @VisitNo, @VisitDate, @Content, @CreatedBy, @CreatedAt, @Agents);
+                        INSERT INTO MedicalReports (FacilityCode, VisitNo, VisitDate, Content, Creator, CreatedAt, Consumers)
+                        VALUES (@FacilityCode, @VisitNo, @VisitDate, @Content, @Creator, @CreatedAt, @Consumers);
                     """;
                     
         var parameters = new DynamicParameters ();
@@ -24,9 +24,9 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         parameters.Add(name: nameof(request.VisitNo), value: request.VisitNo, dbType: DbType.String);
         parameters.Add(name: nameof(request.VisitDate), value: request.VisitDate, dbType: DbType.Date);
         parameters.Add(name: nameof(request.Content), value: request.Content, dbType: DbType.String);
-        parameters.Add(name: nameof(request.CreatedBy), value: request.CreatedBy, dbType: DbType.String);
+        parameters.Add(name: nameof(request.Creator), value: request.Creator, dbType: DbType.String);
         parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTime2);
-        parameters.Add(name: nameof(request.Agents), value: request.Agents, dbType: DbType.String);
+        parameters.Add(name: nameof(request.Consumers), value: request.Consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();
         var result = await connection.ExecuteAsync(sql: query, param: parameters);
@@ -37,8 +37,8 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
     public async Task<MedicalReportResult<MedicalReportResponse>> GetMedicalReport(string facilityCode, string visitNo)
     {
         var query = """
-                        SELECT FacilityCode, VisitNo, VisitDate, Content, CreatedBy, CreatedAt
-                        FROM MedicalReports WHERE FacilityCode = @FacilityCode AND VisitNo = @VisitNo
+                        SELECT FacilityCode, VisitNo, VisitDate, Content, CreatedAt FROM MedicalReports 
+                        WHERE FacilityCode = @FacilityCode AND VisitNo = @VisitNo
                     """;
 
         using var connection = context.CreateConnection();
@@ -59,7 +59,6 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                 VisitDate = data.VisitDate,
                 Content = Utils.DeserializeContent<MedicalReportContentResponse>
                 (content: data.Content) ?? MedicalReportContentResponse.Empty,
-                CreatedBy = data.CreatedBy,
                 CreatedAt = data.CreatedAt                        
             };
 
@@ -79,7 +78,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         if (pageSize > 100) pageSize = 100;
 
         var query = """
-                        SELECT FacilityCode, VisitNo, VisitDate, Content, CreatedBy, CreatedAt
+                        SELECT FacilityCode, VisitNo, VisitDate, Content, CreatedAt
                         FROM MedicalReports WHERE FacilityCode = @FacilityCode
                     """;
                     
@@ -100,7 +99,6 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                 VisitDate = data.VisitDate,
                 Content = Utils.DeserializeContent<MedicalReportContentResponse>
                 (content: data.Content) ?? MedicalReportContentResponse.Empty,
-                CreatedBy = data.CreatedBy,
                 CreatedAt = data.CreatedAt
                                             
             });

@@ -15,19 +15,19 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
     public async Task<bool> CreatePatient(PatientFullRequest request)    
     {        
         var query = """
-                        INSERT INTO Patients (PatientNo, FullName, Gender, Age, CreatedBy, CreatedAt, Agents)
-                        VALUES (@PatientNo, @FullName, @Gender, @Age, @CreatedBy, @CreatedAt, @Agents);
+                        INSERT INTO Patients (PatientNo, FullName, Gender, Age, Creator, CreatedAt, Consumers)
+                        VALUES (@PatientNo, @FullName, @Gender, @Age, @Creator, @CreatedAt, @Consumers);
                     """;
-                    
+
         var parameters = new DynamicParameters ();
 
         parameters.Add(name: nameof(request.PatientNo), value: request.PatientNo, dbType: DbType.String);
         parameters.Add(name: nameof(request.FullName), value: request.FullName, dbType: DbType.String);
         parameters.Add(name: nameof(request.Gender), value: request.Gender, dbType: DbType.String);
         parameters.Add(name: nameof(request.Age), value: request.Age, dbType: DbType.Int32);
-        parameters.Add(name: nameof(request.CreatedBy), value: request.CreatedBy, dbType: DbType.String);
+        parameters.Add(name: nameof(request.Creator), value: request.Creator, dbType: DbType.String);
         parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTime2);
-        parameters.Add(name: nameof(request.Agents), value: request.Agents, dbType: DbType.String);
+        parameters.Add(name: nameof(request.Consumers), value: request.Consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();
         var result = await connection.ExecuteAsync(sql: query, param: parameters);

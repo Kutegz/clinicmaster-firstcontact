@@ -9,10 +9,10 @@ public sealed record PatientFullRequest
     public required string FullName {get; init;}
     public required string Gender {get; init;}
     public required int Age {get; init;}
-    public required string CreatedBy {get; init;}   
-    public required DateTime CreatedAt {get; init;}   
-    public required string Agents {get; init;}   
-    public static PatientFullRequest Create (PatientRequest request, string createdBy, DateTime createdAt) 
+    public required string Creator {get; init;}   
+    public required DateTime CreatedAt {get; init;}  
+    public required List<ConsumerRequest> Consumers {get; init;}  
+    public static PatientFullRequest Create (PatientRequest request, string creator, DateTime createdAt) 
     {
         return new()
             {
@@ -20,20 +20,9 @@ public sealed record PatientFullRequest
                 FullName = request.FullName,
                 Gender = request.Gender,
                 Age = request.Age,
-                CreatedBy = createdBy,
+                Creator = creator,
                 CreatedAt = createdAt,
-                Agents = Utils.SerializeContent(content: new AgentsRequest
-                    {
-                        Submitter = new SubmitterRequest
-                            {
-                                AgentId = createdBy,
-                                AgentName = createdBy,
-                                SyncCount = 1,
-                                SyncStatus = true,
-                                SyncDateTime = createdAt,
-                                ErrorMessage = string.Empty
-                            }
-                    })
+                Consumers = []
             };
     }
     

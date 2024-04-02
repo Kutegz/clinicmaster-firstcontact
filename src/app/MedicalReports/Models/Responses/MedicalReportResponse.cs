@@ -11,7 +11,6 @@ public sealed record MedicalReportResponse : MedicalReportBase<MedicalReportCont
         VisitNo = string.Empty,
         VisitDate = DateTime.Parse(Constants.NullDateTimeString),
         Content = MedicalReportContentResponse.Empty,
-        CreatedBy = string.Empty,
         CreatedAt = DateTime.Parse(Constants.NullDateTimeString),
     };
 

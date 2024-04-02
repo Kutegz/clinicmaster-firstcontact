@@ -1,5 +1,6 @@
 
 using App.Common.Utils;
+using App.Common.Models.Requests;
 using Api.MedicalReports.Services;
 using App.MedicalReports.Contracts;
 using App.MedicalReports.Models.Requests;
@@ -9,16 +10,24 @@ namespace App.MedicalReports.Controllers;
 public static class MedicalReportController 
 {
     public static async Task<IResult> CreateMedicalReport(string facilityCode, MedicalReportRequest request, 
-                                                        IMedicalReport repo, HttpContext context,
+                                                        IMedicalReport repo, HttpContext context, TimeProvider timeProvider,
                                                         ILogger<MedicalReportRequest> logger, MedicalReportMetrics metrics)
     {      
         try
         {     
-            
-            string? createdBy = context.Request.Headers[Constants.XAgentId];           
-            var fullRequest = MedicalReportFullRequest.Create(request: request, createdBy: createdBy ?? Constants.ClinicMaster);
 
-            if (!facilityCode.ToLower().Equals(fullRequest.FacilityCode.ToLower()))
+            string? createdBy = context.Request.Headers[Constants.XAgentId];   
+            var creatorRequest = CreatorRequest.Create(agentId: createdBy ?? Constants.ClinicMaster, 
+                                                        agentName: Constants.ClinicMaster, 
+                                                        syncCount: 1, syncStatus: true, 
+                                                        syncDateTime: timeProvider.GetUtcNow().DateTime, 
+                                                        errorMessage: string.Empty);
+
+            string creator = Utils.SerializeContent(content: creatorRequest);   
+                    
+            var fullRequest = MedicalReportFullRequest.Create(request: request, creator: creator, createdAt: timeProvider.GetUtcNow().DateTime);
+
+            if (!string.Equals(facilityCode, fullRequest.FacilityCode, StringComparison.OrdinalIgnoreCase))
             {
                 logger.LogError(message: "Route Facility Code: {facilityCode} does not match the request Facility Code: {fullRequest.FacilityCode}", 
                                                                     args: [facilityCode, fullRequest.FacilityCode]); 
