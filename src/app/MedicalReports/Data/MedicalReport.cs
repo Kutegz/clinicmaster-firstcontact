@@ -3,6 +3,7 @@ using Dapper;
 using System.Data;
 using App.Common.Utils;
 using App.Common.Context;
+using App.Common.Models.Responses;
 using App.MedicalReports.Contracts;
 using App.MedicalReports.Models.Requests;
 using App.MedicalReports.Models.Responses;
@@ -69,6 +70,40 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                 Data = patient,            
             };
 
+    }
+
+    public async Task<IEnumerable<ConsumerResponse>> GetMedicalReportConsumers(string facilityCode, string visitNo)
+    { 
+        var query = """
+                        SELECT Consumers FROM dbo.MedicalReports WHERE FacilityCode = @FacilityCode AND VisitNo = @VisitNo
+                    """;
+
+        using var connection = context.CreateConnection();
+        var data = await connection.QuerySingleOrDefaultAsync<ConsumerAgentsResponse> (sql: query, param: new { facilityCode, visitNo });
+
+        if (data is null || data.Consumers is null || data.Consumers.Equals(string.Empty)) return [];
+
+        var consumers = Utils.DeserializeContent<IEnumerable<ConsumerResponse>>(content: data.Consumers);
+
+        return consumers ?? [];
+
+    }
+
+    public async Task<bool> UpdateMedicalReportConsumers(string facilityCode, string visitNo, string consumers)
+    {
+       var query = """
+                        UPDATE dbo.MedicalReports SET Consumers = @Consumers WHERE FacilityCode = @FacilityCode AND VisitNo = @VisitNo;
+                    """;
+                    
+        var parameters = new DynamicParameters ();
+
+        parameters.Add(name: "FacilityCode", value: facilityCode, dbType: DbType.String);
+        parameters.Add(name: "VisitNo", value: visitNo, dbType: DbType.String);
+        parameters.Add(name: "Consumers", value: consumers, dbType: DbType.String);
+
+        using var connection = context.CreateConnection();
+        var result = await connection.ExecuteAsync(sql: query, param: parameters);
+        return result > 0;
     }
    
     public async Task<MedicalReportResult<IEnumerable<MedicalReportResponse>>> GetMedicalReports(string facilityCode, int page, int pageSize)

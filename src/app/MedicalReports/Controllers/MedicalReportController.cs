@@ -16,16 +16,16 @@ public static class MedicalReportController
         try
         {     
 
-            string? createdBy = context.Request.Headers[Constants.XAgentId];   
-            var creatorRequest = CreatorRequest.Create(agentId: createdBy ?? Constants.ClinicMaster, 
-                                                        agentName: Constants.ClinicMaster, 
-                                                        syncCount: 1, syncStatus: true, 
-                                                        syncDateTime: timeProvider.GetUtcNow().DateTime, 
+            string createdBy = context.Request.Headers[Constants.XAgentId].ToString() ?? Constants.ClinicMaster;  
+             
+            var creatorRequest = CreatorRequest.Create(agentId: createdBy, agentName: createdBy, syncCount: 1, 
+                                                        syncStatus: true, syncDateTime: timeProvider.GetUtcNow().DateTime, 
                                                         errorMessage: string.Empty);
 
             string creator = Utils.SerializeContent(content: creatorRequest);   
                     
-            var fullRequest = MedicalReportFullRequest.Create(request: request, creator: creator, createdAt: timeProvider.GetUtcNow().DateTime);
+            var fullRequest = MedicalReportFullRequest.Create(request: request, creator: creator, 
+                                                            createdAt: timeProvider.GetUtcNow().DateTime);
 
             if (!string.Equals(facilityCode, fullRequest.FacilityCode, StringComparison.OrdinalIgnoreCase))
             {
@@ -72,12 +72,19 @@ public static class MedicalReportController
             return Results.Problem(ex.Message); 
         }  
     }
-    public static async Task<IResult> GetMedicalReport(string facilityCode, string visitNo, IMedicalReport repo)
+    public static async Task<IResult> GetMedicalReport(string facilityCode, string visitNo, IMedicalReport repo, HttpContext context, 
+                                                        TimeProvider timeProvider, ILogger<MedicalReportRequest> logger)
     {      
         try
         {
+            string createdBy = context.Request.Headers[Constants.XAgentId].ToString() ?? Constants.ClinicMaster; 
+
             var result = await repo.GetMedicalReport(facilityCode, visitNo);
             if (result.Data.Equals(MedicalReportResponse.Empty)) return Results.NotFound(value: result);
+
+            await Helpers.UpdateMedicalReportConsumers(facilityCode: facilityCode, visitNo: visitNo, medicalReport: repo, 
+                                                        createdBy: createdBy, createdAt: timeProvider.GetUtcNow().DateTime, 
+                                                        logger: logger);
 
             return Results.Ok(value: result);            
         }

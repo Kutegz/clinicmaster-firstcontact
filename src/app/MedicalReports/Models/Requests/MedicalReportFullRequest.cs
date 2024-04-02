@@ -11,7 +11,7 @@ public sealed record MedicalReportFullRequest
     public required string Content {get; init;}   
     public required string Creator {get; init;}   
     public required DateTime CreatedAt {get; init;}  
-    public required List<ConsumerRequest> Consumers {get; init;}  
+    public required string Consumers {get; init;}  
     public static MedicalReportFullRequest Create (MedicalReportRequest request, string creator, DateTime createdAt) 
         => new()
             {
@@ -20,8 +20,8 @@ public sealed record MedicalReportFullRequest
                 VisitDate = request.VisitDate,
                 Content = Utils.SerializeContent(content: request.Content),
                 Creator = creator,
-                CreatedAt = DateTime.Now,
-                Consumers = []
+                CreatedAt = createdAt,
+                Consumers = "[]"
             };
     
 }

@@ -34,48 +34,14 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
 
         return result > 0;
     }
-    public async Task<IEnumerable<ConsumerResponse>> GetPatientConsumers(string patientNo)
-    { 
-        var query = """
-                        SELECT ISNULL(JSON_QUERY(Agents, '$.consumers'), '[]') AS Consumers 
-                        FROM dbo.Patients WHERE PatientNo = @PatientNo
-                    """;
-
-        using var connection = context.CreateConnection();
-        var data = await connection.QuerySingleOrDefaultAsync<AgentsResponse> (sql: query, param: new { patientNo });
-
-        if (data is null || data.Consumers is null || data.Consumers.Equals(string.Empty)) return [];
-
-        var consumers = Utils.DeserializeContent<IEnumerable<ConsumerResponse>>(content: data.Consumers);
-
-        return consumers ?? [];
-
-    }
-
-    public async Task<bool> UpdatePatientConsumers(string patientNo, string consumers)
-    {
-       var query = """
-                        UPDATE dbo.Patients SET Agents = JSON_MODIFY(
-                        Agents, '$.consumers', JSON_QUERY(@Consumers)) WHERE PatientNo = @PatientNo;
-                    """;
-                    
-        var parameters = new DynamicParameters ();
-
-        parameters.Add(name: "PatientNo", value: patientNo, dbType: DbType.String);
-        parameters.Add(name: "Consumers", value: consumers, dbType: DbType.String);
-
-        using var connection = context.CreateConnection();
-        var result = await connection.ExecuteAsync(sql: query, param: parameters);
-        return result > 0;
-    }
 
     public async Task<PatientResult<PatientResponse>> GetPatient(string patientNo)
     {
 
         var query = """
-                        SELECT PatientNo, FullName, Gender, Age 
-                        FROM Patients WHERE PatientNo = @PatientNo
+                        SELECT PatientNo, FullName, Gender, Age FROM Patients WHERE PatientNo = @PatientNo
                     """;
+
         using var connection = context.CreateConnection();
         var patient = await connection.QuerySingleOrDefaultAsync<PatientResponse> (sql: query, param: new { patientNo });
         
@@ -94,6 +60,38 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
             };
 
     }
+    public async Task<IEnumerable<ConsumerResponse>> GetPatientConsumers(string patientNo)
+    { 
+        var query = """
+                        SELECT Consumers FROM dbo.Patients WHERE PatientNo = @PatientNo
+                    """;
+
+        using var connection = context.CreateConnection();
+        var data = await connection.QuerySingleOrDefaultAsync<ConsumerAgentsResponse> (sql: query, param: new { patientNo });
+
+        if (data is null || data.Consumers is null || data.Consumers.Equals(string.Empty)) return [];
+
+        var consumers = Utils.DeserializeContent<IEnumerable<ConsumerResponse>>(content: data.Consumers);
+
+        return consumers ?? [];
+
+    }
+
+    public async Task<bool> UpdatePatientConsumers(string patientNo, string consumers)
+    {
+       var query = """
+                        UPDATE dbo.Patients SET Consumers = @Consumers WHERE PatientNo = @PatientNo;
+                    """;
+                    
+        var parameters = new DynamicParameters ();
+
+        parameters.Add(name: "PatientNo", value: patientNo, dbType: DbType.String);
+        parameters.Add(name: "Consumers", value: consumers, dbType: DbType.String);
+
+        using var connection = context.CreateConnection();
+        var result = await connection.ExecuteAsync(sql: query, param: parameters);
+        return result > 0;
+    }
     public async Task<PatientResult<IEnumerable<PatientResponse>>> GetPatients(int page , int pageSize)
     {       
         if (page <= 0) page = 1;
@@ -103,6 +101,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
         var query = """
                         SELECT PatientNo, FullName, Gender, Age FROM Patients
                     """;
+
         using var connection = context.CreateConnection();
         var patients = await connection.QueryAsync<PatientResponse>(sql: query);
         

@@ -15,9 +15,9 @@ public static class PatientController
     {      
         try
         {                 
-            string? createdBy = context.Request.Headers[Constants.XAgentId];   
-            var creatorRequest = CreatorRequest.Create(agentId: createdBy ?? Constants.ClinicMaster, 
-                                                        agentName: Constants.ClinicMaster, 
+            string createdBy = context.Request.Headers[Constants.XAgentId].ToString() ?? Constants.ClinicMaster;
+
+            var creatorRequest = CreatorRequest.Create(agentId: createdBy, agentName: createdBy, 
                                                         syncCount: 1, syncStatus: true, 
                                                         syncDateTime: timeProvider.GetUtcNow().DateTime, 
                                                         errorMessage: string.Empty);
@@ -56,11 +56,12 @@ public static class PatientController
     }
 
     public static async Task<IResult> GetPatient(string patientNo, IPatient repo, ISurgery surgeryRepo, 
-                                                HttpContext context, ILogger<PatientResponse> logger)
+                                                HttpContext context, TimeProvider timeProvider,  
+                                                ILogger<PatientResponse> logger)
     {      
         try
         {
-            string? createdBy = context.Request.Headers[Constants.XAgentId];           
+            string createdBy = context.Request.Headers[Constants.XAgentId].ToString() ?? Constants.ClinicMaster;       
 
             var result = await repo.GetPatient(patientNo);
             if (result.Data.Equals(PatientResponse.Empty)) return Results.NotFound(value: result);
@@ -68,8 +69,8 @@ public static class PatientController
             var surgeries = await surgeryRepo.GetSurgeries(patientNo);
             var finalResult = result with {Data = result.Data with {Surgeries = surgeries.Data.ToList()}};
 
-            await Helpers.UpdatePatientConsumers(patientNo: patientNo, patient: repo,
-                                                createdBy: createdBy ?? Constants.ClinicMaster, logger: logger);
+            await Helpers.UpdatePatientConsumers(patientNo: patientNo, patient: repo, createdBy: createdBy, 
+                                                createdAt: timeProvider.GetUtcNow().DateTime, logger: logger);
 
             return Results.Ok(value: finalResult);         
         }

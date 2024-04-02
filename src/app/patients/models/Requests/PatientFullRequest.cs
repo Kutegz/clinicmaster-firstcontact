@@ -11,7 +11,7 @@ public sealed record PatientFullRequest
     public required int Age {get; init;}
     public required string Creator {get; init;}   
     public required DateTime CreatedAt {get; init;}  
-    public required List<ConsumerRequest> Consumers {get; init;}  
+    public required string Consumers {get; init;}  
     public static PatientFullRequest Create (PatientRequest request, string creator, DateTime createdAt) 
     {
         return new()
@@ -22,7 +22,7 @@ public sealed record PatientFullRequest
                 Age = request.Age,
                 Creator = creator,
                 CreatedAt = createdAt,
-                Consumers = []
+                Consumers = "[]"
             };
     }
     

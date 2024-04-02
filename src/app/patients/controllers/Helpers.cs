@@ -6,7 +6,7 @@ using App.Common.Models.Responses;
 namespace App.Patients.Controllers;
 public static class Helpers 
 {
-    public static async Task UpdatePatientConsumers(string patientNo, IPatient patient, string createdBy, ILogger logger)
+    public static async Task UpdatePatientConsumers(string patientNo, IPatient patient, string createdBy, DateTime createdAt, ILogger logger)
     {      
         try
         {
@@ -23,7 +23,7 @@ public static class Helpers
                     {
                         SyncCount = c.SyncCount + 1,
                         SyncStatus = true,
-                        LastUpdateDateTime = DateTime.UtcNow
+                        LastUpdateDateTime = createdAt
                     };
                 }
 
@@ -39,21 +39,21 @@ public static class Helpers
                     AgentName = createdBy,
                     SyncCount = 1,
                     SyncStatus = true,
-                    SyncDateTime = DateTime.UtcNow,
-                    LastUpdateDateTime = DateTime.UtcNow,
+                    SyncDateTime = createdAt,
+                    LastUpdateDateTime = createdAt,
                     ErrorMessage = string.Empty
                 });
             }
 
             var result = await patient.UpdatePatientConsumers(patientNo: patientNo, consumers: Utils.SerializeContent(content: updatedConsumers));
 
-            logger.LogInformation("Patient Consummers successfully updated for Patient No: {PatientNo} by {createdBy}", patientNo, createdBy);
+            logger.LogInformation("Patient Consummers successfully updated for Patient No: {PatientNo} by {CreatedBy}", patientNo, createdBy);
 
         }
 
         catch  
         {
-            logger.LogError("An error occurred while updating patient consumers for Patient No: {PatientNo} by {createdBy}", patientNo, createdBy);
+            logger.LogError("An error occurred while updating patient consumers for Patient No: {PatientNo} by {CreatedBy}", patientNo, createdBy);
         }
     }
 
