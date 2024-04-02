@@ -57,7 +57,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                 VisitNo = data.VisitNo,
                 FacilityCode = data.FacilityCode,
                 VisitDate = data.VisitDate,
-                Content = Helpers.DeserializeContent<MedicalReportContentResponse>
+                Content = Utils.DeserializeContent<MedicalReportContentResponse>
                 (content: data.Content) ?? MedicalReportContentResponse.Empty,
                 CreatedBy = data.CreatedBy,
                 CreatedAt = data.CreatedAt                        
@@ -98,7 +98,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                 VisitNo = data.VisitNo,
                 FacilityCode = data.FacilityCode,
                 VisitDate = data.VisitDate,
-                Content = Helpers.DeserializeContent<MedicalReportContentResponse>
+                Content = Utils.DeserializeContent<MedicalReportContentResponse>
                 (content: data.Content) ?? MedicalReportContentResponse.Empty,
                 CreatedBy = data.CreatedBy,
                 CreatedAt = data.CreatedAt

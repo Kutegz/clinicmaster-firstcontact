@@ -31,7 +31,7 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
                 TreatmentNo = data.TreatmentNo,
                 PatientNo = data.PatientNo,
                 VisitDate = data.VisitDate,
-                Content = Helpers.DeserializeContent<SurgeryContentResponse>
+                Content = Utils.DeserializeContent<SurgeryContentResponse>
                 (content: data.Content) ?? SurgeryContentResponse.Empty                                
             };
 
@@ -66,7 +66,7 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
                 TreatmentNo = data.TreatmentNo,
                 PatientNo = data.PatientNo,
                 VisitDate = data.VisitDate,
-                Content = Helpers.DeserializeContent<SurgeryContentResponse>
+                Content = Utils.DeserializeContent<SurgeryContentResponse>
                 (content: data.Content) ?? SurgeryContentResponse.Empty                             
             });
 

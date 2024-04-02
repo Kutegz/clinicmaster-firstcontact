@@ -22,11 +22,20 @@ using App.MedicalReports.Contracts;
 using App.MedicalReports.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
-{       
+{
+
     builder.Services.AddOpenTelemetry().WithMetrics(configure: metrics => 
     {
         metrics.AddMeter(names: ["Microsoft.AspNetCore.Hosting", "System.Net.Http",
                                 "Microsoft.AspNetCore.Server.Kestrel", "ReadMedicalReport"]);
+
+        metrics.AddView(instrumentName: "http.server.request.duration", 
+            metricStreamConfiguration: new ExplicitBucketHistogramConfiguration
+                {
+                    Boundaries = [ 0, 0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 
+                                    0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10 ]
+                });
+    
         metrics.AddPrometheusExporter();
 
         // OTLP destination can configure using an environment variable
@@ -40,6 +49,7 @@ var builder = WebApplication.CreateBuilder(args);
         options.AddOtlpExporter();
     });
 
+    builder.Services.AddSingleton(TimeProvider.System);
     builder.Services.AddSingleton<MedicalReportMetrics>();
 
     builder.Services.AddAuthentication();

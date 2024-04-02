@@ -9,13 +9,14 @@ namespace App.Patients.Controllers;
 
 public static class PatientController 
 {
-    public static async Task<IResult> CreatePatient(PatientRequest request, IPatient repo, 
+    public static async Task<IResult> CreatePatient(PatientRequest request, IPatient repo, TimeProvider timeProvider,
                                                     HttpContext context, ILogger<PatientRequest> logger)
     {      
         try
         {                 
             string? createdBy = context.Request.Headers[Constants.XAgentId];           
-            var fullRequest = PatientFullRequest.Create(request: request, createdBy: createdBy ?? Constants.ClinicMaster);
+            var fullRequest = PatientFullRequest.Create(request: request, createdBy: createdBy ?? Constants.ClinicMaster, 
+                                                        createdAt: timeProvider.GetUtcNow().DateTime);
 
             var patient = await repo.GetPatient(patientNo: fullRequest.PatientNo);
             if (!patient.Data.Equals(PatientResponse.Empty) && patient.Success) 
@@ -45,17 +46,23 @@ public static class PatientController
         }  
     }
 
-    public static async Task<IResult> GetPatient(string patientNo, IPatient repo, ISurgery surgeryRepo)
+    public static async Task<IResult> GetPatient(string patientNo, IPatient repo, ISurgery surgeryRepo, 
+                                                HttpContext context, ILogger<PatientResponse> logger)
     {      
         try
         {
+            string? createdBy = context.Request.Headers[Constants.XAgentId];           
+
             var result = await repo.GetPatient(patientNo);
             if (result.Data.Equals(PatientResponse.Empty)) return Results.NotFound(value: result);
 
             var surgeries = await surgeryRepo.GetSurgeries(patientNo);
             var finalResult = result with {Data = result.Data with {Surgeries = surgeries.Data.ToList()}};
 
-            return Results.Ok(value: finalResult);            
+            await Helpers.UpdatePatientConsumers(patientNo: patientNo, patient: repo,
+                                                createdBy: createdBy ?? Constants.ClinicMaster, logger: logger);
+
+            return Results.Ok(value: finalResult);         
         }
         catch (Exception ex) { return Results.Problem(ex.Message); }  
     }

@@ -55,7 +55,7 @@ public sealed class Payment(ClinicMasterContext context) : IPayment
                 BillNo = data.BillNo,
                 PayNo = data.PayNo,
                 PayType = data.PayType,
-                ContentSent = Helpers.DeserializeContent<PaymentContentSentResponse>
+                ContentSent = Utils.DeserializeContent<PaymentContentSentResponse>
                 (content: data.ContentSent) ?? PaymentContentSentResponse.Empty,
                 CreatedBy = data.CreatedBy,
                 CreatedAt = data.CreatedAt,                              
@@ -96,7 +96,7 @@ public sealed class Payment(ClinicMasterContext context) : IPayment
                 BillNo = data.BillNo,
                 PayNo = data.PayNo,
                 PayType = data.PayType,
-                ContentSent = Helpers.DeserializeContent<PaymentContentSentResponse>
+                ContentSent = Utils.DeserializeContent<PaymentContentSentResponse>
                 (content: data.ContentSent) ?? PaymentContentSentResponse.Empty,
                 CreatedBy = data.CreatedBy,
                 CreatedAt = data.CreatedAt,                              

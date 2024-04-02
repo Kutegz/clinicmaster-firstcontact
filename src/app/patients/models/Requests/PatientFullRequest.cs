@@ -12,7 +12,7 @@ public sealed record PatientFullRequest
     public required string CreatedBy {get; init;}   
     public required DateTime CreatedAt {get; init;}   
     public required string Agents {get; init;}   
-    public static PatientFullRequest Create (PatientRequest request, string createdBy) 
+    public static PatientFullRequest Create (PatientRequest request, string createdBy, DateTime createdAt) 
     {
         return new()
             {
@@ -21,16 +21,16 @@ public sealed record PatientFullRequest
                 Gender = request.Gender,
                 Age = request.Age,
                 CreatedBy = createdBy,
-                CreatedAt = DateTime.Now,
-                Agents = Helpers.SerializeContent(content: new AgentsRequest
+                CreatedAt = createdAt,
+                Agents = Utils.SerializeContent(content: new AgentsRequest
                     {
-                        Submitter = new AgentsSubmitterRequest
+                        Submitter = new SubmitterRequest
                             {
                                 AgentId = createdBy,
                                 AgentName = createdBy,
                                 SyncCount = 1,
                                 SyncStatus = true,
-                                SyncDateTime = DateTime.Now,
+                                SyncDateTime = createdAt,
                                 ErrorMessage = string.Empty
                             }
                     })

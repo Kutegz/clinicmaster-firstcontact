@@ -18,12 +18,12 @@ public sealed record SurgeryFullRequest
                 TreatmentNo = request.TreatmentNo,
                 PatientNo = request.PatientNo,
                 VisitDate = request.VisitDate,
-                Content = Helpers.SerializeContent(content: request.Content),
+                Content = Utils.SerializeContent(content: request.Content),
                 CreatedBy = createdBy,
                 CreatedAt = DateTime.Now,
-                Agents = Helpers.SerializeContent(content: new AgentsRequest
+                Agents = Utils.SerializeContent(content: new AgentsRequest
                     {
-                        Submitter = new AgentsSubmitterRequest
+                        Submitter = new SubmitterRequest
                             {
                                 AgentId = createdBy,
                                 AgentName = createdBy,

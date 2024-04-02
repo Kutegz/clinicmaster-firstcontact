@@ -1,7 +1,7 @@
 using System.Text.Json;
 
 namespace App.Common.Utils;
-public static class Helpers 
+public static class Utils 
 {
     private readonly static JsonSerializerOptions options = new (JsonSerializerDefaults.Web);
     public static string SerializeContent<T>(T content) 
