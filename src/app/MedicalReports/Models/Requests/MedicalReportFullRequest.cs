@@ -1,6 +1,5 @@
 
 using App.Common.Utils;
-using App.Common.Models.Requests;
 
 namespace App.MedicalReports.Models.Requests;
 public sealed record MedicalReportFullRequest 

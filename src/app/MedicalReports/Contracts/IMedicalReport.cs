@@ -7,6 +7,7 @@ namespace App.MedicalReports.Contracts;
 public interface IMedicalReport
 {
     public Task<bool> CreateMedicalReport(MedicalReportFullRequest request);
+    public Task<bool> UpdateMedicalReport(MedicalReportFullRequest request);
     public Task<MedicalReportResult<MedicalReportResponse>> GetMedicalReport(string facilityCode, string visitNo);
     public Task<IEnumerable<ConsumerResponse>> GetMedicalReportConsumers(string facilityCode, string visitNo);
     public Task<bool> UpdateMedicalReportConsumers(string facilityCode, string visitNo, string consumers);

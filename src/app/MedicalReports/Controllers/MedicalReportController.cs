@@ -41,12 +41,19 @@ public static class MedicalReportController
             var medicalReport = await repo.GetMedicalReport(facilityCode: fullRequest.FacilityCode, visitNo: fullRequest.VisitNo);
             if (!medicalReport.Data.Equals(MedicalReportResponse.Empty) && medicalReport.Success) 
             {
-                logger.LogError(message: "Medical Report with Facility Code: {FacilityCode}, and Visit No: {VisitNo} already exists", 
+                logger.LogInformation(message: "Medical Report with Facility Code: {FacilityCode}, and Visit No: {VisitNo} Updated Successfully", 
                                                                     args: [fullRequest.FacilityCode, fullRequest.VisitNo]); 
+                
+                await repo.UpdateMedicalReport(request: fullRequest);
 
-                return Results.Conflict(new { 
-                    Success = false,
-                    Message = $"Medical Report with Facility Code: {fullRequest.FacilityCode}, and Visit No: {fullRequest.VisitNo} already exists"
+                metrics.MedicalReportCounter.Add(delta: 1, 
+                                        tag1: new KeyValuePair<string, dynamic?>("FacilityCode", fullRequest.FacilityCode),
+                                        tag2: new KeyValuePair<string, dynamic?>("VisitNo", fullRequest.VisitNo),
+                                        tag3: new KeyValuePair<string, dynamic?>("CreatedAt", fullRequest.CreatedAt)
+                                    );
+                return Results.Ok(new { 
+                    Success = true,
+                    Message = $"Medical Report with Facility Code: {fullRequest.FacilityCode}, and Visit No: {fullRequest.VisitNo} Updated Successfully"
                     });
             }
             

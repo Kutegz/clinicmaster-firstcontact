@@ -11,12 +11,34 @@ using App.MedicalReports.Models.Responses;
 namespace App.MedicalReports.Data;
 public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport 
 {
-    public async Task<bool> CreateMedicalReport(MedicalReportFullRequest request)
-    
+    public async Task<bool> CreateMedicalReport(MedicalReportFullRequest request)    
     {        
         var query = """
                         INSERT INTO MedicalReports (FacilityCode, VisitNo, VisitDate, Content, Creator, CreatedAt, Consumers)
                         VALUES (@FacilityCode, @VisitNo, @VisitDate, @Content, @Creator, @CreatedAt, @Consumers);
+                    """;
+                    
+        var parameters = new DynamicParameters ();
+
+        parameters.Add(name: nameof(request.FacilityCode), value: request.FacilityCode, dbType: DbType.String);
+        parameters.Add(name: nameof(request.VisitNo), value: request.VisitNo, dbType: DbType.String);
+        parameters.Add(name: nameof(request.VisitDate), value: request.VisitDate, dbType: DbType.DateTimeOffset);
+        parameters.Add(name: nameof(request.Content), value: request.Content, dbType: DbType.String);
+        parameters.Add(name: nameof(request.Creator), value: request.Creator, dbType: DbType.String);
+        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTimeOffset);
+        parameters.Add(name: nameof(request.Consumers), value: request.Consumers, dbType: DbType.String);
+
+        using var connection = context.CreateConnection();
+        var result = await connection.ExecuteAsync(sql: query, param: parameters);
+
+        return result > 0;
+    }
+    public async Task<bool> UpdateMedicalReport(MedicalReportFullRequest request)
+    {        
+        var query = """
+                        UPDATE dbo.MedicalReports SET VisitDate = @VisitDate, Content = @Content, 
+                            Creator = @Creator, CreatedAt = @CreatedAt, Consumers = @Consumers
+                            WHERE FacilityCode = @FacilityCode AND VisitNo = @VisitNo;
                     """;
                     
         var parameters = new DynamicParameters ();
