@@ -9,9 +9,9 @@ public sealed record MedicalReportRowData : MedicalReportBase<string>
     {
         FacilityCode = string.Empty,
         VisitNo = string.Empty,
-        VisitDate = DateTime.Parse(Constants.NullDateTimeString),
+        VisitDate = DateTimeOffset.Parse(Constants.NullDateTimeString),
         Content = string.Empty,
-        CreatedAt = DateTime.Parse(Constants.NullDateTimeString),
+        CreatedAt = DateTimeOffset.Parse(Constants.NullDateTimeString),
     };
 
 }

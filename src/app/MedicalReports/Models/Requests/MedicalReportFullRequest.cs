@@ -7,12 +7,12 @@ public sealed record MedicalReportFullRequest
 {
     public required string FacilityCode {get; init;}
     public required string VisitNo {get; init;}
-    public required DateTime VisitDate {get; init;}
+    public required DateTimeOffset VisitDate {get; init;}
     public required string Content {get; init;}   
     public required string Creator {get; init;}   
-    public required DateTime CreatedAt {get; init;}  
+    public required DateTimeOffset CreatedAt {get; init;}  
     public required string Consumers {get; init;}  
-    public static MedicalReportFullRequest Create (MedicalReportRequest request, string creator, DateTime createdAt) 
+    public static MedicalReportFullRequest Create (MedicalReportRequest request, string creator, DateTimeOffset createdAt) 
         => new()
             {
                 FacilityCode = request.FacilityCode,

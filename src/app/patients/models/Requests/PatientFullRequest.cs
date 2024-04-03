@@ -10,9 +10,9 @@ public sealed record PatientFullRequest
     public required string Gender {get; init;}
     public required int Age {get; init;}
     public required string Creator {get; init;}   
-    public required DateTime CreatedAt {get; init;}  
+    public required DateTimeOffset CreatedAt {get; init;}  
     public required string Consumers {get; init;}  
-    public static PatientFullRequest Create (PatientRequest request, string creator, DateTime createdAt) 
+    public static PatientFullRequest Create (PatientRequest request, string creator, DateTimeOffset createdAt) 
     {
         return new()
             {

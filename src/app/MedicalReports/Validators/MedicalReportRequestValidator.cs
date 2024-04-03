@@ -14,9 +14,9 @@ public sealed class MedicalReportRequestValidator : AbstractValidator<MedicalRep
                                             .WithMessage(errorMessage: "Please include Visit No");
         RuleFor(expression: request => request.VisitDate).NotEmpty()
                                             .WithMessage(errorMessage: "Please include Visit Date")
-                                            .GreaterThan(DateTime.Parse(Constants.NullDateTimeString))
+                                            .GreaterThan(DateTimeOffset.Parse(Constants.NullDateTimeString))
                                             .WithMessage(errorMessage: "Visit Date cannot be in the past")
-                                            .LessThan(DateTime.Now)
+                                            .LessThan(DateTimeOffset.UtcNow)
                                             .WithMessage(errorMessage: "Visit Date cannot be ahead of today" );
                                             
         RuleFor(expression: request => request.Content.Encounter_type).NotEmpty();

@@ -6,11 +6,11 @@ public sealed record ConsumerRequest
     public required string AgentName { get; init; }
     public required int SyncCount { get; init; }
     public required bool SyncStatus { get; init; }
-    public required DateTime SyncDateTime { get; init; }
-    public required DateTime LastUpdateDateTime { get; init; }
+    public required DateTimeOffset SyncDateTime { get; init; }
+    public required DateTimeOffset LastUpdateDateTime { get; init; }
     public required string ErrorMessage { get; init; }  
     public static ConsumerRequest Create (string agentId, string agentName, int syncCount, bool syncStatus, 
-                                            DateTime syncDateTime, DateTime lastUpdateDateTime, string errorMessage) 
+                                            DateTimeOffset syncDateTime, DateTimeOffset lastUpdateDateTime, string errorMessage) 
     {
         return new()
             {

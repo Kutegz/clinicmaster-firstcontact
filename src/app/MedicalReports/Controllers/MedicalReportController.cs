@@ -19,13 +19,13 @@ public static class MedicalReportController
             string createdBy = context.Request.Headers[Constants.XAgentId].ToString() ?? Constants.ClinicMaster;  
              
             var creatorRequest = CreatorRequest.Create(agentId: createdBy, agentName: createdBy, syncCount: 1, 
-                                                        syncStatus: true, syncDateTime: timeProvider.GetUtcNow().DateTime, 
+                                                        syncStatus: true, syncDateTime: timeProvider.GetUtcNow(), 
                                                         errorMessage: string.Empty);
 
             string creator = Utils.SerializeContent(content: creatorRequest);   
                     
             var fullRequest = MedicalReportFullRequest.Create(request: request, creator: creator, 
-                                                            createdAt: timeProvider.GetUtcNow().DateTime);
+                                                            createdAt: timeProvider.GetUtcNow());
 
             if (!string.Equals(facilityCode, fullRequest.FacilityCode, StringComparison.OrdinalIgnoreCase))
             {
@@ -83,7 +83,7 @@ public static class MedicalReportController
             if (result.Data.Equals(MedicalReportResponse.Empty)) return Results.NotFound(value: result);
 
             await Helpers.UpdateMedicalReportConsumers(facilityCode: facilityCode, visitNo: visitNo, medicalReport: repo, 
-                                                        createdBy: createdBy, createdAt: timeProvider.GetUtcNow().DateTime, 
+                                                        createdBy: createdBy, createdAt: timeProvider.GetUtcNow(), 
                                                         logger: logger);
 
             return Results.Ok(value: result);            

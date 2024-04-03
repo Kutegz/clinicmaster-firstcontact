@@ -8,11 +8,11 @@ public static class Utils
     => JsonSerializer.Serialize(value: content, options: options);    
     public static T? DeserializeContent<T>(ReadOnlySpan<char> content) 
     => JsonSerializer.Deserialize<T>(json: content, options: options);   
-    public static bool BeAValidDate(string value) => DateTime.TryParse(value, out _);
-    public static DateTime ConvertStringToDateTime(string value)
+    public static bool BeAValidDate(string value) => DateTimeOffset.TryParse(value, out _);
+    public static DateTimeOffset ConvertStringToDateTime(string value)
     {
-        var result = DateTime.TryParse(value, out DateTime date);
-        if (!result) return DateTime.Parse(Constants.NullDateTimeString);
+        var result = DateTimeOffset.TryParse(value, out DateTimeOffset date);
+        if (!result) return DateTimeOffset.Parse(Constants.NullDateTimeString);
         return date;
     }
 }

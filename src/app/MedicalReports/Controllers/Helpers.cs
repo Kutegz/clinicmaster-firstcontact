@@ -8,7 +8,7 @@ public static class Helpers
 {
     public static async Task UpdateMedicalReportConsumers(string facilityCode, string visitNo, 
                                                         IMedicalReport medicalReport, string createdBy, 
-                                                        DateTime createdAt, ILogger logger)
+                                                        DateTimeOffset createdAt, ILogger logger)
     {      
         try
         {
@@ -25,7 +25,7 @@ public static class Helpers
                     {
                         SyncCount = c.SyncCount + 1,
                         SyncStatus = true,
-                        LastUpdateDateTime = DateTime.UtcNow
+                        LastUpdateDateTime = createdAt
                     };
                 }
 
@@ -41,8 +41,8 @@ public static class Helpers
                     AgentName = createdBy,
                     SyncCount = 1,
                     SyncStatus = true,
-                    SyncDateTime = DateTime.UtcNow,
-                    LastUpdateDateTime = DateTime.UtcNow,
+                    SyncDateTime = createdAt,
+                    LastUpdateDateTime = createdAt,
                     ErrorMessage = string.Empty
                 });
             }

@@ -9,7 +9,7 @@ public static class HomeEndpoints
         app.MapGet(pattern: "/", handler: () => new 
             {
                 IsLive = true,
-                Message = $"Welcome to ClinicMaster First Contact API: {DateTime.UtcNow.Ticks.ToString()[^5..]}",
+                Message = $"Welcome to ClinicMaster First Contact API: {DateTimeOffset.UtcNow.Ticks.ToString()[^5..]}",
                 Descrition = "Provide patient number to get patient data summary"
             }         
         ).AllowAnonymous();

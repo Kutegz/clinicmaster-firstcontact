@@ -6,10 +6,10 @@ public sealed record CreatorRequest
     public required string AgentName { get; init; }
     public required int SyncCount { get; init; }
     public required bool SyncStatus { get; init; }
-    public required DateTime SyncDateTime { get; init; }
+    public required DateTimeOffset SyncDateTime { get; init; }
     public required string ErrorMessage { get; init; }
     public static CreatorRequest Create (string agentId, string agentName, int syncCount, 
-                                        bool syncStatus, DateTime syncDateTime, string errorMessage) 
+                                        bool syncStatus, DateTimeOffset syncDateTime, string errorMessage) 
     {
         return new()
             {

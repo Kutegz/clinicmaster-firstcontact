@@ -14,18 +14,19 @@ public static class PatientController
                                                     HttpContext context, ILogger<PatientRequest> logger)
     {      
         try
-        {                 
+        {      
+
             string createdBy = context.Request.Headers[Constants.XAgentId].ToString() ?? Constants.ClinicMaster;
 
             var creatorRequest = CreatorRequest.Create(agentId: createdBy, agentName: createdBy, 
                                                         syncCount: 1, syncStatus: true, 
-                                                        syncDateTime: timeProvider.GetUtcNow().DateTime, 
+                                                        syncDateTime: timeProvider.GetUtcNow(), 
                                                         errorMessage: string.Empty);
 
             string creator = Utils.SerializeContent(content: creatorRequest);        
 
             var fullRequest = PatientFullRequest.Create(request: request, creator: creator, 
-                                                        createdAt: timeProvider.GetUtcNow().DateTime);
+                                                        createdAt: timeProvider.GetUtcNow());
 
             var patient = await repo.GetPatient(patientNo: fullRequest.PatientNo);
             if (!patient.Data.Equals(PatientResponse.Empty) && patient.Success) 
@@ -70,7 +71,7 @@ public static class PatientController
             var finalResult = result with {Data = result.Data with {Surgeries = surgeries.Data.ToList()}};
 
             await Helpers.UpdatePatientConsumers(patientNo: patientNo, patient: repo, createdBy: createdBy, 
-                                                createdAt: timeProvider.GetUtcNow().DateTime, logger: logger);
+                                                createdAt: timeProvider.GetUtcNow(), logger: logger);
 
             return Results.Ok(value: finalResult);         
         }
