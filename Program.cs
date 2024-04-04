@@ -12,6 +12,7 @@ using App.Common.Exceptions;
 using OpenTelemetry.Metrics;
 using App.Patients.Contracts;
 using App.Payments.Contracts;
+using HealthChecks.UI.Client;
 using App.MedicalReports.Apis;
 using App.Surgeries.Contracts;
 using App.Payments.Validators;
@@ -20,9 +21,13 @@ using App.MedicalReports.Data;
 using Api.MedicalReports.Services;
 using App.MedicalReports.Contracts;
 using App.MedicalReports.Validators;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 {
+    string connectionString = builder.Configuration.GetConnectionString("ClinicMasterConnection")!;
+    builder.Services.AddHealthChecks()
+    .AddSqlServer(connectionString: connectionString, name: "Database");
 
     builder.Services.AddOpenTelemetry().WithMetrics(configure: metrics => 
     {
@@ -78,6 +83,11 @@ var app = builder.Build();
 
     app.UseAuthentication();
     app.UseAuthorization();
+
+    app.UseHealthChecks(path: "/health", options: new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
     app.ConfigureHomeApis();
     app.ConfigurePatientApis();

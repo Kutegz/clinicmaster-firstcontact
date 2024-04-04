@@ -12,11 +12,11 @@ public sealed class AppExceptionHandler(ILogger<AppExceptionHandler> logger): IE
 
         (int statusCode, string title, string errorMessage) = exception switch
         {
-            BadHttpRequestException error => (StatusCodes.Status400BadRequest, "Bad Request", error.Message),
-            NotImplementedException error => (StatusCodes.Status501NotImplemented, "Not Implemented", error.Message),
-            ValidationException error => (StatusCodes.Status400BadRequest, "Validation Error", error.Message),
-            FormatException error => (StatusCodes.Status400BadRequest, "Bad Request", error.Message),
-            UnauthorizedAccessException error => (StatusCodes.Status401Unauthorized, "Unauthorized", error.Message),
+            BadHttpRequestException err => (StatusCodes.Status400BadRequest, "Bad Request", err.Message),
+            NotImplementedException err => (StatusCodes.Status501NotImplemented, "Not Implemented", err.Message),
+            ValidationException err => (StatusCodes.Status400BadRequest, "Validation Error", err.Message),
+            FormatException err => (StatusCodes.Status400BadRequest, "Bad Request", err.Message),
+            UnauthorizedAccessException err => (StatusCodes.Status401Unauthorized, "Unauthorized", err.Message),
             _ => (StatusCodes.Status500InternalServerError, "Internal Server Error", "An unexpected error occurred.")
         };
 

@@ -98,8 +98,8 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
         if (pageSize <= 0) pageSize = 10;
         if (pageSize > 100) pageSize = 100;
 
-        var query = """
-                        SELECT PatientNo, FullName, Gender, Age FROM Patients
+        var query = $"""
+                        SELECT PatientNo AS {nameof(PatientResponse.PatientNo)}, FullName, Gender, Age FROM Patients
                     """;
 
         using var connection = context.CreateConnection();
