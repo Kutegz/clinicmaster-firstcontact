@@ -27,7 +27,7 @@ var builder = WebApplication.CreateBuilder(args);
 {
     string connectionString = builder.Configuration.GetConnectionString("ClinicMasterConnection")!;
     builder.Services.AddHealthChecks()
-    .AddSqlServer(connectionString: connectionString, name: "Database");
+    .AddSqlServer(connectionString: connectionString, name: "Database", tags: ["db", "sql", "sqlserver"]);
 
     builder.Services.AddOpenTelemetry().WithMetrics(configure: metrics => 
     {
