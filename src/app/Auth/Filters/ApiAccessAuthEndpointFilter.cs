@@ -1,7 +1,7 @@
 
 using App.Common.Utils;
 
-namespace App.Auth;
+namespace App.Auth.Filters;
 public sealed class ApiAccessAuthEndpointFilter(IConfiguration configuration) : IEndpointFilter
 {
     public async ValueTask<dynamic?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)

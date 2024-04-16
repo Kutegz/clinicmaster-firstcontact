@@ -7,9 +7,10 @@ public sealed record CreatorRequest
     public required int SyncCount { get; init; }
     public required bool SyncStatus { get; init; }
     public required DateTimeOffset SyncDateTime { get; init; }
-    public required string ErrorMessage { get; init; }
-    public static CreatorRequest Create (string agentId, string agentName, int syncCount, 
-                                        bool syncStatus, DateTimeOffset syncDateTime, string errorMessage) 
+    public required string SyncMessage { get; init; }
+    public static CreatorRequest Create (string agentId, string agentName, 
+                                        int syncCount, bool syncStatus, 
+                                        DateTimeOffset syncDateTime, string syncMessage) 
     {
         return new()
             {
@@ -18,7 +19,7 @@ public sealed record CreatorRequest
                 SyncCount = syncCount,
                 SyncStatus = syncStatus,
                 SyncDateTime = syncDateTime,
-                ErrorMessage = errorMessage
+                SyncMessage = syncMessage
             };
     }
 

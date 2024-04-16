@@ -21,7 +21,7 @@ public static class PatientController
             var creatorRequest = CreatorRequest.Create(agentId: createdBy, agentName: createdBy, 
                                                         syncCount: 1, syncStatus: true, 
                                                         syncDateTime: timeProvider.GetUtcNow(), 
-                                                        errorMessage: string.Empty);
+                                                        syncMessage: string.Empty);
 
             string creator = Utils.SerializeContent(content: creatorRequest);        
 

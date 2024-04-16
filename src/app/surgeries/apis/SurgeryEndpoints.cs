@@ -1,5 +1,5 @@
 
-using App.Auth;
+using App.Auth.Filters;
 using App.Surgeries.Controllers;
 
 namespace App.Surgeries.Apis;

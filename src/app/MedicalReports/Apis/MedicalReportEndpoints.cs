@@ -1,5 +1,5 @@
 
-using App.Auth;
+using App.Auth.Filters;
 using App.Common.Filters;
 using App.MedicalReports.Controllers;
 using App.MedicalReports.Models.Requests;

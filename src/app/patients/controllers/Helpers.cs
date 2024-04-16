@@ -41,7 +41,7 @@ public static class Helpers
                     SyncStatus = true,
                     SyncDateTime = createdAt,
                     LastUpdateDateTime = createdAt,
-                    ErrorMessage = string.Empty
+                    SyncMessage = string.Empty
                 });
             }
 

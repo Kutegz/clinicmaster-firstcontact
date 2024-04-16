@@ -8,6 +8,6 @@ public sealed record ConsumerResponse
     public required bool SyncStatus { get; init; }
     public required DateTimeOffset SyncDateTime { get; init; }
     public required DateTimeOffset LastUpdateDateTime { get; init; }
-    public required string ErrorMessage { get; init; }
+    public required string SyncMessage { get; init; }
 
 }
