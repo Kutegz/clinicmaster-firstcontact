@@ -1,9 +1,9 @@
 
 namespace App.Common.Models.Responses;
-public sealed record ConsumerAgentsResponse
+public sealed record ConsumerAgents
 {
     public required string Consumers {get; init;}   
-    public static ConsumerAgentsResponse Empty => new()
+    public static ConsumerAgents Empty => new()
     {
         Consumers = string.Empty
     };

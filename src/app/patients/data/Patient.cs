@@ -67,7 +67,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
                     """;
 
         using var connection = context.CreateConnection();
-        var data = await connection.QuerySingleOrDefaultAsync<ConsumerAgentsResponse> (sql: query, param: new { patientNo });
+        var data = await connection.QuerySingleOrDefaultAsync<ConsumerAgents> (sql: query, param: new { patientNo });
 
         if (data is null || data.Consumers is null || data.Consumers.Equals(string.Empty)) return [];
 
