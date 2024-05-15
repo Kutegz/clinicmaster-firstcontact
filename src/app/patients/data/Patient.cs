@@ -26,7 +26,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
         parameters.Add(name: nameof(request.Gender), value: request.Gender, dbType: DbType.String);
         parameters.Add(name: nameof(request.Age), value: request.Age, dbType: DbType.Int32);
         parameters.Add(name: nameof(request.Creator), value: request.Creator, dbType: DbType.String);
-        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTimeOffset);
+        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTime2);
         parameters.Add(name: nameof(request.Consumers), value: request.Consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();

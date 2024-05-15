@@ -1,4 +1,5 @@
 using App.Home.Apis;
+using App.Common.Utils;
 using FluentValidation;
 using App.Patients.Apis;
 using App.Patients.Data;
@@ -25,14 +26,13 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 {
-    string connectionString = builder.Configuration.GetConnectionString("ClinicMasterConnection")!;
+    string connectionString = builder.Configuration.GetConnectionString(name: "ClinicMasterConnection")!;
     builder.Services.AddHealthChecks()
     .AddSqlServer(connectionString: connectionString, name: "Database", tags: ["db", "sql", "sqlserver"]);
 
     builder.Services.AddOpenTelemetry().WithMetrics(configure: metrics => 
     {
-        metrics.AddMeter(names: ["Microsoft.AspNetCore.Hosting", "System.Net.Http",
-                                "Microsoft.AspNetCore.Server.Kestrel", "ReadMedicalReport"]);
+        metrics.AddMeter(names: [..Constants.OpenTelemetryMeterNames]);
 
         metrics.AddView(instrumentName: "http.server.request.duration", 
             metricStreamConfiguration: new ExplicitBucketHistogramConfiguration
@@ -54,7 +54,7 @@ var builder = WebApplication.CreateBuilder(args);
         options.AddOtlpExporter();
     });
 
-    builder.Services.AddSingleton(TimeProvider.System);
+    builder.Services.AddSingleton(implementationInstance: TimeProvider.System);
     builder.Services.AddSingleton<MedicalReportMetrics>();
 
     builder.Services.AddAuthentication();

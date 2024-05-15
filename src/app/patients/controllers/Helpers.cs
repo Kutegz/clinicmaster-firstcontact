@@ -6,7 +6,7 @@ using App.Common.Models.Responses;
 namespace App.Patients.Controllers;
 public static class Helpers 
 {
-    public static async Task UpdatePatientConsumers(string patientNo, IPatient patient, string createdBy, DateTimeOffset createdAt, ILogger logger)
+    public static async Task UpdatePatientConsumers(string patientNo, IPatient patient, string createdBy, DateTime createdAt, ILogger logger)
     {      
         try
         {

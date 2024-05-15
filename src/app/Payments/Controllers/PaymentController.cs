@@ -22,7 +22,7 @@ public static class PaymentController
         catch (Exception ex) 
         { 
             logger.LogError("Failed to create Gooods Received Note with GRN No: {@GRNNo}", request.GRNNo); 
-            return Results.Problem(ex.Message); 
+            return Results.Problem(detail: ex.Message); 
         }  
     }
     public static async Task<IResult> GetPayment(string billNo, IPayment repo)
@@ -34,7 +34,7 @@ public static class PaymentController
 
             return Results.Ok(value: payment);            
         }
-        catch (Exception ex) { return Results.Problem(ex.Message); }  
+        catch (Exception ex) { return Results.Problem(detail: ex.Message); }  
     }
 
     public static async Task<IResult> GetPayments(IPayment repo, HttpContext context)
@@ -52,7 +52,7 @@ public static class PaymentController
             return Results.Ok(value: payments);   
             
         }
-        catch (Exception ex) { return Results.Problem(ex.Message); }
+        catch (Exception ex) { return Results.Problem(detail: ex.Message); }
     }
 
 }

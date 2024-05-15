@@ -19,13 +19,13 @@ public static class MedicalReportController
             string createdBy = context.Request.Headers[Constants.XAgentId].ToString() ?? Constants.ClinicMaster;  
              
             var creatorRequest = CreatorRequest.Create(agentId: createdBy, agentName: createdBy, syncCount: 1, 
-                                                        syncStatus: true, syncDateTime: timeProvider.GetUtcNow(), 
+                                                        syncStatus: true, syncDateTime: timeProvider.GetLocalNow().DateTime, 
                                                         syncMessage: string.Empty);
 
             string creator = Utils.SerializeContent(content: creatorRequest);   
                     
             var fullRequest = MedicalReportFullRequest.Create(request: request, creator: creator, 
-                                                            createdAt: timeProvider.GetUtcNow());
+                                                            createdAt: timeProvider.GetLocalNow().DateTime);
 
             if (!string.Equals(facilityCode, fullRequest.FacilityCode, StringComparison.OrdinalIgnoreCase))
             {
@@ -76,7 +76,7 @@ public static class MedicalReportController
         { 
             logger.LogError("Failed to create Medical Report with Facility Code: {FacilityCode}, and Visit No: {VisitNo}", 
                                                                                     request.FacilityCode, request.VisitNo); 
-            return Results.Problem(ex.Message); 
+            return Results.Problem(detail: ex.Message); 
         }  
     }
     public static async Task<IResult> GetMedicalReport(string facilityCode, string visitNo, IMedicalReport repo, HttpContext context, 
@@ -90,12 +90,25 @@ public static class MedicalReportController
             if (result.Data.Equals(MedicalReportResponse.Empty)) return Results.NotFound(value: result);
 
             await Helpers.UpdateMedicalReportConsumers(facilityCode: facilityCode, visitNo: visitNo, medicalReport: repo, 
-                                                        createdBy: createdBy, createdAt: timeProvider.GetUtcNow(), 
+                                                        createdBy: createdBy, createdAt: timeProvider.GetLocalNow().DateTime, 
                                                         logger: logger);
 
             return Results.Ok(value: result);            
         }
-        catch (Exception ex) { return Results.Problem(ex.Message); }  
+        catch (Exception ex) { return Results.Problem(detail: ex.Message); }  
+    }
+
+    public static async Task<IResult> GetMedicalReportBuddle(string facilityCode, string visitNo, IMedicalReport repo) 
+                                                        
+    {      
+        try
+        {
+            var result = await repo.GetMedicalReportBuddle(facilityCode, visitNo);
+            if (string.IsNullOrEmpty(result)) return Results.NotFound(value: result);
+
+            return Results.Ok(value: result);            
+        }
+        catch (Exception ex) { return Results.Problem(detail: ex.Message); }  
     }
    
     public static async Task<IResult> GetMedicalReports(string facilityCode, IMedicalReport repo, HttpContext context)
@@ -112,7 +125,7 @@ public static class MedicalReportController
             return Results.Ok(value: results);   
             
         }
-        catch (Exception ex) { return Results.Problem(ex.Message); }
+        catch (Exception ex) { return Results.Problem(detail: ex.Message); }
     }
 
 }

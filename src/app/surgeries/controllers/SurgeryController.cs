@@ -14,7 +14,7 @@ public static class SurgeryController
 
             return Results.Ok(value: result);            
         }
-        catch (Exception ex) { return Results.Problem(ex.Message); }  
+        catch (Exception ex) { return Results.Problem(detail: ex.Message); }  
     }
    
     public static async Task<IResult> GetSurgeries(string patientNo, ISurgery repo)
@@ -25,7 +25,7 @@ public static class SurgeryController
             return Results.Ok(value: results);   
             
         }
-        catch (Exception ex) { return Results.Problem(ex.Message); }
+        catch (Exception ex) { return Results.Problem(detail: ex.Message); }
     }
 
 }

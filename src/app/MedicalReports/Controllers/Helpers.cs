@@ -8,7 +8,7 @@ public static class Helpers
 {
     public static async Task UpdateMedicalReportConsumers(string facilityCode, string visitNo, 
                                                         IMedicalReport medicalReport, string createdBy, 
-                                                        DateTimeOffset createdAt, ILogger logger)
+                                                        DateTime createdAt, ILogger logger)
     {      
         try
         {

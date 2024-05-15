@@ -20,13 +20,13 @@ public static class PatientController
 
             var creatorRequest = CreatorRequest.Create(agentId: createdBy, agentName: createdBy, 
                                                         syncCount: 1, syncStatus: true, 
-                                                        syncDateTime: timeProvider.GetUtcNow(), 
+                                                        syncDateTime: timeProvider.GetLocalNow().DateTime, 
                                                         syncMessage: string.Empty);
 
             string creator = Utils.SerializeContent(content: creatorRequest);        
 
             var fullRequest = PatientFullRequest.Create(request: request, creator: creator, 
-                                                        createdAt: timeProvider.GetUtcNow());
+                                                        createdAt: timeProvider.GetLocalNow().DateTime);
 
             var patient = await repo.GetPatient(patientNo: fullRequest.PatientNo);
             if (!patient.Data.Equals(PatientResponse.Empty) && patient.Success) 
@@ -52,7 +52,7 @@ public static class PatientController
             logger.LogError(ex, message: "An error occurred while creating patient with Patient No: {PatientNo}", 
                             args: [request.PatientNo]);        
                                                                                     
-            return Results.Problem(ex.Message); 
+            return Results.Problem(detail: ex.Message); 
         }  
     }
 
@@ -71,11 +71,11 @@ public static class PatientController
             var finalResult = result with {Data = result.Data with {Surgeries = surgeries.Data.ToList()}};
 
             await Helpers.UpdatePatientConsumers(patientNo: patientNo, patient: repo, createdBy: createdBy, 
-                                                createdAt: timeProvider.GetUtcNow(), logger: logger);
+                                                createdAt: timeProvider.GetLocalNow().DateTime, logger: logger);
 
             return Results.Ok(value: finalResult);         
         }
-        catch (Exception ex) { return Results.Problem(ex.Message); }  
+        catch (Exception ex) { return Results.Problem(detail: ex.Message); }  
     }
 
     public static async Task<IResult> GetPatients(IPatient repo, ISurgery surgeryRepo, HttpContext context)
@@ -99,7 +99,7 @@ public static class PatientController
             return Results.Ok(value: finalResults);   
             
         }
-        catch (Exception ex) { return Results.Problem(ex.Message); }
+        catch (Exception ex) { return Results.Problem(detail: ex.Message); }
     }
 
 }

@@ -7,12 +7,12 @@ public sealed record SurgeryFullRequest
 {    
     public required string TreatmentNo {get; init;}
     public required string PatientNo {get; init;}
-    public required DateTimeOffset VisitDate {get; init;}
+    public required DateTime VisitDate {get; init;}
     public required string Content {get; init;}   
     public required string Creator {get; init;}   
-    public required DateTimeOffset CreatedAt {get; init;}  
+    public required DateTime CreatedAt {get; init;}  
     public required List<ConsumerRequest> Consumers {get; init;}  
-    public static SurgeryFullRequest Create (SurgeryRequest request, string creator, DateTimeOffset createdAt) 
+    public static SurgeryFullRequest Create (SurgeryRequest request, string creator, DateTime createdAt) 
         => new()
             {
                 TreatmentNo = request.TreatmentNo,

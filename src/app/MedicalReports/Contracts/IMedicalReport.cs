@@ -10,6 +10,7 @@ public interface IMedicalReport
     public Task<bool> UpdateMedicalReport(MedicalReportFullRequest request);
     public Task<MedicalReportResult<MedicalReportResponse>> GetMedicalReport(string facilityCode, string visitNo);
     public Task<IEnumerable<ConsumerResponse>> GetMedicalReportConsumers(string facilityCode, string visitNo);
+    public Task<string> GetMedicalReportBuddle(string facilityCode, string visitNo);
     public Task<bool> UpdateMedicalReportConsumers(string facilityCode, string visitNo, string consumers);
     public Task<MedicalReportResult<IEnumerable<MedicalReportResponse>>> GetMedicalReports(string facilityCode, int page, int pageSize);
 }

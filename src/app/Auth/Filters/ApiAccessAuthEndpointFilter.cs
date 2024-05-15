@@ -14,9 +14,9 @@ public sealed class ApiAccessAuthEndpointFilter(IConfiguration configuration) : 
         return await next(context: context);
     }
     private bool IsAgentIdValid(string? agentId) => 
-        !string.IsNullOrWhiteSpace(agentId) && agentId == configuration[Constants.AuthenticationAgentId];
+        !string.IsNullOrWhiteSpace(value: agentId) && agentId == configuration[Constants.AuthenticationAgentId];
 
     private bool IsApiKeyValid(string? apiKey) => 
-        !string.IsNullOrWhiteSpace(apiKey) && apiKey == configuration[Constants.AuthenticationApiKey];
+        !string.IsNullOrWhiteSpace(value: apiKey) && apiKey == configuration[Constants.AuthenticationApiKey];
     
 }

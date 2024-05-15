@@ -22,10 +22,10 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
 
         parameters.Add(name: nameof(request.FacilityCode), value: request.FacilityCode, dbType: DbType.String);
         parameters.Add(name: nameof(request.VisitNo), value: request.VisitNo, dbType: DbType.String);
-        parameters.Add(name: nameof(request.VisitDate), value: request.VisitDate, dbType: DbType.DateTimeOffset);
+        parameters.Add(name: nameof(request.VisitDate), value: request.VisitDate, dbType: DbType.Date);
         parameters.Add(name: nameof(request.Content), value: request.Content, dbType: DbType.String);
         parameters.Add(name: nameof(request.Creator), value: request.Creator, dbType: DbType.String);
-        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTimeOffset);
+        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTime2);
         parameters.Add(name: nameof(request.Consumers), value: request.Consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();
@@ -45,10 +45,10 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
 
         parameters.Add(name: nameof(request.FacilityCode), value: request.FacilityCode, dbType: DbType.String);
         parameters.Add(name: nameof(request.VisitNo), value: request.VisitNo, dbType: DbType.String);
-        parameters.Add(name: nameof(request.VisitDate), value: request.VisitDate, dbType: DbType.DateTimeOffset);
+        parameters.Add(name: nameof(request.VisitDate), value: request.VisitDate, dbType: DbType.Date);
         parameters.Add(name: nameof(request.Content), value: request.Content, dbType: DbType.String);
         parameters.Add(name: nameof(request.Creator), value: request.Creator, dbType: DbType.String);
-        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTimeOffset);
+        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTime2);
         parameters.Add(name: nameof(request.Consumers), value: request.Consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();
@@ -91,6 +91,22 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                 Message = string.Empty,
                 Data = patient,            
             };
+
+    }
+
+        public async Task<string> GetMedicalReportBuddle(string facilityCode, string visitNo)
+    {
+        var query = """
+                        SELECT Content FROM MedicalReports 
+                        WHERE FacilityCode = @FacilityCode AND VisitNo = @VisitNo
+                    """;
+
+        using var connection = context.CreateConnection();
+        var parameters = new { facilityCode, visitNo };
+        var data = await connection.QuerySingleOrDefaultAsync<string> (sql: query, param: parameters);
+                  
+        return data ?? string.Empty;
+
 
     }
 

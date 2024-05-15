@@ -10,8 +10,8 @@ public static class MedicalReportEndpoints
     public static void ConfigureMedicalReportApis(this WebApplication app)
     {
         // Includes all Patient MedicalReports API endpoint mappings
-        var group = app.MapGroup(prefix: "/{facilityCode}/visits/medicalreports")
-                        .RequireAuthorization().AddEndpointFilter<ApiAccessAuthEndpointFilter>();
+        var group = app.MapGroup(prefix: "/{facilityCode}/visits/medicalreports");
+                        //.RequireAuthorization().AddEndpointFilter<ApiAccessAuthEndpointFilter>();
                         
         group.MapPost(pattern: "", handler: MedicalReportController.CreateMedicalReport).AllowAnonymous()
                                     .WithName(nameof(MedicalReportController.CreateMedicalReport))
@@ -20,6 +20,7 @@ public static class MedicalReportEndpoints
         group.MapGet(pattern: "", handler: MedicalReportController.GetMedicalReports).AllowAnonymous(); 
 
         group.MapGet(pattern: "/{visitNo}", handler: MedicalReportController.GetMedicalReport).AllowAnonymous(); 
+        group.MapGet(pattern: "/{visitNo}/buddle", handler: MedicalReportController.GetMedicalReportBuddle).AllowAnonymous(); 
     }
 
 }
