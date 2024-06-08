@@ -35,7 +35,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
         return result > 0;
     }
 
-    public async Task<PatientResult<PatientResponse>> GetPatient(string patientNo)
+    public async Task<ResultResponse<PatientResponse>> GetPatient(string patientNo)
     {
 
         var query = """
@@ -92,7 +92,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
         var result = await connection.ExecuteAsync(sql: query, param: parameters);
         return result > 0;
     }
-    public async Task<PatientResult<IEnumerable<PatientResponse>>> GetPatients(int page , int pageSize)
+    public async Task<ResultResponse<IEnumerable<PatientResponse>>> GetPatients(int page , int pageSize)
     {       
         if (page <= 0) page = 1;
         if (pageSize <= 0) pageSize = 10;

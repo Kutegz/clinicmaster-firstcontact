@@ -57,7 +57,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         return result > 0;
     }
 
-    public async Task<MedicalReportResult<MedicalReportResponse>> GetMedicalReport(string facilityCode, string visitNo)
+    public async Task<ResultResponse<MedicalReportResponse>> GetMedicalReport(string facilityCode, string visitNo)
     {
         var query = """
                         SELECT FacilityCode, VisitNo, VisitDate, Content, CreatedAt FROM MedicalReports 
@@ -144,7 +144,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         return result > 0;
     }
    
-    public async Task<MedicalReportResult<IEnumerable<MedicalReportResponse>>> GetMedicalReports(string facilityCode, int page, int pageSize)
+    public async Task<ResultResponse<IEnumerable<MedicalReportResponse>>> GetMedicalReports(string facilityCode, int page, int pageSize)
     {        
         if (page <= 0) page = 1;
         if (pageSize <= 0) pageSize = 10;

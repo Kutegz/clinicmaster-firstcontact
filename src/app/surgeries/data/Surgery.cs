@@ -3,12 +3,13 @@ using Dapper;
 using App.Common.Utils;
 using App.Common.Context;
 using App.Surgeries.Contracts;
+using App.Common.Models.Responses;
 using App.Surgeries.Models.Responses;
 
 namespace App.Surgeries.Data;
 public sealed class Surgery(ClinicMasterContext context) : ISurgery 
 {
-     public async Task<SurgeryResult<SurgeryResponse>> GetSurgery(string patientNo, string treatmentNo)
+     public async Task<ResultResponse<SurgeryResponse>> GetSurgery(string patientNo, string treatmentNo)
     {
         var query = """
                         SELECT TreatmentNo, PatientNo, VisitDate, Content 
@@ -44,7 +45,7 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
 
     }
    
-    public async Task<SurgeryResult<IEnumerable<SurgeryResponse>>> GetSurgeries(string patientNo)
+    public async Task<ResultResponse<IEnumerable<SurgeryResponse>>> GetSurgeries(string patientNo)
     { 
         var query = """
                         SELECT TreatmentNo, PatientNo, VisitDate, Content 

@@ -4,6 +4,7 @@ using System.Data;
 using App.Common.Utils;
 using App.Common.Context;
 using App.Payments.Contracts;
+using App.Common.Models.Responses;
 using App.Payments.Models.Requests;
 using App.Payments.Models.Responses;
 
@@ -31,7 +32,7 @@ public sealed class Payment(ClinicMasterContext context) : IPayment
 
         return result > 0;
     }
-    public async Task<PaymentResult<PaymentResponse>> GetPayment(string billNo)
+    public async Task<ResultResponse<PaymentResponse>> GetPayment(string billNo)
     {
         var query = """
                         SELECT BillNo, PayNo, PayType, ContentSent, CreatedBy, 
@@ -69,7 +70,7 @@ public sealed class Payment(ClinicMasterContext context) : IPayment
                 Data = payment,            
             };
     }
-    public async Task<PaymentResult<IEnumerable<PaymentResponse>>> GetPayments(int page, int pageSize)
+    public async Task<ResultResponse<IEnumerable<PaymentResponse>>> GetPayments(int page, int pageSize)
     {       
         if (page <= 0) page = 1;
         if (pageSize <= 0) pageSize = 10;
