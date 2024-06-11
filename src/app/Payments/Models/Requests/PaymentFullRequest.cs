@@ -14,7 +14,7 @@ public sealed record PaymentFullRequest
     {
         GRNNo = request.GRNNo,
         ReceivedDate = request.ReceivedDate,
-        Content = Utils.SerializeContent(content: request.ContentReceived),
+        Content = CommonUtils.SerializeContent(content: request.ContentReceived),
         CreatedBy = "Admin",
         CreatedAt = DateTime.Now,
         SyncStatus = false

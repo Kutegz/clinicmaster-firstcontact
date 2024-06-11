@@ -18,7 +18,7 @@ public sealed record SurgeryFullRequest
                 TreatmentNo = request.TreatmentNo,
                 PatientNo = request.PatientNo,
                 VisitDate = request.VisitDate,
-                Content = Utils.SerializeContent(content: request.Content),
+                Content = CommonUtils.SerializeContent(content: request.Content),
                 Creator = creator,
                 CreatedAt = createdAt,
                 Consumers = []

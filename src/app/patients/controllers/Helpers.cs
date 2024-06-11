@@ -45,7 +45,7 @@ public static class Helpers
                 });
             }
 
-            var result = await patient.UpdatePatientConsumers(patientNo: patientNo, consumers: Utils.SerializeContent(content: updatedConsumers));
+            var result = await patient.UpdatePatientConsumers(patientNo: patientNo, consumers: CommonUtils.SerializeContent(content: updatedConsumers));
 
             logger.LogInformation("Patient Consummers successfully updated for Patient No: {PatientNo} by {CreatedBy}", patientNo, createdBy);
 

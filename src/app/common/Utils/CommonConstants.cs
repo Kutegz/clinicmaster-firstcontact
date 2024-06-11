@@ -1,6 +1,6 @@
 
 namespace App.Common.Utils;
-public static class Constants 
+public static class CommonConstants 
 {
     public static string XAgentId => "X-Agent-Id";
     public static string XApiKey => "X-Api-Key";

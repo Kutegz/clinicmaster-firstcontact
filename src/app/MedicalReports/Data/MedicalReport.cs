@@ -80,7 +80,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                 VisitNo = data.VisitNo,
                 FacilityCode = data.FacilityCode,
                 VisitDate = data.VisitDate,
-                Content = Utils.DeserializeContent<MedicalReportContentResponse>
+                Content = CommonUtils.DeserializeContent<MedicalReportContentResponse>
                 (content: data.Content) ?? MedicalReportContentResponse.Empty,
                 CreatedAt = data.CreatedAt                        
             };
@@ -121,7 +121,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
 
         if (data is null || data.Consumers is null || data.Consumers.Equals(string.Empty)) return [];
 
-        var consumers = Utils.DeserializeContent<IEnumerable<ConsumerResponse>>(content: data.Consumers);
+        var consumers = CommonUtils.DeserializeContent<IEnumerable<ConsumerResponse>>(content: data.Consumers);
 
         return consumers ?? [];
 
@@ -170,7 +170,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                 VisitNo = data.VisitNo,
                 FacilityCode = data.FacilityCode,
                 VisitDate = data.VisitDate,
-                Content = Utils.DeserializeContent<MedicalReportContentResponse>
+                Content = CommonUtils.DeserializeContent<MedicalReportContentResponse>
                 (content: data.Content) ?? MedicalReportContentResponse.Empty,
                 CreatedAt = data.CreatedAt
                                             

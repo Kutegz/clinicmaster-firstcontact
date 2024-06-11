@@ -71,7 +71,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
 
         if (data is null || data.Consumers is null || data.Consumers.Equals(string.Empty)) return [];
 
-        var consumers = Utils.DeserializeContent<IEnumerable<ConsumerResponse>>(content: data.Consumers);
+        var consumers = CommonUtils.DeserializeContent<IEnumerable<ConsumerResponse>>(content: data.Consumers);
 
         return consumers ?? [];
 

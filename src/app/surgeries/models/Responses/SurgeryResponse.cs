@@ -8,7 +8,7 @@ public sealed record SurgeryResponse : SurgeryBase<SurgeryContentResponse> {
     {
         TreatmentNo = string.Empty,
         PatientNo = string.Empty,
-        VisitDate = DateTimeOffset.Parse(Constants.NullDateTimeString),
+        VisitDate = DateTimeOffset.Parse(CommonConstants.NullDateTimeString),
         Content = SurgeryContentResponse.Empty,
     };
 

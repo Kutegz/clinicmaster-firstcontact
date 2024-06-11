@@ -12,7 +12,7 @@ public sealed record RadiologyResponse
     public static RadiologyResponse Empty => new() 
     {
         Examination = string.Empty,
-        Examination_date = DateTime.Parse(Constants.NullDateTimeString),
+        Examination_date = DateTime.Parse(CommonConstants.NullDateTimeString),
         Indication = string.Empty,
         Report = string.Empty,
         Conclusion = string.Empty

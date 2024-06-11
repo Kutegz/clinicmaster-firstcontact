@@ -48,7 +48,7 @@ public static class Helpers
             }
 
             var result = await medicalReport.UpdateMedicalReportConsumers(facilityCode: facilityCode, visitNo: visitNo, 
-                                                                        consumers: Utils.SerializeContent(content: updatedConsumers));
+                                                                        consumers: CommonUtils.SerializeContent(content: updatedConsumers));
 
             logger.LogInformation("MedicalReport Consummers successfully updated for Facility Code No: {FacilityCode} and Visit No: {VisitNo} by {CreatedBy}", 
                                 facilityCode, visitNo, createdBy);

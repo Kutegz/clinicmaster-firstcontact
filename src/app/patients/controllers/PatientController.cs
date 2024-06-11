@@ -16,14 +16,14 @@ public static class PatientController
         try
         {      
 
-            string createdBy = context.Request.Headers[Constants.XAgentId].ToString() ?? Constants.ClinicMaster;
+            string createdBy = context.Request.Headers[CommonConstants.XAgentId].ToString() ?? CommonConstants.ClinicMaster;
 
             var creatorRequest = CreatorRequest.Create(agentId: createdBy, agentName: createdBy, 
                                                         syncCount: 1, syncStatus: true, 
                                                         syncDateTime: timeProvider.GetLocalNow().DateTime, 
                                                         syncMessage: string.Empty);
 
-            string creator = Utils.SerializeContent(content: creatorRequest);        
+            string creator = CommonUtils.SerializeContent(content: creatorRequest);        
 
             var fullRequest = PatientFullRequest.Create(request: request, creator: creator, 
                                                         createdAt: timeProvider.GetLocalNow().DateTime);
@@ -62,7 +62,7 @@ public static class PatientController
     {      
         try
         {
-            string createdBy = context.Request.Headers[Constants.XAgentId].ToString() ?? Constants.ClinicMaster;       
+            string createdBy = context.Request.Headers[CommonConstants.XAgentId].ToString() ?? CommonConstants.ClinicMaster;       
 
             var result = await repo.GetPatient(patientNo);
             if (result.Data.Equals(PatientResponse.Empty)) return Results.NotFound(value: result);

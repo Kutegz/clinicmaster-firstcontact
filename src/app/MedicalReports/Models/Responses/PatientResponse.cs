@@ -16,7 +16,7 @@ public sealed record PatientResponse
         Identifier = string.Empty,
         Age = 0,
         Gender = string.Empty,
-        Join_date = DateTime.Parse(Constants.NullDateTimeString),
+        Join_date = DateTime.Parse(CommonConstants.NullDateTimeString),
         Status = string.Empty,
         Chronic_diseases = [],
         Allergies = [],

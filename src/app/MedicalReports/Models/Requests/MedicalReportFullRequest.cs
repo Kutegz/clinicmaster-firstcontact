@@ -17,7 +17,7 @@ public sealed record MedicalReportFullRequest
                 FacilityCode = request.FacilityCode,
                 VisitNo = request.VisitNo,
                 VisitDate = request.VisitDate,
-                Content = Utils.SerializeContent(content: request.Content),
+                Content = CommonUtils.SerializeContent(content: request.Content),
                 Creator = creator,
                 CreatedAt = createdAt,
                 Consumers = "[]"

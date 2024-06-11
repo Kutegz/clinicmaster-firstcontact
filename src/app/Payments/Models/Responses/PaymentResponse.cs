@@ -11,7 +11,7 @@ public sealed record PaymentResponse : PaymentBase<PaymentContentSentResponse> {
         PayType = string.Empty,
         ContentSent =  PaymentContentSentResponse.Empty,
         CreatedBy = string.Empty,
-        CreatedAt = DateTime.Parse(Constants.NullDateTimeString),
+        CreatedAt = DateTime.Parse(CommonConstants.NullDateTimeString),
         Completed = false,
     };
 

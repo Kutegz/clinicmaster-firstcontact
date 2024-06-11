@@ -11,7 +11,7 @@ public sealed class PaymentRequestValidator : AbstractValidator<PaymentRequest>
                                             .WithMessage(errorMessage: "Please include GRNNo");
         RuleFor(request => request.ReceivedDate).NotEmpty()
                                             .WithMessage(errorMessage: "Please include Received Date")
-                                            .GreaterThan(DateTime.Parse(Constants.NullDateTimeString))
+                                            .GreaterThan(DateTime.Parse(CommonConstants.NullDateTimeString))
                                             .WithMessage(errorMessage: "Received Date cannot be in the past")
                                             .LessThan(DateTime.Now)
                                             .WithMessage(errorMessage: "Received Date cannot be ahead of today" );

@@ -32,7 +32,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddOpenTelemetry().WithMetrics(configure: metrics => 
     {
-        metrics.AddMeter(names: [..Constants.OpenTelemetryMeterNames]);
+        metrics.AddMeter(names: [..CommonConstants.OpenTelemetryMeterNames]);
 
         metrics.AddView(instrumentName: "http.server.request.duration", 
             metricStreamConfiguration: new ExplicitBucketHistogramConfiguration

@@ -12,7 +12,7 @@ public sealed record PaymentRowData : PaymentBase<string>
         PayType = string.Empty,
         ContentSent =  string.Empty,
         CreatedBy = string.Empty,
-        CreatedAt = DateTime.Parse(Constants.NullDateTimeString),
+        CreatedAt = DateTime.Parse(CommonConstants.NullDateTimeString),
         Completed = false,
     };
 }
