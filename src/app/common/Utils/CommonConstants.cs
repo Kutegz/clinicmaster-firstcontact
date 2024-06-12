@@ -8,7 +8,7 @@ public static class CommonConstants
     public static string NullDateTimeString => "1 Jan 1900";
     public static string AuthenticationAgentId => "Authentication:AgentId";
     public static string AuthenticationApiKey => "Authentication:ApiKey";
-    public static List<string> OpenTelemetryMeterNames 
+    public static IReadOnlyList<string> OpenTelemetryMeterNames 
         => ["Microsoft.AspNetCore.Hosting", "System.Net.Http",
             "Microsoft.AspNetCore.Server.Kestrel", "ReadMedicalReport"];
 }
