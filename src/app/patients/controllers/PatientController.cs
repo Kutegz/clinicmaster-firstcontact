@@ -20,13 +20,13 @@ public static class PatientController
 
             var creatorRequest = CreatorRequest.Create(agentId: createdBy, agentName: createdBy, 
                                                         syncCount: 1, syncStatus: true, 
-                                                        syncDateTime: timeProvider.GetLocalNow().DateTime, 
+                                                        syncDateTime: CommonUtils.GetCurrentDateTime(timeProvider), 
                                                         syncMessage: string.Empty);
 
             string creator = CommonUtils.SerializeContent(content: creatorRequest);        
 
             var fullRequest = PatientFullRequest.Create(request: request, creator: creator, 
-                                                        createdAt: timeProvider.GetLocalNow().DateTime);
+                                                        createdAt: CommonUtils.GetCurrentDateTime(timeProvider));
 
             var patient = await repo.GetPatient(patientNo: fullRequest.PatientNo);
             if (!patient.Data.Equals(PatientResponse.Empty) && patient.Success) 
@@ -71,7 +71,7 @@ public static class PatientController
             var finalResult = result with {Data = result.Data with {Surgeries = surgeries.Data.ToList()}};
 
             await Helpers.UpdatePatientConsumers(patientNo: patientNo, patient: repo, createdBy: createdBy, 
-                                                createdAt: timeProvider.GetLocalNow().DateTime, logger: logger);
+                                                createdAt: CommonUtils.GetCurrentDateTime(timeProvider), logger: logger);
 
             return Results.Ok(value: finalResult);         
         }

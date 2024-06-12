@@ -16,4 +16,5 @@ public static class CommonUtils
         if (!result) return DateTime.Parse(s: CommonConstants.NullDateTimeString);
         return date;
     }
+    public static DateTime GetCurrentDateTime(TimeProvider timeProvider) => timeProvider.GetLocalNow().DateTime;
 }
