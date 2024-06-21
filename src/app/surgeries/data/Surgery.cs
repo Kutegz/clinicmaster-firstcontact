@@ -1,12 +1,12 @@
 
 using Dapper;
-using App.Common.Utils;
-using App.Common.Context;
-using App.Surgeries.Contracts;
-using App.Common.Models.Responses;
-using App.Surgeries.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Common.Context;
+using ClinicMasterFirstContact.src.App.Surgeries.Contracts;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
+using ClinicMasterFirstContact.src.App.Surgeries.Models.Responses;
 
-namespace App.Surgeries.Data;
+namespace ClinicMasterFirstContact.src.App.Surgeries.Data;
 public sealed class Surgery(ClinicMasterContext context) : ISurgery 
 {
      public async Task<ResultResponse<SurgeryResponse>> GetSurgery(string patientNo, string treatmentNo)

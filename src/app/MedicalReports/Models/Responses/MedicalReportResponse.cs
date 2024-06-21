@@ -1,8 +1,8 @@
 
-using App.Common.Utils;
-using App.MedicalReports.Contracts;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.MedicalReports.Contracts;
 
-namespace App.MedicalReports.Models.Responses;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
 public sealed record MedicalReportResponse : MedicalReportBase<MedicalReportContentResponse> 
 {
     public static MedicalReportResponse Empty => new() 

@@ -1,7 +1,7 @@
 
-using App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Common.Utils;
 
-namespace App.Payments.Models.Requests;
+namespace ClinicMasterFirstContact.src.App.Payments.Models.Requests;
 public sealed record PaymentFullRequest 
 {
     public required string GRNNo {get; init;}

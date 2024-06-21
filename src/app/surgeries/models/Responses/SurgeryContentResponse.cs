@@ -1,5 +1,5 @@
 
-namespace App.Surgeries.Models.Responses;
+namespace ClinicMasterFirstContact.src.App.Surgeries.Models.Responses;
 public sealed record SurgeryContentResponse {
     public required string ProcedureCode {get; init;}
     public required string ProcedureName {get; init;}

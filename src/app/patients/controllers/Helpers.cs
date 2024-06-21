@@ -1,9 +1,9 @@
 
-using App.Common.Utils;
-using App.Patients.Contracts;
-using App.Common.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Patients.Contracts;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
 
-namespace App.Patients.Controllers;
+namespace ClinicMasterFirstContact.src.App.Patients.Controllers;
 public static class Helpers 
 {
     public static async Task UpdatePatientConsumers(string patientNo, IPatient patient, string createdBy, DateTime createdAt, ILogger logger)

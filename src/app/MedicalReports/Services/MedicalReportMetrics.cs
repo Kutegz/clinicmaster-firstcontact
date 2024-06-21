@@ -1,7 +1,7 @@
 
 using System.Diagnostics.Metrics;
 
-namespace Api.MedicalReports.Services;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Services;
 public class MedicalReportMetrics 
 {
     public Counter<int> MedicalReportCounter { get; private set;  }

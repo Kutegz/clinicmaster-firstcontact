@@ -1,5 +1,5 @@
 
-namespace App.Common.Exceptions;
+namespace ClinicMasterFirstContact.src.App.Common.Exceptions;
 
 public sealed record ErrorResponse
 {

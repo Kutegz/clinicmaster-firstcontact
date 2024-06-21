@@ -1,5 +1,5 @@
 
-namespace App.Surgeries.Contracts;
+namespace ClinicMasterFirstContact.src.App.Surgeries.Contracts;
 public abstract record SurgeryBase<TContent> {
     public required string TreatmentNo {get; init;}
     public required string PatientNo {get; init;}

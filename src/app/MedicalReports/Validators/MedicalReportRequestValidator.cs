@@ -1,8 +1,8 @@
 using FluentValidation;
-using App.Common.Utils;
-using App.MedicalReports.Models.Requests;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.MedicalReports.Models.Requests;
 
-namespace App.MedicalReports.Validators;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Validators;
 public sealed class MedicalReportRequestValidator : AbstractValidator<MedicalReportRequest> 
 {
     public MedicalReportRequestValidator() 

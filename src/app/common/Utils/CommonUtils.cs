@@ -1,7 +1,7 @@
 
 using System.Text.Json;
 
-namespace App.Common.Utils;
+namespace ClinicMasterFirstContact.src.App.Common.Utils;
 public static class CommonUtils 
 {
     private readonly static JsonSerializerOptions options = new (defaults: JsonSerializerDefaults.Web);

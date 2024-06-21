@@ -1,8 +1,8 @@
 
-using App.Auth.Filters;
-using App.Surgeries.Controllers;
+using ClinicMasterFirstContact.src.App.Auth.Filters;
+using ClinicMasterFirstContact.src.App.Surgeries.Controllers;
 
-namespace App.Surgeries.Apis;
+namespace ClinicMasterFirstContact.src.App.Surgeries.Apis;
 public static class SurgeryEndpoints
 {
     public static void ConfigureSurgeryApis(this WebApplication app)

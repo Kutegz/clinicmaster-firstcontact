@@ -1,14 +1,14 @@
 
 using Dapper;
 using System.Data;
-using App.Common.Utils;
-using App.Common.Context;
-using App.Common.Models.Responses;
-using App.MedicalReports.Contracts;
-using App.MedicalReports.Models.Requests;
-using App.MedicalReports.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Common.Context;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
+using ClinicMasterFirstContact.src.App.MedicalReports.Contracts;
+using ClinicMasterFirstContact.src.App.MedicalReports.Models.Requests;
+using ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
 
-namespace App.MedicalReports.Data;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Data;
 public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport 
 {
     public async Task<bool> CreateMedicalReport(MedicalReportFullRequest request)    

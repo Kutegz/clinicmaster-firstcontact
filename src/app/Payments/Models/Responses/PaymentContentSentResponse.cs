@@ -1,5 +1,5 @@
 
-namespace App.Payments.Models.Responses;
+namespace ClinicMasterFirstContact.src.App.Payments.Models.Responses;
 public sealed record PaymentContentSentResponse 
 {
     public required string Service {get; init;} 

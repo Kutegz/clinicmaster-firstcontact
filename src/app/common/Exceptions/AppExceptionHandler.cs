@@ -3,7 +3,7 @@ using FluentValidation;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Diagnostics;
 
-namespace App.Common.Exceptions;
+namespace ClinicMasterFirstContact.src.App.Common.Exceptions;
 public sealed class AppExceptionHandler(ILogger<AppExceptionHandler> logger): IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext context, Exception exception, 

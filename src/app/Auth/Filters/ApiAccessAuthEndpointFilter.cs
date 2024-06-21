@@ -1,7 +1,7 @@
 
-using App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Common.Utils;
 
-namespace App.Auth.Filters;
+namespace ClinicMasterFirstContact.src.App.Auth.Filters;
 public sealed class ApiAccessAuthEndpointFilter(IConfiguration configuration) : IEndpointFilter
 {
     public async ValueTask<dynamic?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)

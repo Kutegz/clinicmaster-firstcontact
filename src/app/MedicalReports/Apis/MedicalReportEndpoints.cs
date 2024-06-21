@@ -1,10 +1,10 @@
 
-using App.Auth.Filters;
-using App.Common.Filters;
-using App.MedicalReports.Controllers;
-using App.MedicalReports.Models.Requests;
+using ClinicMasterFirstContact.src.App.Auth.Filters;
+using ClinicMasterFirstContact.src.App.Common.Filters;
+using ClinicMasterFirstContact.src.App.MedicalReports.Controllers;
+using ClinicMasterFirstContact.src.App.MedicalReports.Models.Requests;
 
-namespace App.MedicalReports.Apis;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Apis;
 public static class MedicalReportEndpoints
 {
     public static void ConfigureMedicalReportApis(this WebApplication app)

@@ -1,9 +1,9 @@
 
-using App.Common.Filters;
-using App.Payments.Controllers;
-using App.Payments.Models.Requests;
+using ClinicMasterFirstContact.src.App.Common.Filters;
+using ClinicMasterFirstContact.src.App.Payments.Controllers;
+using ClinicMasterFirstContact.src.App.Payments.Models.Requests;
 
-namespace App.Payments.Apis;
+namespace ClinicMasterFirstContact.src.App.Payments.Apis;
 public static class PaymentEndpoints
 {
     public static void ConfigurePaymentApis(this WebApplication app)

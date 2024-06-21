@@ -1,8 +1,8 @@
 
-using App.Common.Models.Responses;
-using App.Surgeries.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
+using ClinicMasterFirstContact.src.App.Surgeries.Models.Responses;
 
-namespace App.Surgeries.Contracts;
+namespace ClinicMasterFirstContact.src.App.Surgeries.Contracts;
 public interface ISurgery{
 
     public Task<ResultResponse<SurgeryResponse>> GetSurgery(string patientNo, string treatmentNo);

@@ -1,5 +1,5 @@
 // Purpose: Contains the API endpoint mappings for the Home module.
-namespace App.Home.Apis;
+namespace ClinicMasterFirstContact.src.App.Home.Apis;
 public static class HomeEndpoints 
 {
     public static void ConfigureHomeApis(this WebApplication app)

@@ -1,8 +1,8 @@
 using FluentValidation;
-using App.Common.Utils;
-using App.Payments.Models.Requests;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Payments.Models.Requests;
 
-namespace App.Payments.Validators;
+namespace ClinicMasterFirstContact.src.App.Payments.Validators;
 public sealed class PaymentRequestValidator : AbstractValidator<PaymentRequest> 
 {
     public PaymentRequestValidator() 

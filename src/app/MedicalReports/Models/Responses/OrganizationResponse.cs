@@ -1,5 +1,5 @@
 
-namespace App.MedicalReports.Models.Responses;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
 public sealed record OrganizationResponse 
 {
     public required string Code {get; init;}

@@ -1,5 +1,5 @@
 
-namespace App.Common.Models.Requests;
+namespace ClinicMasterFirstContact.src.App.Common.Models.Requests;
 public sealed record CreatorRequest 
 {
     public required string AgentId { get; init; }

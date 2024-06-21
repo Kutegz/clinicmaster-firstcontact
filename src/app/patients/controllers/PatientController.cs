@@ -1,12 +1,12 @@
 
-using App.Common.Utils;
-using App.Patients.Contracts;
-using App.Surgeries.Contracts;
-using App.Patients.Models.Requests;
-using App.Patients.Models.Responses;
-using App.Common.Models.Requests;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Patients.Contracts;
+using ClinicMasterFirstContact.src.App.Surgeries.Contracts;
+using ClinicMasterFirstContact.src.App.Patients.Models.Requests;
+using ClinicMasterFirstContact.src.App.Patients.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Models.Requests;
 
-namespace App.Patients.Controllers;
+namespace ClinicMasterFirstContact.src.App.Patients.Controllers;
 
 public static class PatientController 
 {

@@ -1,14 +1,14 @@
 
 using Dapper;
 using System.Data;
-using App.Common.Utils;
-using App.Common.Context;
-using App.Payments.Contracts;
-using App.Common.Models.Responses;
-using App.Payments.Models.Requests;
-using App.Payments.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Common.Context;
+using ClinicMasterFirstContact.src.App.Payments.Contracts;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
+using ClinicMasterFirstContact.src.App.Payments.Models.Requests;
+using ClinicMasterFirstContact.src.App.Payments.Models.Responses;
 
-namespace App.Payments.Data;
+namespace ClinicMasterFirstContact.src.App.Payments.Data;
 public sealed class Payment(ClinicMasterContext context) : IPayment 
 {
     public async Task<bool> UpdatePayment(PaymentFullRequest request)

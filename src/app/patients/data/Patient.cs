@@ -1,14 +1,14 @@
 
 using Dapper;
 using System.Data;
-using App.Common.Utils;
-using App.Common.Context;
-using App.Patients.Contracts;
-using App.Common.Models.Responses;
-using App.Patients.Models.Requests;
-using App.Patients.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Common.Context;
+using ClinicMasterFirstContact.src.App.Patients.Contracts;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
+using ClinicMasterFirstContact.src.App.Patients.Models.Requests;
+using ClinicMasterFirstContact.src.App.Patients.Models.Responses;
 
-namespace App.Patients.Data;
+namespace ClinicMasterFirstContact.src.App.Patients.Data;
 
 public sealed class Patient(ClinicMasterContext context) : IPatient 
 {

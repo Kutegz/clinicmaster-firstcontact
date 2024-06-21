@@ -1,7 +1,7 @@
 
 using FluentValidation;
 
-namespace App.Common.Filters;
+namespace ClinicMasterFirstContact.src.App.Common.Filters;
 public sealed class RequestEndPontFilter<TRequest>(ILogger<RequestEndPontFilter<TRequest>> logger, 
                                                     IValidator<TRequest> validator) : IEndpointFilter
 {

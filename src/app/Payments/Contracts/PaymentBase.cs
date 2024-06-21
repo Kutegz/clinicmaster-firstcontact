@@ -1,5 +1,5 @@
 
-namespace App.Payments.Contracts;
+namespace ClinicMasterFirstContact.src.App.Payments.Contracts;
 public abstract record PaymentBase<TContentSent> 
 {
     public required string BillNo {get; init;}

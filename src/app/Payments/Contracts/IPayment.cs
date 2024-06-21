@@ -1,9 +1,9 @@
 
-using App.Common.Models.Responses;
-using App.Payments.Models.Requests;
-using App.Payments.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
+using ClinicMasterFirstContact.src.App.Payments.Models.Requests;
+using ClinicMasterFirstContact.src.App.Payments.Models.Responses;
 
-namespace App.Payments.Contracts;
+namespace ClinicMasterFirstContact.src.App.Payments.Contracts;
 public interface IPayment
 {
     public Task<bool> UpdatePayment(PaymentFullRequest request);

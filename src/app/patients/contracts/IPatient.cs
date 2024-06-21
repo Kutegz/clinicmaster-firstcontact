@@ -1,9 +1,9 @@
 
-using App.Common.Models.Responses;
-using App.Patients.Models.Requests;
-using App.Patients.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
+using ClinicMasterFirstContact.src.App.Patients.Models.Requests;
+using ClinicMasterFirstContact.src.App.Patients.Models.Responses;
 
-namespace App.Patients.Contracts;
+namespace ClinicMasterFirstContact.src.App.Patients.Contracts;
 public interface IPatient
 {
     public Task<bool> CreatePatient(PatientFullRequest request);

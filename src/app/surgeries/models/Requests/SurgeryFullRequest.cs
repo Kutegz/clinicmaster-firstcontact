@@ -1,8 +1,8 @@
 
-using App.Common.Utils;
-using App.Common.Models.Requests;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Common.Models.Requests;
 
-namespace App.Surgeries.Models.Requests;
+namespace ClinicMasterFirstContact.src.App.Surgeries.Models.Requests;
 public sealed record SurgeryFullRequest 
 {    
     public required string TreatmentNo {get; init;}

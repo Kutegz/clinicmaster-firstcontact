@@ -1,7 +1,7 @@
 
-using App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Common.Utils;
 
-namespace App.MedicalReports.Models.Requests;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Models.Requests;
 public sealed record TheaterOperationRequest
 {
     public required string Anaesthesia_type {get; init;}

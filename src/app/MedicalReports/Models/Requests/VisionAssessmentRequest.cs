@@ -1,5 +1,5 @@
 
-namespace App.MedicalReports.Models.Requests;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Models.Requests;
 public sealed record VisionAssessmentRequest 
 {
     public required string Entry_order { get; init; }

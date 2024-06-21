@@ -1,5 +1,5 @@
 
-namespace App.Common.Utils;
+namespace ClinicMasterFirstContact.src.App.Common.Utils;
 public static class CommonConstants 
 {
     public static string XAgentId => "X-Agent-Id";

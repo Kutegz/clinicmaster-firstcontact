@@ -1,5 +1,5 @@
 
-namespace App.MedicalReports.Contracts;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Contracts;
 public abstract record MedicalReportBase<TContent> {
     public required string FacilityCode {get; init;}
     public required string VisitNo {get; init;}

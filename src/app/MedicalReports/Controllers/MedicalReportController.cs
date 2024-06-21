@@ -1,12 +1,13 @@
 
-using App.Common.Utils;
-using App.Common.Models.Requests;
-using Api.MedicalReports.Services;
-using App.MedicalReports.Contracts;
-using App.MedicalReports.Models.Requests;
-using App.MedicalReports.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Common.Models.Requests;
+using ClinicMasterFirstContact.src.App.MedicalReports.Services;
+using ClinicMasterFirstContact.src.App.MedicalReports.Contracts;
+using ClinicMasterFirstContact.src.App.MedicalReports.Models.Requests;
+using ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
 
-namespace App.MedicalReports.Controllers;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Controllers;
+
 public static class MedicalReportController 
 {
     public static async Task<IResult> CreateMedicalReport(string facilityCode, MedicalReportRequest request, 
@@ -32,7 +33,7 @@ public static class MedicalReportController
                 logger.LogError(message: "Route Facility Code: {facilityCode} does not match the request Facility Code: {fullRequest.FacilityCode}", 
                                                                     args: [facilityCode, fullRequest.FacilityCode]); 
 
-                return Results.BadRequest(new { 
+                return Results.BadRequest(error: new { 
                     Success = false,
                     Message = $"Route Facility Code: {facilityCode} does not match the request Facility Code: {fullRequest.FacilityCode}"
                     });
@@ -51,7 +52,7 @@ public static class MedicalReportController
                                         tag2: new KeyValuePair<string, dynamic?>("VisitNo", fullRequest.VisitNo),
                                         tag3: new KeyValuePair<string, dynamic?>("CreatedAt", fullRequest.CreatedAt)
                                     );
-                return Results.Ok(new { 
+                return Results.Ok(value: new { 
                     Success = true,
                     Message = $"Medical Report with Facility Code: {fullRequest.FacilityCode}, and Visit No: {fullRequest.VisitNo} Updated Successfully"
                     });

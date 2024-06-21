@@ -1,5 +1,5 @@
 
-namespace App.Common.Models.Responses;
+namespace ClinicMasterFirstContact.src.App.Common.Models.Responses;
 public sealed record ConsumerResponse
 {
     public required string AgentId { get; init; }

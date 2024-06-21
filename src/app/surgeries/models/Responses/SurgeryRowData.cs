@@ -1,8 +1,8 @@
 
-using App.Common.Utils;
-using App.Surgeries.Contracts;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Surgeries.Contracts;
 
-namespace App.Surgeries.Models.Responses;
+namespace ClinicMasterFirstContact.src.App.Surgeries.Models.Responses;
 public sealed record SurgeryRowData : SurgeryBase<string> {
     public static SurgeryRowData Empty => new() 
     {

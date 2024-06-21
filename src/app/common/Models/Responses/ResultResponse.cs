@@ -1,5 +1,5 @@
 
-namespace App.Common.Models.Responses;
+namespace ClinicMasterFirstContact.src.App.Common.Models.Responses;
 public sealed record ResultResponse<TResponse>
 {
     public required bool Success {get; init;}

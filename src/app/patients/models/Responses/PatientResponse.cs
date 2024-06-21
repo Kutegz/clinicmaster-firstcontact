@@ -1,7 +1,7 @@
 
-using App.Surgeries.Models.Responses;
+using ClinicMasterFirstContact.src.App.Surgeries.Models.Responses;
 
-namespace App.Patients.Models.Responses;
+namespace ClinicMasterFirstContact.src.App.Patients.Models.Responses;
 public sealed record PatientResponse {
     public required string PatientNo {get; init;}
     public required string FullName {get; init;}

@@ -1,7 +1,7 @@
 using FluentValidation;
-using App.Patients.Models.Requests;
+using ClinicMasterFirstContact.src.App.Patients.Models.Requests;
 
-namespace App.Patients.Validators;
+namespace ClinicMasterFirstContact.src.App.Patients.Validators;
 public sealed class PatientRequestValidator : AbstractValidator<PatientRequest> 
 {
     public PatientRequestValidator() 

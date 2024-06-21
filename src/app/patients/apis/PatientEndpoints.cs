@@ -1,10 +1,10 @@
 
-using App.Auth.Filters;
-using App.Common.Filters;
-using App.Patients.Controllers;
-using App.Patients.Models.Requests;
+using ClinicMasterFirstContact.src.App.Auth.Filters;
+using ClinicMasterFirstContact.src.App.Common.Filters;
+using ClinicMasterFirstContact.src.App.Patients.Controllers;
+using ClinicMasterFirstContact.src.App.Patients.Models.Requests;
 
-namespace App.Patients.Apis;
+namespace ClinicMasterFirstContact.src.App.Patients.Apis;
 public static class PatientEndpoints
 {
     public static void ConfigurePatientApis(this WebApplication app)

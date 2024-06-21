@@ -1,9 +1,9 @@
 
-using App.Common.Utils;
-using App.MedicalReports.Contracts;
-using App.Common.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.MedicalReports.Contracts;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
 
-namespace App.MedicalReports.Controllers;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Controllers;
 public static class Helpers 
 {
     public static async Task UpdateMedicalReportConsumers(string facilityCode, string visitNo, 

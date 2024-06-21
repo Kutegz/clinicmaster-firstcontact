@@ -1,8 +1,8 @@
 
-using App.Surgeries.Contracts;
-using App.Surgeries.Models.Responses;
+using ClinicMasterFirstContact.src.App.Surgeries.Contracts;
+using ClinicMasterFirstContact.src.App.Surgeries.Models.Responses;
 
-namespace App.Surgeries.Controllers;
+namespace ClinicMasterFirstContact.src.App.Surgeries.Controllers;
 public static class SurgeryController 
 {
     public static async Task<IResult> GetSurgery(string patientNo, string treatmentNo, ISurgery repo)

@@ -1,5 +1,5 @@
 
-namespace App.MedicalReports.Models.Responses;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
 public sealed record ClinicalFindingsResponse 
 {
     public required string Presenting_complaint {get; init;}

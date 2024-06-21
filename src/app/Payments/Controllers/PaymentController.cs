@@ -1,9 +1,9 @@
 
-using App.Payments.Contracts;
-using App.Payments.Models.Requests;
-using App.Payments.Models.Responses;
+using ClinicMasterFirstContact.src.App.Payments.Contracts;
+using ClinicMasterFirstContact.src.App.Payments.Models.Requests;
+using ClinicMasterFirstContact.src.App.Payments.Models.Responses;
 
-namespace App.Payments.Controllers;
+namespace ClinicMasterFirstContact.src.App.Payments.Controllers;
 
 public static class PaymentController 
 {   public static async Task<IResult> UpdatePayment(PaymentRequest request, IPayment repo, 

@@ -1,5 +1,5 @@
 
-namespace App.Payments.Models.Requests;
+namespace ClinicMasterFirstContact.src.App.Payments.Models.Requests;
 public sealed record PaymentDetailsRequest 
 {
     public required string ItemCode {get; init;}   

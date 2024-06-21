@@ -1,7 +1,7 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace App.Common.Context;
+namespace ClinicMasterFirstContact.src.App.Common.Context;
 
 public sealed class ClinicMasterContext(IConfiguration configuration)
 {

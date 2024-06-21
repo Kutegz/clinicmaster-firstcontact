@@ -1,5 +1,5 @@
 
-namespace App.Surgeries.Models.Responses;
+namespace ClinicMasterFirstContact.src.App.Surgeries.Models.Responses;
 public sealed record PrecriptionResponse {
     public required string DrugNo {get; init;}
     public required string DrugName {get; init;}

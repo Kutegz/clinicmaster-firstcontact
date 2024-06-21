@@ -1,9 +1,9 @@
 
-using App.Common.Models.Responses;
-using App.MedicalReports.Models.Requests;
-using App.MedicalReports.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
+using ClinicMasterFirstContact.src.App.MedicalReports.Models.Requests;
+using ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
 
-namespace App.MedicalReports.Contracts;
+namespace ClinicMasterFirstContact.src.App.MedicalReports.Contracts;
 public interface IMedicalReport
 {
     public Task<bool> CreateMedicalReport(MedicalReportFullRequest request);
