@@ -71,6 +71,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         if (data is null) return new () 
             {
                 Success = false,
+                Count = 0,
                 Message = "Medical Report Not Found",
                 Data = MedicalReportResponse.Empty,            
             };
@@ -88,6 +89,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         return new () 
             {
                 Success = true,
+                Count = 1,
                 Message = string.Empty,
                 Data = patient,            
             };
@@ -161,6 +163,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         if (incomingData is null) return new () 
             {
                 Success = false,
+                Count = 0,
                 Message = "Medical Reports Not Found",
                 Data = [],            
             };
@@ -181,6 +184,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         return new () 
             {
                 Success = true,
+                Count = pagedMedicalReports.Count,
                 Message = string.Empty,
                 Data = pagedMedicalReports,            
             };         

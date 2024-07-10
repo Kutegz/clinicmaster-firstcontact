@@ -23,6 +23,7 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
         if (data is null) return new () 
             {
                 Success = false,
+                Count = 0,
                 Message = "Surgery Not Found",
                 Data = SurgeryResponse.Empty,            
             };
@@ -39,6 +40,7 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
         return new () 
             {
                 Success = true,
+                Count = 1,
                 Message = string.Empty,
                 Data = patient,            
             };
@@ -58,6 +60,7 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
         if (incomingData is null) return new () 
             {
                 Success = false,
+                Count = 0,
                 Message = "Surgeries Not Found",
                 Data = [],            
             };
@@ -74,6 +77,7 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
         return new () 
             {
                 Success = true,
+                Count = surgeries.Count(),
                 Message = string.Empty,
                 Data = surgeries.ToList(),            
             };           

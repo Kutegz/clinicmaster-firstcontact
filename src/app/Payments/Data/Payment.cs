@@ -47,6 +47,7 @@ public sealed class Payment(ClinicMasterContext context) : IPayment
         if (data is null) return new () 
             {
                 Success = false,
+                Count = 0,
                 Message = "Payment Not Found",
                 Data = PaymentResponse.Empty,            
             };
@@ -66,6 +67,7 @@ public sealed class Payment(ClinicMasterContext context) : IPayment
         return new () 
             {
                 Success = true,
+                Count = 1,
                 Message = string.Empty,
                 Data = payment,            
             };
@@ -88,6 +90,7 @@ public sealed class Payment(ClinicMasterContext context) : IPayment
         if (incomingData is null) return new () 
             {
                 Success = false,
+                Count = 0,
                 Message = "Payments Not Found",
                 Data = [],            
             };
@@ -109,6 +112,7 @@ public sealed class Payment(ClinicMasterContext context) : IPayment
         return new () 
             {
                 Success = true,
+                Count = pagedPayments.Count,
                 Message = string.Empty,
                 Data = pagedPayments,            
             };           

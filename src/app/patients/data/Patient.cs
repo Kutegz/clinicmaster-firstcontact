@@ -48,6 +48,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
         if (patient is null) return new () 
             {
                 Success = false,
+                Count = 0,
                 Message = "Patient Not Found",
                 Data = PatientResponse.Empty,            
             };
@@ -55,6 +56,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
         return new () 
             {
                 Success = true,
+                Count = 1,
                 Message = string.Empty,
                 Data = patient,            
             };
@@ -110,6 +112,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
         return new () 
                 {
                     Success = true,
+                    Count = pagedPatients.Count,
                     Message = string.Empty,
                     Data = pagedPatients,            
                 };           
