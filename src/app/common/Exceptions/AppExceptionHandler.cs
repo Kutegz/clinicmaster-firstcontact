@@ -4,45 +4,48 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace ClinicMasterFirstContact.src.App.Common.Exceptions;
+
 public sealed class AppExceptionHandler(ILogger<AppExceptionHandler> logger): IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext context, Exception exception, 
                                         CancellationToken cancellationToken)
     {
 
-        (int statusCode, string title, string errorMessage) = exception switch
+        (string title, int status, string message) = exception switch
         {
-            BadHttpRequestException err => (StatusCodes.Status400BadRequest, "Bad Request", err.Message),
-            NotImplementedException err => (StatusCodes.Status501NotImplemented, "Not Implemented", err.Message),
-            ValidationException err => (StatusCodes.Status400BadRequest, "Validation Error", err.Message),
-            FormatException err => (StatusCodes.Status400BadRequest, "Bad Request", err.Message),
-            UnauthorizedAccessException err => (StatusCodes.Status401Unauthorized, "Unauthorized", err.Message),
-            HttpRequestException err => (StatusCodes.Status502BadGateway, "Bad Gateway", err.Message),
-            Exception err => (StatusCodes.Status500InternalServerError, "Internal Server Error", err.Message),
-            _ => (StatusCodes.Status500InternalServerError, "Internal Server Error", "An unexpected error occurred.")
+            BadHttpRequestException err => ("Bad Request", StatusCodes.Status400BadRequest, err.Message),
+            NotImplementedException err => ("Not Implemented", StatusCodes.Status501NotImplemented, err.Message),
+            ValidationException err => ("Validation Error", StatusCodes.Status400BadRequest, err.Message),
+            FormatException err => ("Bad Request", StatusCodes.Status400BadRequest, err.Message),
+            UnauthorizedAccessException err => ("Unauthorized", StatusCodes.Status401Unauthorized, err.Message),
+            HttpRequestException err => ("Bad Gateway", StatusCodes.Status502BadGateway, err.Message),
+            Exception err => ("Internal Server Error", StatusCodes.Status500InternalServerError, err.Message),
+            _ => ("Internal Server Error", StatusCodes.Status500InternalServerError, "An unexpected error occurred.")
         };
 
-        context.Response.StatusCode = statusCode;
+        context.Response.StatusCode = status;
         context.Response.ContentType = "application/problem+json";
 
         var response = new ErrorResponse
         {
-            StatusCode = statusCode,
             Title = title,
-            ErrorMessage = errorMessage,
+            Status = status,
+            Message = message,
             TraceId = Activity.Current?.Id ?? context.TraceIdentifier
         };
 
-        if (statusCode == StatusCodes.Status500InternalServerError)
+        if (status == StatusCodes.Status500InternalServerError)
         {
-            logger.LogError(message: "{exception.GetType().FullName)}: ", exception.GetType().Name);
+            logger.LogError(message: "{exception.GetType().FullName)}: ", args: exception.GetType().Name);
         }
 
         logger.LogError(message: "{exception.Message}, a request on {Environment.MachineName} with Trace Id: {Activity.Current.Id}", 
-                                    exception.Message, Environment.MachineName, Activity.Current?.Id ?? context.TraceIdentifier);
+                                   args: [exception.Message, Environment.MachineName, Activity.Current?.Id ?? context.TraceIdentifier]);
 
         await context.Response.WriteAsJsonAsync(value: response, cancellationToken: cancellationToken);
 
         return  true;
     }
 }
+
+
