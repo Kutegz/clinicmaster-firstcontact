@@ -2,9 +2,10 @@
 using ClinicMasterFirstContact.src.App.Common.Utils;
 using ClinicMasterFirstContact.src.App.Patients.Contracts;
 using ClinicMasterFirstContact.src.App.Surgeries.Contracts;
+using ClinicMasterFirstContact.src.App.Common.Models.Requests;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
 using ClinicMasterFirstContact.src.App.Patients.Models.Requests;
 using ClinicMasterFirstContact.src.App.Patients.Models.Responses;
-using ClinicMasterFirstContact.src.App.Common.Models.Requests;
 
 namespace ClinicMasterFirstContact.src.App.Patients.Controllers;
 
@@ -39,12 +40,15 @@ public static class PatientController
                     });
             }
             
-            await repo.CreatePatient(request: fullRequest);
+            var result = await repo.CreatePatient(request: fullRequest);
 
-            return Results.Created(uri: $"/patients/{fullRequest.PatientNo}/", value: new 
-                    { 
-                        Success = true,
-                        Message = $"Patient with Patient No: {fullRequest.PatientNo} created successfully"
+            return Results.Created(uri: $"/patients/{fullRequest.PatientNo}/", value: new CreatedResponse
+                    {
+                        Success = result > 0,
+                        Status = StatusCodes.Status201Created,
+                        Count = result,
+                        Message = $"Patient with Patient No: {fullRequest.PatientNo} created successfully",
+                        Location = $"/patients/{fullRequest.PatientNo}/"
                     });            
         }
         catch (Exception ex) 

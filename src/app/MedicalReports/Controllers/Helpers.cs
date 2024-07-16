@@ -47,7 +47,7 @@ public static class Helpers
                 });
             }
 
-            var result = await medicalReport.UpdateMedicalReportConsumers(facilityCode: facilityCode, visitNo: visitNo, 
+            await medicalReport.UpdateMedicalReportConsumers(facilityCode: facilityCode, visitNo: visitNo, 
                                                                         consumers: CommonUtils.SerializeContent(content: updatedConsumers));
 
             logger.LogInformation("MedicalReport Consummers successfully updated for Facility Code No: {FacilityCode} and Visit No: {VisitNo} by {CreatedBy}", 

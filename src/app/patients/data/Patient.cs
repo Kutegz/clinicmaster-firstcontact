@@ -12,7 +12,7 @@ namespace ClinicMasterFirstContact.src.App.Patients.Data;
 
 public sealed class Patient(ClinicMasterContext context) : IPatient 
 {
-    public async Task<bool> CreatePatient(PatientFullRequest request)    
+    public async Task<int> CreatePatient(PatientFullRequest request)    
     {        
         var query = """
                         INSERT INTO Patients (PatientNo, FullName, Gender, Age, Creator, CreatedAt, Consumers)
@@ -30,9 +30,9 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
         parameters.Add(name: nameof(request.Consumers), value: request.Consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();
-        var result = await connection.ExecuteAsync(sql: query, param: parameters);
 
-        return result > 0;
+        return await connection.ExecuteAsync(sql: query, param: parameters);
+
     }
 
     public async Task<ResultResponse<PatientResponse>> GetPatient(string patientNo)
@@ -79,7 +79,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
 
     }
 
-    public async Task<bool> UpdatePatientConsumers(string patientNo, string consumers)
+    public async Task<int> UpdatePatientConsumers(string patientNo, string consumers)
     {
        var query = """
                         UPDATE dbo.Patients SET Consumers = @Consumers WHERE PatientNo = @PatientNo;
@@ -91,8 +91,9 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
         parameters.Add(name: "Consumers", value: consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();
-        var result = await connection.ExecuteAsync(sql: query, param: parameters);
-        return result > 0;
+        
+        return await connection.ExecuteAsync(sql: query, param: parameters);
+       
     }
     public async Task<ResultResponse<IEnumerable<PatientResponse>>> GetPatients(int page , int pageSize)
     {       

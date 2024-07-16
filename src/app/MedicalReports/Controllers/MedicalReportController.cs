@@ -5,6 +5,7 @@ using ClinicMasterFirstContact.src.App.MedicalReports.Services;
 using ClinicMasterFirstContact.src.App.MedicalReports.Contracts;
 using ClinicMasterFirstContact.src.App.MedicalReports.Models.Requests;
 using ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
 
 namespace ClinicMasterFirstContact.src.App.MedicalReports.Controllers;
 
@@ -58,7 +59,7 @@ public static class MedicalReportController
                     });
             }
             
-            await repo.CreateMedicalReport(request: fullRequest);
+            var result = await repo.CreateMedicalReport(request: fullRequest);
 
             metrics.MedicalReportCounter.Add(delta: 1, 
                                         tag1: new KeyValuePair<string, dynamic?>("FacilityCode", fullRequest.FacilityCode),
@@ -67,11 +68,15 @@ public static class MedicalReportController
                                     );
 
             return Results.Created(uri: $"/{fullRequest.FacilityCode}/visits/medicalreports/{fullRequest.VisitNo}/", 
-                                    value: new 
-                                            { 
-                                                Success = true,
-                                                Message = "Medical Report Created Successfully"
-                                            });            
+                    value: new CreatedResponse
+                        {
+                            Success = result > 0,
+                            Status = StatusCodes.Status201Created,
+                            Count = result,
+                            Message = "Medical Report Created Successfully",
+                            Location = $"/{fullRequest.FacilityCode}/visits/medicalreports/{fullRequest.VisitNo}/", 
+                        }
+                );            
         }
         catch (Exception ex) 
         { 

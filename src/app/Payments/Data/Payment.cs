@@ -11,7 +11,7 @@ using ClinicMasterFirstContact.src.App.Payments.Models.Responses;
 namespace ClinicMasterFirstContact.src.App.Payments.Data;
 public sealed class Payment(ClinicMasterContext context) : IPayment 
 {
-    public async Task<bool> UpdatePayment(PaymentFullRequest request)
+    public async Task<int> UpdatePayment(PaymentFullRequest request)
     {        
         var query = """
                         INSERT INTO Payments (GRNNo, ReceivedDate, Content, CreatedBy, CreatedAt, SyncStatus) 
@@ -28,9 +28,8 @@ public sealed class Payment(ClinicMasterContext context) : IPayment
         parameters.Add(name: nameof(request.SyncStatus), value: request.SyncStatus, dbType: DbType.Boolean);
 
         using var connection = context.CreateConnection();
-        var result = await connection.ExecuteAsync(sql: query, param: parameters);
 
-        return result > 0;
+        return await connection.ExecuteAsync(sql: query, param: parameters);
     }
     public async Task<ResultResponse<PaymentResponse>> GetPayment(string billNo)
     {

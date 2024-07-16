@@ -11,7 +11,7 @@ using ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
 namespace ClinicMasterFirstContact.src.App.MedicalReports.Data;
 public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport 
 {
-    public async Task<bool> CreateMedicalReport(MedicalReportFullRequest request)    
+    public async Task<int> CreateMedicalReport(MedicalReportFullRequest request)    
     {        
         var query = """
                         INSERT INTO MedicalReports (FacilityCode, VisitNo, VisitDate, Content, Creator, CreatedAt, Consumers)
@@ -29,11 +29,10 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         parameters.Add(name: nameof(request.Consumers), value: request.Consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();
-        var result = await connection.ExecuteAsync(sql: query, param: parameters);
-
-        return result > 0;
+        
+        return  await connection.ExecuteAsync(sql: query, param: parameters);
     }
-    public async Task<bool> UpdateMedicalReport(MedicalReportFullRequest request)
+    public async Task<int> UpdateMedicalReport(MedicalReportFullRequest request)
     {        
         var query = """
                         UPDATE dbo.MedicalReports SET VisitDate = @VisitDate, Content = @Content, 
@@ -52,9 +51,8 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         parameters.Add(name: nameof(request.Consumers), value: request.Consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();
-        var result = await connection.ExecuteAsync(sql: query, param: parameters);
 
-        return result > 0;
+        return await connection.ExecuteAsync(sql: query, param: parameters);
     }
 
     public async Task<ResultResponse<MedicalReportResponse>> GetMedicalReport(string facilityCode, string visitNo)
@@ -129,7 +127,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
 
     }
 
-    public async Task<bool> UpdateMedicalReportConsumers(string facilityCode, string visitNo, string consumers)
+    public async Task<int> UpdateMedicalReportConsumers(string facilityCode, string visitNo, string consumers)
     {
        var query = """
                         UPDATE dbo.MedicalReports SET Consumers = @Consumers WHERE FacilityCode = @FacilityCode AND VisitNo = @VisitNo;
@@ -142,8 +140,8 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         parameters.Add(name: "Consumers", value: consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();
-        var result = await connection.ExecuteAsync(sql: query, param: parameters);
-        return result > 0;
+        
+        return await connection.ExecuteAsync(sql: query, param: parameters);
     }
    
     public async Task<ResultResponse<IEnumerable<MedicalReportResponse>>> GetMedicalReports(string facilityCode, int page, int pageSize)

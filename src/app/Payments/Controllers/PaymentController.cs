@@ -1,5 +1,6 @@
 
 using ClinicMasterFirstContact.src.App.Payments.Contracts;
+using ClinicMasterFirstContact.src.App.Common.Models.Responses;
 using ClinicMasterFirstContact.src.App.Payments.Models.Requests;
 using ClinicMasterFirstContact.src.App.Payments.Models.Responses;
 
@@ -12,12 +13,19 @@ public static class PaymentController
         try
         {    
             var fullRequest = PaymentFullRequest.Create(request);
-            await repo.UpdatePayment(fullRequest);
+            var result = await repo.UpdatePayment(fullRequest);
 
             logger.LogInformation("Goods Received Note request received {@fullRequest}", fullRequest); 
 
             return Results.Created(uri: $"/payments/{request.GRNNo}/", 
-                                    value: new { Message = "Payments Updated Successfully"});            
+                    value: new CreatedResponse
+                        {
+                            Success = result > 0,
+                            Status = StatusCodes.Status201Created,
+                            Count = result,
+                            Message = "Payments Updated Successfully",
+                            Location = $"/payments/{request.GRNNo}/", 
+                        });            
         }
         catch (Exception ex) 
         { 
