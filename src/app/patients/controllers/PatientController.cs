@@ -1,5 +1,7 @@
 
+using System.Diagnostics;
 using ClinicMasterFirstContact.src.App.Common.Utils;
+using ClinicMasterFirstContact.src.App.Common.Exceptions;
 using ClinicMasterFirstContact.src.App.Patients.Contracts;
 using ClinicMasterFirstContact.src.App.Surgeries.Contracts;
 using ClinicMasterFirstContact.src.App.Common.Models.Requests;
@@ -34,10 +36,13 @@ public static class PatientController
             {
                 logger.LogError(message: "Patient with Patient No: {PatientNo} already exists", args: [fullRequest.PatientNo]);
 
-                return Results.Conflict(new { 
-                    Success = false,
-                    Message = $"Patient with Patient No: {fullRequest.PatientNo} already exists"
-                    });
+                return Results.Conflict(new ErrorResponse 
+                        {
+                            Title = "Conflict Error",
+                            Status = StatusCodes.Status409Conflict,
+                            Message = $"Patient with Patient No: {fullRequest.PatientNo} already exists",
+                            TraceId = Activity.Current?.Id ?? context.TraceIdentifier,
+                        });
             }
             
             var result = await repo.CreatePatient(request: fullRequest);
