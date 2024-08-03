@@ -46,14 +46,15 @@ public static class PatientController
             }
             
             var result = await repo.CreatePatient(request: fullRequest);
+            var location = $"/patients/{fullRequest.PatientNo}/";
 
-            return Results.Created(uri: $"/patients/{fullRequest.PatientNo}/", value: new CreatedResponse
+            return Results.Created(uri: location, value: new CreatedResponse
                     {
                         Success = result > 0,
                         Status = StatusCodes.Status201Created,
                         Count = result,
                         Message = $"Patient with Patient No: {fullRequest.PatientNo} created successfully",
-                        Location = $"/patients/{fullRequest.PatientNo}/"
+                        Location = location
                     });            
         }
         catch (Exception ex) 
@@ -101,7 +102,7 @@ public static class PatientController
             var finalResults = results with { Data = results.Data.Select(async patient => 
                 {
                     var surgeries = await surgeryRepo.GetSurgeries(patient.PatientNo);
-                    return patient with { Surgeries = surgeries.Data.ToList()};
+                    return patient with { Surgeries = surgeries.Data.ToList() };
                 }).Select(pr => pr.Result).ToList()            
             };
 
