@@ -1,5 +1,4 @@
 
-using ClinicMasterFirstContact.src.App.Common.Utils;
 using ClinicMasterFirstContact.src.App.MedicalReports.Contracts;
 
 namespace ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
@@ -9,9 +8,9 @@ public sealed record MedicalReportResponse : MedicalReportBase<MedicalReportCont
     {
         FacilityCode = string.Empty,
         VisitNo = string.Empty,
-        VisitDate = DateTime.Parse(CommonConstants.NullDateTimeString),
+        VisitDate = DateTime.MinValue,
         Content = MedicalReportContentResponse.Empty,
-        CreatedAt = DateTime.Parse(CommonConstants.NullDateTimeString),
+        CreatedAt = DateTime.MinValue,
     };
 
 }

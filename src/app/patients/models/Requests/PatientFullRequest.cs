@@ -1,7 +1,4 @@
 
-using ClinicMasterFirstContact.src.App.Common.Utils;
-using ClinicMasterFirstContact.src.App.Common.Models.Requests;
-
 namespace ClinicMasterFirstContact.src.App.Patients.Models.Requests;
 public sealed record PatientFullRequest 
 {

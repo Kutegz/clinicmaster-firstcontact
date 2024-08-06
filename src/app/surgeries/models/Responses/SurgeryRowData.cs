@@ -1,5 +1,3 @@
-
-using ClinicMasterFirstContact.src.App.Common.Utils;
 using ClinicMasterFirstContact.src.App.Surgeries.Contracts;
 
 namespace ClinicMasterFirstContact.src.App.Surgeries.Models.Responses;
@@ -8,7 +6,7 @@ public sealed record SurgeryRowData : SurgeryBase<string> {
     {
         TreatmentNo = string.Empty,
         PatientNo = string.Empty,
-        VisitDate = DateTimeOffset.Parse(CommonConstants.NullDateTimeString),
+        VisitDate = DateTime.MinValue,
         Content = string.Empty,
     };
 

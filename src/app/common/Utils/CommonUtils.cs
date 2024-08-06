@@ -13,8 +13,7 @@ public static class CommonUtils
     public static DateTime ConvertStringToDateTime(string value)
     {
         var result = DateTime.TryParse(s: value, result: out DateTime date);
-        if (!result) return DateTime.Parse(s: CommonConstants.NullDateTimeString);
-        return date;
+        return result ? date : DateTime.MinValue;
     }
     public static DateTime GetCurrentDateTime(TimeProvider timeProvider) => timeProvider.GetLocalNow().DateTime;
 }

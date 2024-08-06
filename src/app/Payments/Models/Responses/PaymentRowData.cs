@@ -1,5 +1,3 @@
-
-using ClinicMasterFirstContact.src.App.Common.Utils;
 using ClinicMasterFirstContact.src.App.Payments.Contracts;
 
 namespace ClinicMasterFirstContact.src.App.Payments.Models.Responses;
@@ -12,7 +10,7 @@ public sealed record PaymentRowData : PaymentBase<string>
         PayType = string.Empty,
         ContentSent =  string.Empty,
         CreatedBy = string.Empty,
-        CreatedAt = DateTime.Parse(CommonConstants.NullDateTimeString),
+        CreatedAt = DateTime.MinValue,
         Completed = false,
     };
 }

@@ -1,5 +1,4 @@
 using FluentValidation;
-using ClinicMasterFirstContact.src.App.Common.Utils;
 using ClinicMasterFirstContact.src.App.MedicalReports.Models.Requests;
 
 namespace ClinicMasterFirstContact.src.App.MedicalReports.Validators;
@@ -14,7 +13,7 @@ public sealed class MedicalReportRequestValidator : AbstractValidator<MedicalRep
                                             .WithMessage(errorMessage: "Please include Visit No");
         RuleFor(expression: request => request.VisitDate).NotEmpty()
                                             .WithMessage(errorMessage: "Please include Visit Date")
-                                            .GreaterThan(DateTime.Parse(CommonConstants.NullDateTimeString))
+                                            .GreaterThan(DateTime.MinValue)
                                             .WithMessage(errorMessage: "Visit Date cannot be in the past")
                                             .LessThan(DateTime.Now)
                                             .WithMessage(errorMessage: "Visit Date cannot be ahead of today" );
@@ -162,7 +161,7 @@ public sealed class MedicalReportRequestValidator : AbstractValidator<MedicalRep
                         theaterOperation.RuleFor(expression: theaterOp => theaterOp.Report).NotEmpty();
                         theaterOperation.RuleFor(expression: theaterOp => theaterOp.Postoperative_instructions).NotEmpty();
                         theaterOperation.RuleFor(expression: theaterOp => theaterOp.Operation_datetime).NotEmpty()
-                                                                        .GreaterThan(DateTime.Parse(CommonConstants.NullDateTimeString))
+                                                                        .GreaterThan(DateTime.MinValue)
                                                                         .WithMessage(errorMessage: "Operation Date cannot be in the past")
                                                                         .LessThan(DateTime.Now)
                                                                         .WithMessage(errorMessage: "Operation Date cannot be ahead of today" );
@@ -180,7 +179,7 @@ public sealed class MedicalReportRequestValidator : AbstractValidator<MedicalRep
                     {
                         radiology.RuleFor(expression: rad => rad.Examination).NotEmpty();
                         radiology.RuleFor(expression: rad => rad.Examination_date).NotEmpty()
-                                                                        .GreaterThan(DateTime.Parse(CommonConstants.NullDateTimeString))
+                                                                        .GreaterThan(DateTime.MinValue)
                                                                         .WithMessage(errorMessage: "Examination Date cannot be in the past")
                                                                         .LessThan(DateTime.Now)
                                                                         .WithMessage(errorMessage: "Examination Date cannot be ahead of today" );
@@ -200,7 +199,7 @@ public sealed class MedicalReportRequestValidator : AbstractValidator<MedicalRep
                     {
                         pathology.RuleFor(expression: path => path.Test).NotEmpty();
                         pathology.RuleFor(expression: path => path.Examination_date).NotEmpty()
-                                                            .GreaterThan(DateTime.Parse(CommonConstants.NullDateTimeString))
+                                                            .GreaterThan(DateTime.MinValue)
                                                             .WithMessage(errorMessage: "Examination Date cannot be in the past")
                                                             .LessThan(DateTime.Now)
                                                             .WithMessage(errorMessage: "Examination Date cannot be ahead of today" );

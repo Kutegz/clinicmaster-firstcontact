@@ -1,6 +1,4 @@
 
-using ClinicMasterFirstContact.src.App.Common.Utils;
-
 namespace ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
 public sealed record TheaterOperationResponse 
 {
@@ -19,6 +17,6 @@ public sealed record TheaterOperationResponse
         Planned_procedures = string.Empty,
         Report = string.Empty,
         Postoperative_instructions = string.Empty,
-        Operation_datetime = DateTime.Parse(CommonConstants.NullDateTimeString),
+        Operation_datetime = DateTime.MinValue,
     };
 }

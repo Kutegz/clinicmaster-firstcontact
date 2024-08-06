@@ -1,6 +1,4 @@
 
-using ClinicMasterFirstContact.src.App.Common.Utils;
-
 namespace ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
 public sealed record PatientResponse 
 {
@@ -16,7 +14,7 @@ public sealed record PatientResponse
         Identifier = string.Empty,
         Age = 0,
         Gender = string.Empty,
-        Join_date = DateTime.Parse(CommonConstants.NullDateTimeString),
+        Join_date = DateTime.MinValue,
         Status = string.Empty,
         Chronic_diseases = [],
         Allergies = [],

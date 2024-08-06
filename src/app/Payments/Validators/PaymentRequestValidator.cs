@@ -1,5 +1,4 @@
 using FluentValidation;
-using ClinicMasterFirstContact.src.App.Common.Utils;
 using ClinicMasterFirstContact.src.App.Payments.Models.Requests;
 
 namespace ClinicMasterFirstContact.src.App.Payments.Validators;
@@ -11,7 +10,7 @@ public sealed class PaymentRequestValidator : AbstractValidator<PaymentRequest>
                                             .WithMessage(errorMessage: "Please include GRNNo");
         RuleFor(request => request.ReceivedDate).NotEmpty()
                                             .WithMessage(errorMessage: "Please include Received Date")
-                                            .GreaterThan(DateTime.Parse(CommonConstants.NullDateTimeString))
+                                            .GreaterThan(DateTime.MinValue)
                                             .WithMessage(errorMessage: "Received Date cannot be in the past")
                                             .LessThan(DateTime.Now)
                                             .WithMessage(errorMessage: "Received Date cannot be ahead of today" );

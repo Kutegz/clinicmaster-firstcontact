@@ -1,6 +1,4 @@
 
-using ClinicMasterFirstContact.src.App.Common.Utils;
-
 namespace ClinicMasterFirstContact.src.App.MedicalReports.Models.Responses;
 public sealed record PathologyResponse 
 {
@@ -11,7 +9,7 @@ public sealed record PathologyResponse
     public static PathologyResponse Empty => new() 
     {
         Test = string.Empty,
-        Examination_date = DateTime.Parse(CommonConstants.NullDateTimeString),
+        Examination_date = DateTime.MinValue,
         Indication = string.Empty,
         Diagnosis = string.Empty
     };
