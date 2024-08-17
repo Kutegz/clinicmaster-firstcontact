@@ -446,6 +446,7 @@ VALUES (
     '{
         "agentId": "ClinicMaster",
         "agentName": "ClinicMaster",
+        "clientAddress": "CILCEOMac",
         "syncCount": 1,
         "syncStatus": true,
         "syncDateTime": "2024-03-25T00:00:00.000Z",

@@ -16,4 +16,12 @@ public static class CommonUtils
         return result ? date : DateTime.MinValue;
     }
     public static DateTime GetCurrentDateTime(TimeProvider timeProvider) => timeProvider.GetLocalNow().DateTime;
+    
+    public static string GetClientAddress(HttpContext context)
+    {
+        var forwardedHeader = context.Request.Headers[CommonConstants.XForwardedFor].FirstOrDefault();
+        return string.IsNullOrEmpty(value: forwardedHeader) 
+                ? context.Connection.RemoteIpAddress?.ToString() ?? Environment.MachineName
+                : forwardedHeader.Split(separator: ',').First().Trim();
+    }
 }
