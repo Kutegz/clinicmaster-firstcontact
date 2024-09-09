@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using ClinicMasterFirstContact.src.App.Common.Utils;
 using ClinicMasterFirstContact.src.App.Patients.Apis;
 using ClinicMasterFirstContact.src.App.Patients.Data;
-// using ClinicMasterFirstContact.src.App.Payments.Apis;
 using ClinicMasterFirstContact.src.App.Payments.Data;
 using ClinicMasterFirstContact.src.App.Common.Context;
 using ClinicMasterFirstContact.src.App.Surgeries.Apis;
@@ -24,7 +23,7 @@ using ClinicMasterFirstContact.src.App.MedicalReports.Services;
 using ClinicMasterFirstContact.src.App.MedicalReports.Contracts;
 using ClinicMasterFirstContact.src.App.MedicalReports.Validators;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args: args);
 {
     string connectionString = builder.Configuration.GetConnectionString(name: "ClinicMasterConnection")!;
     builder.Services.AddHealthChecks()
@@ -78,7 +77,7 @@ var app = builder.Build();
 {
     // Configure the HTTP request pipeline.
 
-    app.UseExceptionHandler(_ => {});
+    app.UseExceptionHandler(configure: _ => {});
     app.UseHttpsRedirection();
 
     app.UseAuthentication();

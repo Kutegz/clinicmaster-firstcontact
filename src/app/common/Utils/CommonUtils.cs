@@ -16,7 +16,12 @@ public static class CommonUtils
         return result ? date : DateTime.MinValue;
     }
     public static DateTime GetCurrentDateTime(TimeProvider timeProvider) => timeProvider.GetLocalNow().DateTime;
-    
+        public static (DateTime startDate, DateTime endDate) GetMonthStartEndDates(int year, int month, int day = 1)
+    {
+        var startDate = new DateTime(year: year, month: month, day: day);
+        var endDate = startDate.AddMonths(months: 1).AddDays(value: -1);
+        return (startDate, endDate);
+    }
     public static string GetClientAddress(HttpContext context)
     {
         var forwardedHeader = context.Request.Headers[CommonConstants.XForwardedFor].FirstOrDefault();
