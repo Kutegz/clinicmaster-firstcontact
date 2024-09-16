@@ -71,7 +71,7 @@ public static class MedicalReportController
                     value: new CreatedResponse
                         {
                             Success = result > 0,
-                            Status = StatusCodes.Status201Created,
+                            StatusCode = StatusCodes.Status201Created,
                             Count = result,
                             Message = "Medical Report Created Successfully",
                             Location = $"/{fullRequest.FacilityCode}/visits/medicalreports/{fullRequest.VisitNo}/", 

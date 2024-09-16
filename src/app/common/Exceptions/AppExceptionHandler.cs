@@ -11,7 +11,7 @@ public sealed class AppExceptionHandler(ILogger<AppExceptionHandler> logger): IE
                                         CancellationToken cancellationToken)
     {
 
-        (string title, int status, string message) = exception switch
+        (string title, int statusCode, string message) = exception switch
         {
             BadHttpRequestException err => ("Bad Request", StatusCodes.Status400BadRequest, err.Message),
             NotImplementedException err => ("Not Implemented", StatusCodes.Status501NotImplemented, err.Message),
@@ -23,18 +23,18 @@ public sealed class AppExceptionHandler(ILogger<AppExceptionHandler> logger): IE
             _ => ("Internal Server Error", StatusCodes.Status500InternalServerError, "An unexpected error occurred.")
         };
 
-        context.Response.StatusCode = status;
+        context.Response.StatusCode = statusCode;
         context.Response.ContentType = "application/problem+json";
 
         var response = new ErrorResponse
         {
             Title = title,
-            Status = status,
+            StatusCode = statusCode,
             Message = message,
             TraceId = Activity.Current?.Id ?? context.TraceIdentifier
         };
 
-        if (status == StatusCodes.Status500InternalServerError)
+        if (statusCode == StatusCodes.Status500InternalServerError)
         {
             logger.LogError(message: "{exception.GetType().FullName)}: ", args: exception.GetType().Name);
         }

@@ -39,7 +39,7 @@ public static class PatientController
                 return Results.Conflict(new ErrorResponse 
                         {
                             Title = "Conflict Error",
-                            Status = StatusCodes.Status409Conflict,
+                            StatusCode = StatusCodes.Status409Conflict,
                             Message = $"Patient with Patient No: {fullRequest.PatientNo} already exists",
                             TraceId = Activity.Current?.Id ?? context.TraceIdentifier,
                         });
@@ -51,7 +51,7 @@ public static class PatientController
             return Results.Created(uri: location, value: new CreatedResponse
                     {
                         Success = result > 0,
-                        Status = StatusCodes.Status201Created,
+                        StatusCode = StatusCodes.Status201Created,
                         Count = result,
                         Message = $"Patient with Patient No: {fullRequest.PatientNo} created successfully",
                         Location = location

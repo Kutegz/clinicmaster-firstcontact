@@ -21,7 +21,7 @@ public static class PaymentController
                     value: new CreatedResponse
                         {
                             Success = result > 0,
-                            Status = StatusCodes.Status201Created,
+                            StatusCode = StatusCodes.Status201Created,
                             Count = result,
                             Message = "Payments Updated Successfully",
                             Location = $"/payments/{request.GRNNo}/", 
