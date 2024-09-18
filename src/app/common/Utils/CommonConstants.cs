@@ -6,6 +6,7 @@ public static class CommonConstants
     public static string XApiKey => "X-Api-Key";
     public static string ClinicMaster => "ClinicMaster";
     public static string XForwardedFor => "X-Forwarded-For";
+    public static string CorsPolicyName => "CorsPolicy";
     public static string AuthenticationAgentId => "Authentication:AgentId";
     public static string AuthenticationApiKey => "Authentication:ApiKey";
     public static IReadOnlyList<string> OpenTelemetryMeterNames 
