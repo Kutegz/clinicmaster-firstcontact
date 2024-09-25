@@ -29,4 +29,16 @@ public static class CommonUtils
                 ? context.Connection.RemoteIpAddress?.ToString() ?? Environment.MachineName
                 : forwardedHeader.Split(separator: ',').First().Trim();
     }
+    public static (uint records, int page, int pageSize) GetDataQueryParameters(HttpContext context)
+    {
+        var recordsValue = context.Request.Query["records"].FirstOrDefault();
+        var pageValue = context.Request.Query["page"].FirstOrDefault();
+        var pageSizeValue = context.Request.Query["pageSize"].FirstOrDefault();
+
+        if (!uint.TryParse(recordsValue, out uint records)) records = 1000;
+        if (!int.TryParse(pageValue, out int page) || page <= 0) page = 1;
+        if (!int.TryParse(pageSizeValue, out int pageSize) || pageSize <= 0) pageSize = 10;
+
+        return (records, page, pageSize);
+    }
 }
