@@ -18,5 +18,4 @@ public sealed class ApiAccessAuthEndpointFilter(IConfiguration configuration) : 
 
     private bool IsApiKeyValid(string? apiKey) => 
         !string.IsNullOrWhiteSpace(value: apiKey) && apiKey == configuration[CommonConstants.AuthenticationApiKey];
-    
 }

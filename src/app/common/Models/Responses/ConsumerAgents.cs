@@ -7,5 +7,4 @@ public sealed record ConsumerAgents
     {
         Consumers = string.Empty
     };
-
 }
