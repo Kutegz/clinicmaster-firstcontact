@@ -66,15 +66,17 @@ public static class MedicalReportController
                                         tag2: new KeyValuePair<string, dynamic?>("VisitNo", fullRequest.VisitNo),
                                         tag3: new KeyValuePair<string, dynamic?>("CreatedAt", fullRequest.CreatedAt)
                                     );
+            var location = $"/{fullRequest.FacilityCode}/visits/medicalreports/{fullRequest.VisitNo}/";
 
-            return Results.Created(uri: $"/{fullRequest.FacilityCode}/visits/medicalreports/{fullRequest.VisitNo}/", 
+            return Results.Created(uri: location, 
                     value: new CreatedResponse
                         {
                             Success = result > 0,
                             StatusCode = StatusCodes.Status201Created,
                             Count = result,
                             Message = "Medical Report Created Successfully",
-                            Location = $"/{fullRequest.FacilityCode}/visits/medicalreports/{fullRequest.VisitNo}/", 
+                            Location = location, 
+                            CreatedAt = fullRequest.CreatedAt
                         }
                 );            
         }

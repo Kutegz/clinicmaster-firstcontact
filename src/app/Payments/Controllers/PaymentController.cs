@@ -16,15 +16,17 @@ public static class PaymentController
             var result = await repo.UpdatePayment(fullRequest);
 
             logger.LogInformation("Goods Received Note request received {@fullRequest}", fullRequest); 
+            var location = $"/payments/{request.GRNNo}/";
 
-            return Results.Created(uri: $"/payments/{request.GRNNo}/", 
+            return Results.Created(uri: location, 
                     value: new CreatedResponse
                         {
                             Success = result > 0,
                             StatusCode = StatusCodes.Status201Created,
                             Count = result,
                             Message = "Payments Updated Successfully",
-                            Location = $"/payments/{request.GRNNo}/", 
+                            Location = location, 
+                            CreatedAt = fullRequest.CreatedAt
                         });            
         }
         catch (Exception ex) 

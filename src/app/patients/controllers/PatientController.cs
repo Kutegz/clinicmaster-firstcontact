@@ -54,7 +54,8 @@ public static class PatientController
                         StatusCode = StatusCodes.Status201Created,
                         Count = result,
                         Message = $"Patient with Patient No: {fullRequest.PatientNo} created successfully",
-                        Location = location
+                        Location = location,
+                        CreatedAt = fullRequest.CreatedAt
                     });            
         }
         catch (Exception ex) 
