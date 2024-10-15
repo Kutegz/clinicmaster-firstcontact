@@ -44,7 +44,6 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
                 Message = string.Empty,
                 Data = patient,            
             };
-
     }
    
     public async Task<ResultResponse<IEnumerable<SurgeryResponse>>> GetSurgeries(string patientNo)
@@ -80,8 +79,6 @@ public sealed class Surgery(ClinicMasterContext context) : ISurgery
                 Count = surgeries.Count(),
                 Message = string.Empty,
                 Data = surgeries.ToList(),            
-            };           
-
+            };
     }
-  
 }

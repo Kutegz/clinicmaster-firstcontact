@@ -17,19 +17,9 @@ public sealed class Payment(ClinicMasterContext context) : IPayment
                         INSERT INTO Payments (GRNNo, ReceivedDate, Content, CreatedBy, CreatedAt, SyncStatus) 
                         VALUES (@GRNNo, @ReceivedDate, CAST(@Content AS JSONB), @CreatedBy, @CreatedAt, @SyncStatus);
                     """;
-                    
-        var parameters = new DynamicParameters ();
-
-        parameters.Add(name: nameof(request.GRNNo), value: request.GRNNo, dbType: DbType.String);
-        parameters.Add(name: nameof(request.ReceivedDate), value: request.ReceivedDate, dbType: DbType.Date);
-        parameters.Add(name: nameof(request.Content), value: request.Content, dbType: DbType.String);
-        parameters.Add(name: nameof(request.CreatedBy), value: request.CreatedBy, dbType: DbType.String);
-        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTime2);
-        parameters.Add(name: nameof(request.SyncStatus), value: request.SyncStatus, dbType: DbType.Boolean);
 
         using var connection = context.CreateConnection();
-
-        return await connection.ExecuteAsync(sql: query, param: parameters);
+        return await connection.ExecuteAsync(sql: query, param: request);
     }
     public async Task<ResultResponse<PaymentResponse>> GetPayment(string billNo)
     {

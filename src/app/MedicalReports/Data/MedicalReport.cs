@@ -17,20 +17,10 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                         INSERT INTO MedicalReports (FacilityCode, VisitNo, VisitDate, Content, Creator, CreatedAt, Consumers)
                         VALUES (@FacilityCode, @VisitNo, @VisitDate, @Content, @Creator, @CreatedAt, @Consumers);
                     """;
-                    
-        var parameters = new DynamicParameters ();
-
-        parameters.Add(name: nameof(request.FacilityCode), value: request.FacilityCode, dbType: DbType.String);
-        parameters.Add(name: nameof(request.VisitNo), value: request.VisitNo, dbType: DbType.String);
-        parameters.Add(name: nameof(request.VisitDate), value: request.VisitDate, dbType: DbType.Date);
-        parameters.Add(name: nameof(request.Content), value: request.Content, dbType: DbType.String);
-        parameters.Add(name: nameof(request.Creator), value: request.Creator, dbType: DbType.String);
-        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTime2);
-        parameters.Add(name: nameof(request.Consumers), value: request.Consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();
         
-        return  await connection.ExecuteAsync(sql: query, param: parameters);
+        return  await connection.ExecuteAsync(sql: query, param: request);
     }
     public async Task<int> UpdateMedicalReport(MedicalReportFullRequest request)
     {        
@@ -39,20 +29,10 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                             Creator = @Creator, CreatedAt = @CreatedAt, Consumers = @Consumers
                             WHERE FacilityCode = @FacilityCode AND VisitNo = @VisitNo;
                     """;
-                    
-        var parameters = new DynamicParameters ();
-
-        parameters.Add(name: nameof(request.FacilityCode), value: request.FacilityCode, dbType: DbType.String);
-        parameters.Add(name: nameof(request.VisitNo), value: request.VisitNo, dbType: DbType.String);
-        parameters.Add(name: nameof(request.VisitDate), value: request.VisitDate, dbType: DbType.Date);
-        parameters.Add(name: nameof(request.Content), value: request.Content, dbType: DbType.String);
-        parameters.Add(name: nameof(request.Creator), value: request.Creator, dbType: DbType.String);
-        parameters.Add(name: nameof(request.CreatedAt), value: request.CreatedAt, dbType: DbType.DateTime2);
-        parameters.Add(name: nameof(request.Consumers), value: request.Consumers, dbType: DbType.String);
 
         using var connection = context.CreateConnection();
 
-        return await connection.ExecuteAsync(sql: query, param: parameters);
+        return await connection.ExecuteAsync(sql: query, param: request);
     }
 
     public async Task<ResultResponse<MedicalReportResponse>> GetMedicalReport(string facilityCode, string visitNo)
@@ -94,7 +74,7 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
 
     }
 
-        public async Task<string> GetMedicalReportBuddle(string facilityCode, string visitNo)
+    public async Task<string> GetMedicalReportBuddle(string facilityCode, string visitNo)
     {
         var query = """
                         SELECT Content FROM MedicalReports 
@@ -106,7 +86,6 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
         var data = await connection.QuerySingleOrDefaultAsync<string> (sql: query, param: parameters);
                   
         return data ?? string.Empty;
-
 
     }
 
@@ -133,14 +112,14 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                         UPDATE dbo.MedicalReports SET Consumers = @Consumers WHERE FacilityCode = @FacilityCode AND VisitNo = @VisitNo;
                     """;
                     
-        var parameters = new DynamicParameters ();
+        var parameters = new {
 
-        parameters.Add(name: "FacilityCode", value: facilityCode, dbType: DbType.String);
-        parameters.Add(name: "VisitNo", value: visitNo, dbType: DbType.String);
-        parameters.Add(name: "Consumers", value: consumers, dbType: DbType.String);
+            FacilityCode = facilityCode,
+            VisitNo = visitNo,
+            Consumers = consumers
+        };
 
         using var connection = context.CreateConnection();
-        
         return await connection.ExecuteAsync(sql: query, param: parameters);
     }
    
@@ -186,7 +165,5 @@ public sealed class MedicalReport(ClinicMasterContext context) : IMedicalReport
                 Message = string.Empty,
                 Data = pagedMedicalReports,            
             };         
-
     }
-  
 }
