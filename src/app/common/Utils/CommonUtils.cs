@@ -22,6 +22,19 @@ public static class CommonUtils
         var endDate = startDate.AddMonths(months: 1).AddDays(value: -1);
         return (startDate, endDate);
     }
+    public static int GetQuarterBeginMonth(string quarter)
+        => quarter.ToUpper() switch { "Q1" => 1, "Q2" => 4, "Q3" => 7, "Q4" => 10, _ => 0 };
+    public static int GetQuarterEndMonth(string quarter)
+        => quarter.ToUpper() switch { "Q1" => 3, "Q2" => 6, "Q3" => 9, "Q4" => 12, _ => 0 };
+    public static (DateTime startDate, DateTime endDate) GetQuarterStartEndDates(string quarter, int year)
+        => quarter.ToUpper() switch
+            {
+                "Q1" => (new DateTime(year: year, month: 1, day: 1), new DateTime(year: year, month: 3, day: 31)),
+                "Q2" => (new DateTime(year: year, month: 4, day: 1), new DateTime(year: year, month: 6, day: 30)),
+                "Q3" => (new DateTime(year: year, month: 7, day: 1), new DateTime(year: year, month: 9, day: 30)),
+                "Q4" => (new DateTime(year: year, month: 10, day: 1), new DateTime(year: year, month: 12, day: 31)),
+                _ => (DateTime.MinValue, DateTime.MinValue)
+            };
     public static string GetClientAddress(HttpContext context)
     {
         var forwardedHeader = context.Request.Headers[CommonConstants.XForwardedFor].FirstOrDefault();

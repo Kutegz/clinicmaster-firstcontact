@@ -49,7 +49,7 @@ public sealed class Patient(ClinicMasterContext context) : IPatient
     public async Task<IEnumerable<ConsumerResponse>> GetPatientConsumers(string patientNo)
     { 
         var query = """
-                        SELECT Consumers FROM dbo.Patients WHERE PatientNo = @PatientNo
+                        SELECT Consumers FROM dbo.Patients WHERE PatientNo = @PatientNo;
                     """;
 
         using var connection = context.CreateConnection();
