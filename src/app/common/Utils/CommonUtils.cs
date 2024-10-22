@@ -54,4 +54,16 @@ public static class CommonUtils
 
         return (records, page, pageSize);
     }
+    public static (DateTime startDate, DateTime endDate) GetDateRangeQueryParameters(HttpContext context, DateTime now)
+    {
+        var startDateValue = context.Request.Query["startDate"].FirstOrDefault();
+        var endDateValue = context.Request.Query["endDate"].FirstOrDefault();
+
+        if (!DateTime.TryParse(startDateValue, out DateTime startDate) || 
+            startDate <= DateTime.MinValue || startDate > now) startDate = now;
+        if (!DateTime.TryParse(endDateValue, out DateTime endDate) || 
+            endDate <= DateTime.MinValue || endDate > now) endDate = now;
+
+        return (startDate, endDate);
+    }
 }
