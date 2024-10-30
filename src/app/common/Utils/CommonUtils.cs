@@ -14,7 +14,12 @@ public static class CommonUtils
         var result = DateTime.TryParse(s: value, result: out DateTime date);
         return result ? date : DateTime.MinValue;
     }
+    public static DateTime GetCurrentDate(TimeProvider timeProvider) => timeProvider.GetLocalNow().Date;
     public static DateTime GetCurrentDateTime(TimeProvider timeProvider) => timeProvider.GetLocalNow().DateTime;
+    public static bool BeTodayOrFutureDate(DateTime date)=> date.Date >= DateTime.Now.Date;
+    public static bool BeTodayOrPastDate(DateTime date)=> date.Date <= DateTime.Now.Date;
+    public static bool BeValidDate(DateTime date) => date.Date != DateTime.MinValue.Date;
+    public static bool BeValidDateTime(DateTime date) => date != DateTime.MinValue;
         public static (DateTime startDate, DateTime endDate) GetMonthStartEndDates(int year, int month, int day = 1)
     {
         var startDate = new DateTime(year: year, month: month, day: day);
