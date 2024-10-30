@@ -9,7 +9,6 @@ public static class CommonUtils
         => JsonSerializer.Serialize(value: content, options: options);    
     public static T? DeserializeContent<T>(ReadOnlySpan<char> content) 
         => JsonSerializer.Deserialize<T>(json: content, options: options);   
-    public static bool BeAValidDate(string value) => DateTime.TryParse(s: value, result: out _);
     public static DateTime ConvertStringToDateTime(string value)
     {
         var result = DateTime.TryParse(s: value, result: out DateTime date);
