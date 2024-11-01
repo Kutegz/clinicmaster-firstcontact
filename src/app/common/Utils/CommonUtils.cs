@@ -1,5 +1,6 @@
 
 using System.Text.Json;
+using System.Globalization;
 
 namespace ClinicMasterFirstContact.src.App.Common.Utils;
 public static class CommonUtils 
@@ -58,15 +59,21 @@ public static class CommonUtils
 
         return (records, page, pageSize);
     }
-    public static (DateTime startDate, DateTime endDate) GetDateRangeQueryParameters(HttpContext context, DateTime now)
+    public static (DateTime startDate, DateTime endDate) GetDateRangeQueryParameters(HttpContext context, DateTime now, 
+                                                                                    IReadOnlyList<string> dateFormats)
     {
         var startDateValue = context.Request.Query["startDate"].FirstOrDefault();
         var endDateValue = context.Request.Query["endDate"].FirstOrDefault();
 
-        if (!DateTime.TryParse(startDateValue, out DateTime startDate) || 
-            startDate <= DateTime.MinValue || startDate > now) startDate = now;
-        if (!DateTime.TryParse(endDateValue, out DateTime endDate) || 
-            endDate <= DateTime.MinValue || endDate > now) endDate = now;
+        if (!DateTime.TryParseExact(s: startDateValue, formats: [.. dateFormats], provider: null, 
+            style: DateTimeStyles.None, result: out DateTime startDate) ||
+            startDate <= DateTime.MinValue || startDate > now)
+        { startDate = now; }
+
+        if (!DateTime.TryParseExact(s: endDateValue, formats: [.. dateFormats], provider: null, 
+            style: DateTimeStyles.None, result: out DateTime endDate) ||
+            endDate <= DateTime.MinValue || endDate > now)
+        { endDate = now; }
 
         return (startDate, endDate);
     }
