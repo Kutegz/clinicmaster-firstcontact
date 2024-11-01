@@ -53,9 +53,9 @@ public static class CommonUtils
         var pageValue = context.Request.Query["page"].FirstOrDefault();
         var pageSizeValue = context.Request.Query["pageSize"].FirstOrDefault();
 
-        if (!uint.TryParse(recordsValue, out uint records)) records = 1000;
-        if (!int.TryParse(pageValue, out int page) || page <= 0) page = 1;
-        if (!int.TryParse(pageSizeValue, out int pageSize) || pageSize <= 0) pageSize = 10;
+        if (!uint.TryParse(s: recordsValue, result: out uint records)) records = 1000;
+        if (!int.TryParse(s: pageValue, result: out int page) || page <= 0) page = 1;
+        if (!int.TryParse(s: pageSizeValue, result: out int pageSize) || pageSize <= 0) pageSize = 10;
 
         return (records, page, pageSize);
     }
@@ -68,12 +68,14 @@ public static class CommonUtils
         if (!DateTime.TryParseExact(s: startDateValue, formats: [.. dateFormats], provider: null, 
             style: DateTimeStyles.None, result: out DateTime startDate) ||
             startDate <= DateTime.MinValue || startDate > now)
-        { startDate = now; }
+        { startDate = DateTime.MinValue; }
 
         if (!DateTime.TryParseExact(s: endDateValue, formats: [.. dateFormats], provider: null, 
             style: DateTimeStyles.None, result: out DateTime endDate) ||
             endDate <= DateTime.MinValue || endDate > now)
-        { endDate = now; }
+        { endDate = DateTime.MinValue; }
+
+        if (startDate == DateTime.MinValue) endDate = DateTime.MinValue;
 
         return (startDate, endDate);
     }

@@ -14,5 +14,7 @@ public static class CommonConstants
             "Microsoft.AspNetCore.Server.Kestrel", "ReadMedicalReport"];
     public static int HttpCallRetryCount => 3;
     public static IReadOnlyList<string> DateFormats 
-        => ["dd MMM yyyy", "dd MMMM yyyy", "yyyy-MM-dd", "dd/MM/yyyy", "dd-MM-yyyy"];
+        => ["dd MMM yyyy", "d MMM yyyy", "dd MMMM yyyy", 
+            "d MMMM yyyy", "yyyy-MM-dd", "dd/MM/yyyy", 
+            "dd-MM-yyyy", "d/M/yyyy", "d-M-yyyy"];
 }
