@@ -65,12 +65,14 @@ public static class CommonUtils
         var startDateValue = context.Request.Query["startDate"].FirstOrDefault();
         var endDateValue = context.Request.Query["endDate"].FirstOrDefault();
 
-        if (!DateTime.TryParseExact(s: startDateValue, formats: [.. dateFormats], provider: null, 
+        if (!DateTime.TryParseExact(s: startDateValue, formats: [.. dateFormats], 
+            provider: CultureInfo.InvariantCulture, 
             style: DateTimeStyles.None, result: out DateTime startDate) ||
             startDate <= DateTime.MinValue || startDate > now)
         { startDate = DateTime.MinValue; }
 
-        if (!DateTime.TryParseExact(s: endDateValue, formats: [.. dateFormats], provider: null, 
+        if (!DateTime.TryParseExact(s: endDateValue, formats: [.. dateFormats], 
+            provider: CultureInfo.InvariantCulture, 
             style: DateTimeStyles.None, result: out DateTime endDate) ||
             endDate <= DateTime.MinValue || endDate > now)
         { endDate = DateTime.MinValue; }
@@ -78,5 +80,28 @@ public static class CommonUtils
         if (startDate == DateTime.MinValue) endDate = DateTime.MinValue;
 
         return (startDate, endDate);
+    }
+
+    public static (DateTime startDateTime, DateTime endDateTime) GetDateTimeRangeQueryParameters(HttpContext context, DateTime now, 
+                                                                                    IReadOnlyList<string> dateTimeFormats)
+    {
+        var startDateTimeValue = context.Request.Query["startDateTime"].FirstOrDefault();
+        var endDateTimeValue = context.Request.Query["endDateTime"].FirstOrDefault();
+
+        if (!DateTime.TryParseExact(s: startDateTimeValue, formats: [.. dateTimeFormats], 
+            provider: CultureInfo.InvariantCulture, 
+            style: DateTimeStyles.None, result: out DateTime startDateTime) ||
+            startDateTime <= DateTime.MinValue || startDateTime > now)
+        { startDateTime = DateTime.MinValue; }
+
+        if (!DateTime.TryParseExact(s: endDateTimeValue, formats: [.. dateTimeFormats], 
+            provider: CultureInfo.InvariantCulture, 
+            style: DateTimeStyles.None, result: out DateTime endDateTime) ||
+            endDateTime <= DateTime.MinValue || endDateTime > now)
+        { endDateTime = DateTime.MinValue; }
+
+        if (startDateTime == DateTime.MinValue) endDateTime = DateTime.MinValue;
+
+        return (startDateTime, endDateTime);
     }
 }

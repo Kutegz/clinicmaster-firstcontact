@@ -17,4 +17,12 @@ public static class CommonConstants
         => ["dd MMM yyyy", "d MMM yyyy", "dd MMMM yyyy", 
             "d MMMM yyyy", "yyyy-MM-dd", "dd/MM/yyyy", 
             "dd-MM-yyyy", "d/M/yyyy", "d-M-yyyy"];
+    public static IReadOnlyList<string> DateTimeFormats
+        => ["dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy HH:mm", "dd-MM-yyyy HH:mm:ss", 
+            "dd-MM-yyyy HH:mm", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm",
+            "yyyy-MM-dd", "dd MMM yyyy HH:mm:ss", "dd MMM yyyy HH:mm", 
+            "dd MMMM yyyy HH:mm:ss", "dd MMMM yyyy HH:mm",
+            "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm", "yyyy-MM-ddTHH:mm:ssZ",
+            "yyyy-MM-ddTHH:mmZ", "yyyy-MM-ddTHH:mm:sszzz", "yyyy-MM-ddTHH:mmzzz",
+            "yyyy-MM-ddTHH:mm:sszzzz", "yyyy-MM-ddTHH:mmzzzz"];
 }
