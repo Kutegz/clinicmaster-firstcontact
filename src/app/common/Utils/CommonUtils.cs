@@ -1,6 +1,8 @@
 
 using System.Text.Json;
 using System.Globalization;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ClinicMasterFirstContact.src.App.Common.Utils;
 public static class CommonUtils 
@@ -103,5 +105,18 @@ public static class CommonUtils
         if (startDateTime == DateTime.MinValue) endDateTime = DateTime.MinValue;
 
         return (startDateTime, endDateTime);
+    }
+    public static (string userName, string fullName) GetLoginCredentials(HttpContext context)
+    {
+
+        string userName = context.User.FindFirstValue(claimType: ClaimTypes.NameIdentifier) ?? 
+                          context.User.FindFirstValue(claimType: JwtRegisteredClaimNames.Sub) ?? 
+                          string.Empty;
+                          
+        string fullName = context.User.FindFirstValue(claimType: ClaimTypes.Name) ??
+                            context.User.FindFirstValue(claimType: JwtRegisteredClaimNames.GivenName) ?? 
+                            string.Empty;
+
+        return (userName, fullName);
     }
 }
