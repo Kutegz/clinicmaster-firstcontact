@@ -71,6 +71,13 @@ var builder = WebApplication.CreateBuilder(args: args);
 
     builder.Services.AddExceptionHandler<AppExceptionHandler>();
 
+    builder.Services.AddCors(setupAction: options 
+        => options.AddPolicy(name: CommonConstants.CorsPolicyName, configurePolicy: builder 
+            => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .WithOrigins(origins: "*")));
+
 }
 
 var app = builder.Build();
@@ -79,6 +86,7 @@ var app = builder.Build();
 
     app.UseExceptionHandler(configure: _ => {});
     app.UseHttpsRedirection();
+    app.UseCors(policyName: CommonConstants.CorsPolicyName);
 
     app.UseAuthentication();
     app.UseAuthorization();

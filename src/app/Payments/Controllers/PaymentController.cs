@@ -39,6 +39,7 @@ public static class PaymentController
     {      
         try
         {
+            billNo = billNo.Replace(oldValue: "-", newValue: string.Empty);
             var payment = await repo.GetPayment(billNo);
             if (payment.Data.Equals(PaymentResponse.Empty)) return Results.NotFound(value: payment);
 

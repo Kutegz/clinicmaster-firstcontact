@@ -94,6 +94,7 @@ public static class MedicalReportController
         {
             string createdBy = context.Request.Headers[CommonConstants.XAgentId].ToString() ?? CommonConstants.ClinicMaster; 
 
+            visitNo = visitNo.Replace(oldValue: "-", newValue: string.Empty);
             var result = await repo.GetMedicalReport(facilityCode, visitNo);
             if (result.Data.Equals(MedicalReportResponse.Empty)) return Results.NotFound(value: result);
 
@@ -111,6 +112,7 @@ public static class MedicalReportController
     {      
         try
         {
+            visitNo = visitNo.Replace(oldValue: "-", newValue: string.Empty);
             var result = await repo.GetMedicalReportBuddle(facilityCode, visitNo);
             if (string.IsNullOrEmpty(result)) return Results.NotFound(value: result);
 

@@ -73,12 +73,13 @@ public static class PatientController
     {      
         try
         {
+            patientNo = patientNo.Replace(oldValue: "-", newValue: string.Empty);
             string createdBy = context.Request.Headers[CommonConstants.XAgentId].ToString() ?? CommonConstants.ClinicMaster;       
 
-            var result = await repo.GetPatient(patientNo);
+            var result = await repo.GetPatient(patientNo: patientNo);
             if (result.Data.Equals(PatientResponse.Empty)) return Results.NotFound(value: result);
 
-            var surgeries = await surgeryRepo.GetSurgeries(patientNo);
+            var surgeries = await surgeryRepo.GetSurgeries(patientNo: patientNo);
             var finalResult = result with {Data = result.Data with {Surgeries = surgeries.Data.ToList()}};
 
             await Helpers.UpdatePatientConsumers(patientNo: patientNo, patient: repo, createdBy: createdBy, 
