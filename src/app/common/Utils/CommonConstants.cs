@@ -24,5 +24,6 @@ public static class CommonConstants
             "dd MMMM yyyy HH:mm:ss", "dd MMMM yyyy HH:mm",
             "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm", "yyyy-MM-ddTHH:mm:ssZ",
             "yyyy-MM-ddTHH:mmZ", "yyyy-MM-ddTHH:mm:sszzz", "yyyy-MM-ddTHH:mmzzz",
-            "yyyy-MM-ddTHH:mm:sszzzz", "yyyy-MM-ddTHH:mmzzzz"];
+            "yyyy-MM-ddTHH:mm:sszzzz", "yyyy-MM-ddTHH:mmzzzz",
+            "yyyy-MM-ddTHH:mm:ss.fffZ"];
 }
