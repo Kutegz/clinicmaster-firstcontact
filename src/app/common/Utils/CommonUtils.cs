@@ -119,4 +119,32 @@ public static class CommonUtils
 
         return (userName, fullName);
     }
+
+    public static DateTime GetTokenExpiryDate(string token)
+    {
+        var handler = new JwtSecurityTokenHandler();
+        if (!handler.CanReadToken(token: token)) return DateTime.MinValue;
+        
+        var jwtToken = handler.ReadJwtToken(token: token);
+        var expClaim = jwtToken.Claims.FirstOrDefault(predicate: c => c.Type == "exp");
+
+        if (expClaim == null) return DateTime.MinValue;
+
+        // Convert 'exp' claim (epoch seconds) to DateTime
+        return long.TryParse(expClaim.Value, out var expiryUnix)
+                ? DateTimeOffset.FromUnixTimeSeconds(seconds: expiryUnix).UtcDateTime
+                : DateTime.MinValue;
+    }
+    
+    public static HttpRequestMessage GetRequestWithHeaders(HttpRequestMessage httpRequest, 
+                                                            IReadOnlyDictionary<string, string> headers)
+    {
+        foreach (var header in headers) httpRequest.Headers.Add(name: header.Key, value: header.Value);
+        return httpRequest;
+    }
+    public static Func<TIn, TOut> Memoizer<TIn, TOut>(Func<TIn, TOut> func) where TIn : notnull
+    {
+        var cache = new Dictionary<TIn, TOut>();
+        return input => cache.TryGetValue(input, out var result) ? result : cache[input] = func(input);
+    }
 }
