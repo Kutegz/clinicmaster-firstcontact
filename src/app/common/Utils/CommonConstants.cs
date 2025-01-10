@@ -9,6 +9,9 @@ public static class CommonConstants
     public static string CorsPolicyName => "CorsPolicy";
     public static string AuthenticationAgentId => "Authentication:AgentId";
     public static string AuthenticationApiKey => "Authentication:ApiKey";
+    public static string RateLimitPolicyName => "fixedWindowPolicy";
+    public static int RateTimeSpanSeconds => 10;
+    public static int RatePermitLimit => 5;
     public static IReadOnlyList<string> OpenTelemetryMeterNames 
         => ["Microsoft.AspNetCore.Hosting", "System.Net.Http",
             "Microsoft.AspNetCore.Server.Kestrel", "ReadMedicalReport"];
