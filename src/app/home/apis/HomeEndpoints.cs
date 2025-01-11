@@ -10,7 +10,7 @@ public static class HomeEndpoints
             {
                 IsLive = true,
                 Message = $"Welcome to ClinicMaster First Contact API: {DateTimeOffset.UtcNow.Ticks.ToString()[^5..]}",
-                Descrition = "Provide patient number to get patient data summary"
+                Description = "Provide patient number to get patient data summary"
             }         
         ).AllowAnonymous();
     }
